@@ -1,0 +1,27 @@
+const express = require("express");
+const mongoose = require('mongoose');
+require("dotenv").config({ path: "./config.env" });
+const MongoURI = process.env.ATLAS_URI
+
+//App variables
+const app = express();
+const port = process.env.PORT || "8000";
+const Flights = require('./models/Flights');
+
+// configurations
+app.use(express.urlencoded({extended: true}));
+app.use(express.json())
+
+// Mongo DB
+mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(result =>console.log("MongoDB is now connected") )
+.catch(err => console.log(err));
+
+app.get("/Home", (req, res) => {
+  res.status(200).send("You have everything installed !");
+});
+
+// Starting server
+app.listen(port, () => {
+    console.log(`Listening to requests on http://localhost:${port}`);
+  });
