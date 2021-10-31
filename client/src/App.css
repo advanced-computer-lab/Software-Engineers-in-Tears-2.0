@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Archivo';
-    src: local('Archivo'), url(./assets/fonts/archivo-regular.tff) format('truetype');
+    src: local('Archivo'), url(./assets/fonts/archivo-regular.ttf) format('truetype');
 }
 
 @font-face {
