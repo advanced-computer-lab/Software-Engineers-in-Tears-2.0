@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Archivo';
+    src: local('Archivo'), url(./assets/fonts/archivo-regular.tff) format('truetype');
+}
+
+@font-face {
+    font-family: 'Archivo Black';
+    src: local('Archivo Black'), url(./assets/fonts/archivo-black-regular.ttf) format('truetype');
+}
+  
