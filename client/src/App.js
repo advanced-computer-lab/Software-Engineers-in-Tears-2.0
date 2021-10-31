@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import HomeScreen from './components/HomeScreen';
-import SignInScreen from './components/SignInScreen';
+import HomeScreen from './screens/HomeScreen.js';
+import LoginScreen from './screens/LoginScreen';
 
 class App extends Component {
   render() {
@@ -10,7 +10,7 @@ class App extends Component {
       <Router>
         <div>
           <Route exact path='/' component={HomeScreen} />
-          <Route path='/signin' component={SignInScreen} />
+          <Route path='/login' component={LoginScreen} />
         </div>
       </Router>
     );
