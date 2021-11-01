@@ -78,7 +78,8 @@ function AdminHome(props) {
           <LoremIpsum3
             style={{color: hover2, cursor: "pointer"}}
             onMouseEnter={() => setHover2('rgba(207,117,0,1)')} 
-            onMouseLeave={() => setHover2('rgba(240,165,0,1)')} 
+            onMouseLeave={() => setHover2('rgba(240,165,0,1)')}
+            onClick={() => history.push('/adminflights')} 
           >List all availaible flights</LoremIpsum3>
         </Or5Row>
       </Rect2>
