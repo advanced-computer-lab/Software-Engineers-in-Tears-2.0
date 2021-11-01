@@ -1,12 +1,13 @@
 const express = require("express");
 const mongoose = require('mongoose');
+const flightController = require('./Routes/flightController');
 require("dotenv").config({ path: "./config.env" });
 const MongoURI = process.env.ATLAS_URI
 
 //App variables
 const app = express();
 const port = process.env.PORT || "8000";
-const Flights = require('./models/Flights');
+//const Flights = require('./models/Flights');
 
 // configurations
 app.use(express.urlencoded({extended: true}));
@@ -20,6 +21,9 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.get("/Home", (req, res) => {
   res.status(200).send("You have everything installed !");
 });
+
+
+app.get("/admin", flightController.listAllFlights);
 
 // Starting server
 app.listen(port, () => {

@@ -10,3 +10,12 @@ exports.updateFlight = (req, res)=>{
   }
 
 
+  exports.listAllFlights = (req, res) => {
+    Flights.find({})
+      .then(result => {
+        res.send(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
