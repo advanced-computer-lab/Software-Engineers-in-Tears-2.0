@@ -1,6 +1,26 @@
 const Flights = require('../Models/Flights');
+const express = require("express");
+const router=express.Router();
+module.exports=router;
 
 
+router.route("/createflight").post((req,res)=>{
+  const From= req.body.From;
+  const To= req.body.To;
+  const Flight_Date= req.body.Flight_Date;
+  const Cabin= req.body.Cabin;
+  const Seats_Available= req.body.Seats_Available;
+  const newFlight= new Flights({
+    To,
+    From,
+    Flight_Date,
+    Cabin,
+    Seats_Available
+  });
+  newFlight.save();
+}
+)
+g
 exports.updateFlight = (req, res)=>{
     Flights.findByIdAndUpdate(req.params.id, req.body)
     .then(result => {
@@ -19,3 +39,5 @@ exports.updateFlight = (req, res)=>{
         console.log(err);
       });
   };
+
+ 
