@@ -40,4 +40,19 @@ exports.updateFlight = (req, res)=>{
       });
   };
 
- 
+
+  exports.searchFlights = (req, res) => {
+    Flights.find(
+      (req.body != '' ? {FlightNumber: req.body.FlightNumber} : null),
+      (req.body != '' ? {DepartureTime: req.body.DepartureTime} : null),
+      (req.body != '' ? {ArrivalTime: req.body.ArrivalTime} : null),
+      (req.body != '' ? {Flight_Date: req.body.Flight_Date} : null)
+      (req.body != '' ? {AirportTerminal: req.body.AirportTerminal} : null),  
+      ).then(result => {
+        res.send(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
