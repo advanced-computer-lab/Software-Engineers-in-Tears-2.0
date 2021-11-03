@@ -18,7 +18,11 @@
   },
   "homepage": "https://github.com/advanced-computer-lab/Software-Engineers-in-Tears-2.0#readme",
   "dependencies": {
+<<<<<<< HEAD
     "csv-parse": "^4.16.3",
+=======
+    "cors": "^2.8.5",
+>>>>>>> b923266eb60653344b94ff01f834ee580ed3c6c3
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^6.0.12",

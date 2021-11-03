@@ -70,13 +70,13 @@ const DuneAirlines = styled.span`
 `;
 
 const Image4Row = styled.div`
-  height: 69px;
+  height: 49px;
   flex-direction: row;
   display: flex;
   flex: 1 1 0%;
-  margin-right: 68px;
+  margin-right: 100px;
   margin-left: 50px;
-  margin-top: 33px;
+  margin-top: 37px;
 `;
 const Row2 = styled.div`
   height: 69px;
@@ -84,7 +84,7 @@ const Row2 = styled.div`
   display: flex;
   flex: 1 1 0%;
   margin-right: 68px;
-  margin-left: -90px;
+  margin-left: -120px;
   margin-top: 33px;
 `;
 

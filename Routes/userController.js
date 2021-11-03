@@ -1,3 +1,5 @@
+//For reference only not related to project
+
 // #Task route solution
 const User = require('../models/User');
 exports.addUser = (req, res) => {

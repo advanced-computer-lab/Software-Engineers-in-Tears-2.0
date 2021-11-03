@@ -1,11 +1,15 @@
-import React, { Component } from "react";
-import styled, { css } from "styled-components";
-import Button1 from "../components/Button1";
+import React, {useState} from "react";
+import styled from "styled-components";
+//import Button1 from "../components/Button1";
+import Textbox from "../components/Textbox";
 import { useHistory } from "react-router-dom";
+import ProfileCard from "../components/ProfileCard";
 
 function AdminHome(props) {
 
-    const history = useHistory();
+  const history = useHistory();
+  const [hover1, setHover1] = useState('rgba(240,165,0,1)');
+  const [hover2, setHover2] = useState('rgba(240,165,0,1)');
 
   return (
     <Container>
@@ -14,40 +18,71 @@ function AdminHome(props) {
             <Image4 src={require("../assets/images/logo3.png").default}></Image4>
             <DuneAirlines>DUNE</DuneAirlines>
         </Image4Row>
-        <Row2>
-            <Image2
-                src={require("../assets/images/profile-icon.png").default}
-            ></Image2>
-            <Admin>Admin</Admin>
-        </Row2>
+        <ProfileCard
+          title={'Admin'}
+        />
     </Rect>
-    <Button1
-        title={'Create Flight'}
-        style={{
-            height: 58,
-            width: 207,
-            marginTop: 50,
-            marginLeft: 550 
-        }}
-    />
-    <Button1
-        title={'Update Flight'}
-        style={{
-            height: 58,
-            width: 207,
-            marginTop: 50,
-            marginLeft: 550 
-        }}
-    />
-    <Button1
-        title={'Delete Flight'}
-        style={{
-            height: 58,
-            width: 207,
-            marginTop: 50,
-            marginLeft: 550 
-        }}
-    />
+    <Rect2>
+        <SearchFlight>SEARCH FLIGHT</SearchFlight>
+        <MaterialFixedLabelTextboxRow>
+          <Textbox
+            title={'Flight Number'}
+            style={{
+              height: 43,
+              width: 192,
+              marginTop: 7
+            }}
+          ></Textbox>
+          <Textbox
+            style={{
+              height: 43,
+              width: 219,
+              marginLeft: 26,
+              marginTop: 7
+            }}
+            title={'Airport Terminal'}
+          ></Textbox>
+          <Textbox
+            style={{
+              height: 43,
+              width: 235,
+              marginLeft: 23,
+              marginTop: 7
+            }}
+          ></Textbox>
+          <Textbox
+            style={{
+              height: 43,
+              width: 159,
+              marginLeft: 23,
+              marginTop: 7
+            }}
+          ></Textbox>
+          <Textbox
+            style={{
+              height: 43,
+              width: 182,
+              marginLeft: 21,
+              marginTop: 7
+            }}
+          ></Textbox>
+          <Image3
+            style={{background: hover1}}
+            onMouseEnter={() => setHover1('rgba(207,117,0,1)')} 
+            onMouseLeave={() => setHover1('rgba(240,165,0,1)')} 
+            src={require("../assets/images/search.png").default}
+          ></Image3>
+        </MaterialFixedLabelTextboxRow>
+        <Or5Row>
+          <Or5>OR</Or5>
+          <LoremIpsum3
+            style={{color: hover2, cursor: "pointer"}}
+            onMouseEnter={() => setHover2('rgba(207,117,0,1)')} 
+            onMouseLeave={() => setHover2('rgba(240,165,0,1)')}
+            onClick={() => history.push('/adminflights')} 
+          >List all availaible flights</LoremIpsum3>
+        </Or5Row>
+      </Rect2>
     </Container>
 
   );
@@ -63,6 +98,68 @@ const Rect = styled.div`
   background-color: rgba(0,0,0,1);
   flex-direction: row;
   display: flex;
+`;
+
+const Rect2 = styled.div`
+  height: 277px;
+  background-color: rgba(0,0,0,1);
+  border-top: 1px solid rgba(60,60,60,1);
+  flex-direction: column;
+  display: flex;
+`;
+
+const SearchFlight = styled.span`
+  font-family: Archivo Black;
+  font-style: normal;
+  font-weight: 400;
+  color: rgba(244,244,244,1);
+  font-size: 39px;
+  margin-top: 27px;
+  margin-left: 50px;
+`;
+
+const Image3 = styled.img`
+  width: 57px;
+  height: 57px;
+  border-radius: 100px;
+  margin-left: 55px;
+  margin-top: -3px;
+  cursor: pointer;
+`;
+
+const MaterialFixedLabelTextboxRow = styled.div`
+  height: 58px;
+  flex-direction: row;
+  display: flex;
+  margin-top: 31px;
+  margin-left: 50px;
+  margin-right: 81px;
+`;
+
+const Or5 = styled.span`
+  font-family: Archivo Black;
+  font-style: normal;
+  font-weight: 400;
+  color: rgba(244,244,244,1);
+  font-size: 30px;
+`;
+
+const LoremIpsum3 = styled.span`
+  font-family: Archivo;
+  font-style: normal;
+  font-weight: 400;
+  text-decoration-line: underline;
+  font-size: 27px;
+  margin-left: 23px;
+  margin-top: 7px;
+`;
+
+const Or5Row = styled.div`
+  height: 40px;
+  flex-direction: row;
+  display: flex;
+  margin-top: 37px;
+  margin-left: 50px;
 `;
 
 const Image4 = styled.img`
@@ -82,40 +179,12 @@ const DuneAirlines = styled.span`
 `;
 
 const Image4Row = styled.div`
-  height: 69px;
+  height: 49px;
   flex-direction: row;
   display: flex;
-  flex: 1 1 0%;
-  margin-right: 68px;
+  margin-right: 100px;
   margin-left: 50px;
-  margin-top: 33px;
-`;
-const Row2 = styled.div`
-  height: 69px;
-  flex-direction: row;
-  display: flex;
-  flex: 1 1 0%;
-  margin-right: 68px;
-  margin-left: -90px;
-  margin-top: 33px;
-`;
-
-const Image2 = styled.img`
-  width: 45px;
-  height: 45px;
-  margin-left: 887px;
-  margin-top: -8px;
-  object-fit: contain;
-`;
-
-const Admin = styled.span`
-  font-family: Archivo;
-  font-style: normal;
-  font-weight: 400;
-  color: rgba(240,165,0,1);
-  font-size: 25px;
-  margin-left: 11px;
-  margin-top: 2px;
+  margin-top: 37px;
 `;
 
 
