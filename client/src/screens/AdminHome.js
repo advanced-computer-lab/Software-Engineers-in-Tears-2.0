@@ -79,7 +79,7 @@ function AdminHome(props) {
             style={{color: hover2, cursor: "pointer"}}
             onMouseEnter={() => setHover2('rgba(207,117,0,1)')} 
             onMouseLeave={() => setHover2('rgba(240,165,0,1)')}
-            onClick={() => history.push('/adminflights')} 
+            onClick={() =>  history.push('/admin/flights')} 
           >List all availaible flights</LoremIpsum3>
         </Or5Row>
       </Rect2>

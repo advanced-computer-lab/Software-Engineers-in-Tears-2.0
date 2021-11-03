@@ -25,8 +25,8 @@ app.get("/Home", (req, res) => {
 });
 
 
-app.get("/adminFlights", flightController.listAllFlights);
-app.get("/adminSearchFlights", flightController.searchFlights);
+app.get("/adminflights", flightController.listAllFlights);
+app.get("/adminsearchflights", flightController.searchFlights);
 
 
 

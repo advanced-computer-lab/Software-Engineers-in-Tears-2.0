@@ -9,15 +9,14 @@ function AdminAllFlights(props) {
   const history = useHistory();
 
   useEffect(() => {
-    console.log('entered')
     axios
-        .get('http://localhost:8000/adminflights')
-        .then(res => {
-            console.log(res)
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+              .get('http://localhost:8000/adminflights')
+              .then(res => {
+                  console.log(res.data)
+              })
+              .catch(err =>{
+                  console.log(err);
+              })
   }, []);
 
   return (
