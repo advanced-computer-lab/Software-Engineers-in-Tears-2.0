@@ -12,7 +12,7 @@ const port = process.env.PORT || "8000";
 
 // configurations
 app.use(express.urlencoded({extended: true}));
-app.use(express.json())
+app.use(express.json({extended: false}));
 app.use(cors({ origin: true, credentials: true }));
 
 // Mongo DB
@@ -28,6 +28,7 @@ app.get("/Home", (req, res) => {
 app.get("/adminflights", flightController.listAllFlights);
 app.post("/adminsearchflights", flightController.searchFlights);
 app.put('/adminUpdateFlight/:id', flightController.updateFlight);
+app.get('/adminUpdateFlight/:id', flightController.viewFlightDetails);
 
 
 

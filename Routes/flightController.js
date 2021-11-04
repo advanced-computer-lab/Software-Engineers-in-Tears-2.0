@@ -36,3 +36,9 @@ exports.updateFlight = (req, res)=>{
       });
   };
 
+  exports.viewFlightDetails = (req, res) => {
+    Flights.findById(req.params.id)
+    .then(result => res.status(200).json(result))
+    .catch(err => console.error(err));
+  }
+
