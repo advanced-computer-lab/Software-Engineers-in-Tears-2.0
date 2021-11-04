@@ -43,7 +43,12 @@ const [input, setInput]=useState({
 
 
    }
-  axios.post('http://localhost:8000/createflight',newFlight)
+  axios.post('http://localhost:8000/admincreateflights',newFlight).then(res => {
+    console.log(res.data)
+  })
+  .catch(err =>{
+    console.log(err);
+  })
   }
   
   
