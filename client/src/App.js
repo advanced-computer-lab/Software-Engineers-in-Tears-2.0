@@ -7,6 +7,7 @@ import LoginScreen from './screens/LoginScreen';
 import AdminHome from './screens/AdminHome';
 import AdminAllFlights from './screens/AdminAllFlights';
 import FlightUpdateScreen from './screens/FlightUpdateScreen';
+import AdminFlights from './screens/AdminFlights';
 
 class App extends Component {
   render() {
@@ -15,9 +16,9 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={HomeScreen} />
           <Route path='/login' component={LoginScreen} />
-          <Route path='/admin' component={AdminHome} />
-          <Route path='/adminflights' component={AdminAllFlights} />
           <Route exact path='/update-flight/:id' component = {FlightUpdateScreen} />
+          <Route exact path='/admin' component={AdminHome} />
+          <Route eaxct path='/admin/flights' component={AdminFlights} />
         </Switch>
       </Router>
     );

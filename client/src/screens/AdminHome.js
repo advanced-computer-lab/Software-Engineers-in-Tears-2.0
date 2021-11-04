@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 import styled from "styled-components";
-//import Button1 from "../components/Button1";
-import Textbox from "../components/Textbox";
 import { useHistory } from "react-router-dom";
 import ProfileCard from "../components/ProfileCard";
 
@@ -10,6 +8,17 @@ function AdminHome(props) {
   const history = useHistory();
   const [hover1, setHover1] = useState('rgba(240,165,0,1)');
   const [hover2, setHover2] = useState('rgba(240,165,0,1)');
+
+  const [flightNumber, setFlightNumber] = useState('');
+  const [departureTime, setDepartureTime] = useState('');
+  const [arrivalTime, setArrivalTime] = useState('');
+  const [flightDate, setFlightDate] = useState('');
+  const [airportTerminal, setAirportTerminal] = useState('');
+  const [flightData, setFlightData] = useState({AirportTerminal: 'E1'});
+
+  const onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   return (
     <Container>
@@ -25,52 +34,70 @@ function AdminHome(props) {
     <Rect2>
         <SearchFlight>SEARCH FLIGHT</SearchFlight>
         <MaterialFixedLabelTextboxRow>
-          <Textbox
-            title={'Flight Number'}
+          <input
+            placeholder={'Flight Number'}
             style={{
               height: 43,
               width: 192,
               marginTop: 7
             }}
-          ></Textbox>
-          <Textbox
+            value={flightNumber}
+            onChange={onChange}
+          ></input>
+          <input
             style={{
               height: 43,
               width: 219,
               marginLeft: 26,
               marginTop: 7
             }}
-            title={'Airport Terminal'}
-          ></Textbox>
-          <Textbox
+            placeholder={'Airport Terminal'}
+            value={airportTerminal}
+            onChange={onChange}
+          ></input>
+          <input
             style={{
               height: 43,
               width: 235,
               marginLeft: 23,
               marginTop: 7
             }}
-          ></Textbox>
-          <Textbox
+            placeholder={'Departure Time'}
+            value={departureTime}
+            onChange={onChange}
+          ></input>
+          <input
             style={{
               height: 43,
               width: 159,
               marginLeft: 23,
               marginTop: 7
             }}
-          ></Textbox>
-          <Textbox
+            placeholder={'Arrival Time'}
+            value={arrivalTime}
+            onChange={onChange}
+          ></input>
+          <input
             style={{
               height: 43,
               width: 182,
               marginLeft: 21,
               marginTop: 7
             }}
-          ></Textbox>
+            placeholder={'Flight Date'}
+            value={flightDate}
+            onChange={onChange}
+          ></input>
           <Image3
             style={{background: hover1}}
             onMouseEnter={() => setHover1('rgba(207,117,0,1)')} 
             onMouseLeave={() => setHover1('rgba(240,165,0,1)')} 
             src={require("../assets/images/search.png").default}
+            onClick={() => history.push({
+              pathname: '/admin/flights',
+              showAll: false,
+              state: {flightData: flightData}
+            })}
           ></Image3>
         </MaterialFixedLabelTextboxRow>
         <Or5Row>
@@ -79,7 +106,10 @@ function AdminHome(props) {
             style={{color: hover2, cursor: "pointer"}}
             onMouseEnter={() => setHover2('rgba(207,117,0,1)')} 
             onMouseLeave={() => setHover2('rgba(240,165,0,1)')}
-            onClick={() => history.push('/adminflights')} 
+            onClick={() => history.push({
+              pathname: '/admin/flights',
+              showAll: true,
+            })}
           >List all availaible flights</LoremIpsum3>
         </Or5Row>
       </Rect2>
