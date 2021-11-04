@@ -14,7 +14,7 @@ function AdminHome(props) {
   const [arrivalTime, setArrivalTime] = useState('');
   const [flightDate, setFlightDate] = useState('');
   const [airportTerminal, setAirportTerminal] = useState('');
-  const [flightData, setFlightData] = useState({AirportTerminal: 'E1'});
+  const flightData = {AirportTerminal: 'E1'};
 
   const onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -42,7 +42,7 @@ function AdminHome(props) {
               marginTop: 7
             }}
             value={flightNumber}
-            onChange={onChange}
+            // onChange={onChange}
           ></input>
           <input
             style={{
@@ -53,7 +53,7 @@ function AdminHome(props) {
             }}
             placeholder={'Airport Terminal'}
             value={airportTerminal}
-            onChange={onChange}
+            // onChange={onChange}
           ></input>
           <input
             style={{
@@ -64,7 +64,7 @@ function AdminHome(props) {
             }}
             placeholder={'Departure Time'}
             value={departureTime}
-            onChange={onChange}
+            // onChange={onChange}
           ></input>
           <input
             style={{
@@ -75,7 +75,7 @@ function AdminHome(props) {
             }}
             placeholder={'Arrival Time'}
             value={arrivalTime}
-            onChange={onChange}
+            // onChange={onChange}
           ></input>
           <input
             style={{
@@ -86,7 +86,7 @@ function AdminHome(props) {
             }}
             placeholder={'Flight Date'}
             value={flightDate}
-            onChange={onChange}
+            // onChange={onChange}
           ></input>
           <Image3
             style={{background: hover1}}
@@ -96,7 +96,7 @@ function AdminHome(props) {
             onClick={() => history.push({
               pathname: '/admin/flights',
               showAll: false,
-              state: {flightData: flightData}
+              flightData: flightData
             })}
           ></Image3>
         </MaterialFixedLabelTextboxRow>
