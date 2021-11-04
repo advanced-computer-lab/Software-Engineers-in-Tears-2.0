@@ -38,8 +38,8 @@ app.get("/Home", (req, res) => {
 
 
 app.use('/Routes/flightController', flights);
-app.get("/adminFlights", flightController.listAllFlights);
-app.get("/adminSearchFlights", flightController.searchFlights);
+// app.get("/adminFlights", flightController.listAllFlights);
+// app.get("/adminSearchFlights", flightController.searchFlights);
 
 
 

@@ -9,18 +9,17 @@ router.route("/createflight").post((req,res)=>{
   const To= req.body.To;
   const Flight_Date= req.body.Flight_Date;
   const Cabin= req.body.Cabin;
-  const Seats_Available= req.body.Seats_Available;
+  const Seats_Available_on_Flight= req.body.Seats_Available;
   const newFlight= new Flights({
-    To,
     From,
+    To,
     Flight_Date,
     Cabin,
-    Seats_Available
+    Seats_Available_on_Flight
   });
   newFlight.save();
 }
-)
-g
+);
 exports.updateFlight = (req, res)=>{
     Flights.findByIdAndUpdate(req.params.id, req.body)
     .then(result => {
