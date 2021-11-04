@@ -19,6 +19,8 @@ function AdminAllFlights(props) {
               })
   }, []);
 
+
+
   return (
     <Container>
     <Rect>
@@ -31,6 +33,7 @@ function AdminAllFlights(props) {
         />
     </Rect>
     </Container>
+    
   );
 }
 
