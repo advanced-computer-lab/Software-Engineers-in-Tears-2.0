@@ -34,12 +34,11 @@ app.get("/Home", (req, res) => {
 });
 
 
-//app.get("/admin", flightController.listAllFlights);
 
 
 app.use('/Routes/flightController', flights);
-// app.get("/adminFlights", flightController.listAllFlights);
-// app.get("/adminSearchFlights", flightController.searchFlights);
+app.get("/adminflights", flightController.listAllFlights);
+app.post("/adminsearchflights", flightController.searchFlights);
 
 
 

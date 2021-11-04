@@ -6,7 +6,7 @@ import HomeScreen from './screens/HomeScreen.js';
 import LoginScreen from './screens/LoginScreen';
 import CreateFlight from './components/CreateFlight.js';
 import AdminHome from './screens/AdminHome';
-import AdminAllFlights from './screens/AdminAllFlights';
+import AdminFlights from './screens/AdminFlights';
 
 class App extends Component {
   render() {
@@ -16,8 +16,8 @@ class App extends Component {
           <Route exact path='/' component={HomeScreen} />
           <Route path='/login' component={LoginScreen} />
           <Route exact path='/createflight' component={CreateFlight} />
-          <Route path='/admin' component={AdminHome} />
-          <Route path='/adminflights' component={AdminAllFlights} />
+          <Route exact path='/admin' component={AdminHome} />
+          <Route eaxct path='/admin/flights' component={AdminFlights} />
         </Switch>
       </Router>
     );
