@@ -1,5 +1,5 @@
 {
-  "name": "Software-Engineers-in-Tears-2.0",
+  "name": "software-engineers-in-tears-2.0",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -23,5 +23,6 @@
     "express": "^4.17.1",
     "mongoose": "^6.0.12",
     "nodemon": "^2.0.14"
-  }
+  },
+  "devDependencies": {}
 }

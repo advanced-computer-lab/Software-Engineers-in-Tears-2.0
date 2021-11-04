@@ -4,11 +4,17 @@ var cors = require('cors');
 const flightController = require('./Routes/flightController.js');
 require("dotenv").config({ path: "./config.env" });
 const MongoURI = process.env.ATLAS_URI
+const router = express.Router();
+module.exports = router;
 
 //App variables
 const app = express();
 const port = process.env.PORT || "8000";
-//const Flights = require('./models/Flights');    once collections are altered
+var cors = require('cors');
+
+const flights = require('./Routes/flightController');
+
+//const Flights = require('./models/Flights');  once collections are altered
 
 // configurations
 app.use(express.urlencoded({extended: true}));
@@ -20,11 +26,17 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(result =>console.log("MongoDB is now connected") )
 .catch(err => console.log(err));
 
+
+app.use("/",require("./Routes/flightController"));
+
 app.get("/Home", (req, res) => {
   res.status(200).send("You have everything installed !");
 });
 
 
+
+
+app.use('/Routes/flightController', flights);
 app.get("/adminflights", flightController.listAllFlights);
 app.post("/adminsearchflights", flightController.searchFlights);
 
