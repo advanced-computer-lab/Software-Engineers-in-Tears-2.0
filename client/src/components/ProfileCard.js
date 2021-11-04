@@ -9,7 +9,7 @@ function ProfileCard(props) {
     <Container
       onMouseEnter={() => setHover('rgba(207,117,0,1)')} 
       onMouseLeave={() => setHover('transparent')}
-      style={{...props.style, background: hover, height: 60, width: 140, marginLeft: '62%', marginTop: 20}}
+      style={{...props.style, background: hover, height: 60, width: 140, marginTop: 20, position: 'absolute', right: 55}}
       onClick={props.onClick}  
     >
         <Image2
