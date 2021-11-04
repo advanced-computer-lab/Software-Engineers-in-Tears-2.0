@@ -27,6 +27,7 @@ app.get("/Home", (req, res) => {
 
 app.get("/adminFlights", flightController.listAllFlights);
 app.get("/adminSearchFlights", flightController.searchFlights);
+app.put('/adminUpdateFlight/:id', flightController.updateFlight);
 
 
 
