@@ -4,6 +4,16 @@ const router=express.Router();
 module.exports=router;
 
 
+
+
+exports.updateFlight = (req, res)=>{
+  Flights.findByIdAndUpdate(req.params.id, req.body)
+  .then(result => {
+      res.status(200).send("Flight updated");
+      console.log('Flight has been updated successfully')})
+  .catch(err => console.log(err));
+}
+
 router.route("/createflight").post((req,res)=>{
   const From= req.body.From;
   const To= req.body.To;
