@@ -16,12 +16,19 @@ function CreateFlight() {
   const[flightDate, setFlightDate] = useState('');
   const[cabin, setCabin] = useState('');
   const[seats, setSeats] = useState('');
+  const[flightNumber, setFlightNumber] = useState('');
+  const[airportTerminal, setAirportTerminal] = useState('');
+  const[departureTime, setDepartureTime] = useState('');
+  const[arrivalTime, setArrivalTime] = useState('');
+
+
   const[created, setCreated] = useState(false);
   const[error, setError] = useState(false);
 
   function create(event){
    event.preventDefault();
-    if(from === '' | to === '' | flightDate === ''  | cabin === '' | seats === ''){
+    if(from === '' | to === '' | flightDate === ''  | cabin === '' | seats === '' | flightNumber === ''
+    | airportTerminal === '' | departureTime === '' | arrivalTime === ''){
       setError(true)
       setCreated(false)
     }
@@ -32,7 +39,11 @@ function CreateFlight() {
         To:to,
         Flight_Date:flightDate,
         Cabin:cabin,
-        Seats_Available:seats
+        Seats_Available:seats,
+        FlightNumber: flightNumber,
+        AirportTerminal: airportTerminal,
+        DepartureTime: departureTime,
+        ArrivalTime: arrivalTime
       }
        axios.post('http://localhost:8000/admincreateflights',newFlight).then(res => {
          console.log(res.data)
@@ -46,6 +57,10 @@ function CreateFlight() {
        setFlightDate('')
        setFrom('')
        setSeats('')
+       setAirportTerminal('')
+       setArrivalTime('')
+       setDepartureTime('')
+       setFlightNumber('')
     } 
    
   }
@@ -62,10 +77,10 @@ function CreateFlight() {
         title={'Admin'}
       />
     </Rect>
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 750}}>
-      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#AAA7A6', height: 680, borderRadius: 20, width: '50%', border:'2px solid #F0A500'}}>
-        <text style={{fontFamily: 'Archivo Black', fontSize: 30, color: 'rgba(244,244,244,1)', marginTop: -30}}>CREATE FLIGHT</text>
-        <label style={{marginTop: 50}}>From:</label>
+    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 1100}}>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#AAA7A6', height: 980, borderRadius: 20, width: '50%', border:'2px solid #F0A500'}}>
+        <text style={{fontFamily: 'Archivo Black', fontSize: 30, color: 'rgba(244,244,244,1)', marginTop: 0}}>CREATE FLIGHT</text>
+        <label style={{marginTop: 30}}>From:</label>
         <input
             type='text'
             value={from}
@@ -124,6 +139,54 @@ function CreateFlight() {
               borderRadius: 10
             }}
             onChange={(e) => setSeats(e.target.value)}
+           />
+           <label>Flight Number:</label>
+           <input
+            type='text'
+            value={flightNumber}
+            style={{
+              height: 43,
+              width: 192,
+              marginTop: 7,
+              borderRadius: 10
+            }}
+            onChange={(e) => setFlightNumber(e.target.value)}
+           />
+           <label>Airport Terminal:</label>
+           <input
+            type='text'
+            value={airportTerminal}
+            style={{
+              height: 43,
+              width: 192,
+              marginTop: 7,
+              borderRadius: 10
+            }}
+            onChange={(e) => setAirportTerminal(e.target.value)}
+           />
+           <label>Departure Time:</label>
+           <input
+            type='text'
+            value={departureTime}
+            style={{
+              height: 43,
+              width: 192,
+              marginTop: 7,
+              borderRadius: 10
+            }}
+            onChange={(e) => setDepartureTime(e.target.value)}
+           />
+           <label>Arrival Time:</label>
+           <input
+            type='text'
+            value={arrivalTime}
+            style={{
+              height: 43,
+              width: 192,
+              marginTop: 7,
+              borderRadius: 10
+            }}
+            onChange={(e) => setArrivalTime(e.target.value)}
            />
            <Button1 
             style={{
