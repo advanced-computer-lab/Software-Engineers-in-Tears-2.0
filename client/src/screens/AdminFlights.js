@@ -15,6 +15,7 @@ function AdminFlights(props) {
       axios
         .get('http://localhost:8000/adminflights')
         .then(res => {
+          console.log(res.data)
           setFlights(res.data);
         })
         .catch(err =>{
@@ -25,13 +26,14 @@ function AdminFlights(props) {
       axios
         .post('http://localhost:8000/adminsearchflights', props.location.flightData)
         .then(res => {
+          console.log(res.data)
           setFlights(res.data);
         })
         .catch(err =>{
           console.log(err);
         })
     }
-  });
+  }, [props.location.showAll]);
 
   return (
     <Container>
@@ -64,7 +66,7 @@ function AdminFlights(props) {
           <td>{flight.Flight_Date}</td>
           <td>{flight.Cabin}</td>
           <td>{flight.Seats_Available_on_Flight}</td>
-          <td><Button1 title={'Update'} style={{width: 30, height: 30}}/></td>
+          <td><Button1 title={'Update'} style={{width: 30, height: 30}} onClick={() => history.push(`/admin/update/${flight._id}`)}/></td>
           <td><Button1 title={'Delete'} style={{width: 30, height: 30}}/></td>
         </tr>
       ))}
