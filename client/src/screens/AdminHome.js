@@ -2,23 +2,34 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import ProfileCard from "../components/ProfileCard";
+import Button1 from "../components/Button1";
+import Footer from "../components/Footer";
 
 function AdminHome(props) {
 
   const history = useHistory();
   const [hover1, setHover1] = useState('rgba(240,165,0,1)');
   const [hover2, setHover2] = useState('rgba(240,165,0,1)');
-
   const [flightNumber, setFlightNumber] = useState('');
+  const [airportTerminal, setAirportTerminal] = useState('');
   const [departureTime, setDepartureTime] = useState('');
   const [arrivalTime, setArrivalTime] = useState('');
   const [flightDate, setFlightDate] = useState('');
-  const [airportTerminal, setAirportTerminal] = useState('');
-  const flightData = {AirportTerminal: 'E1'};
 
-  const onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+   function handle(event){
+    event.preventDefault();
+    history.push({
+      pathname: '/admin/flights',
+      showAll: false,
+      flightData: {
+        FlightNumber: flightNumber, 
+        DepartureTime: departureTime,
+        ArrivalTime: arrivalTime,
+        Flight_Date: Date.parse(flightDate+'T22:00:00.000+00:00'),
+        AirportTerminal: airportTerminal,
+      }
+    });
+   }
 
   return (
     <Container>
@@ -33,72 +44,71 @@ function AdminHome(props) {
     </Rect>
     <Rect2>
         <SearchFlight>SEARCH FLIGHT</SearchFlight>
-        <MaterialFixedLabelTextboxRow>
-          <input
+        <MaterialFixedLabelTextboxRow>  
+        <input
+            type='text'
+            value={flightNumber}
             placeholder={'Flight Number'}
             style={{
               height: 43,
               width: 192,
               marginTop: 7
             }}
-            value={flightNumber}
-            // onChange={onChange}
-          ></input>
+            onChange={(e) => setFlightNumber(e.target.value)}
+           /> 
           <input
             style={{
               height: 43,
-              width: 219,
-              marginLeft: 26,
+              width: 159,
+              marginLeft: 20,
               marginTop: 7
             }}
             placeholder={'Airport Terminal'}
             value={airportTerminal}
-            // onChange={onChange}
+            onChange={(e) => setAirportTerminal(e.target.value)}
           ></input>
           <input
             style={{
               height: 43,
               width: 235,
-              marginLeft: 23,
+              marginLeft: 20,
               marginTop: 7
             }}
             placeholder={'Departure Time'}
             value={departureTime}
-            // onChange={onChange}
+            onChange={(e) => setDepartureTime(e.target.value)}
           ></input>
           <input
             style={{
               height: 43,
-              width: 159,
-              marginLeft: 23,
+              width: 235,
+              marginLeft: 20,
               marginTop: 7
             }}
             placeholder={'Arrival Time'}
             value={arrivalTime}
-            // onChange={onChange}
+            onChange={(e) => setArrivalTime(e.target.value)}
           ></input>
           <input
+            type='date'
             style={{
               height: 43,
               width: 182,
-              marginLeft: 21,
+              marginLeft: 20,
               marginTop: 7
             }}
             placeholder={'Flight Date'}
             value={flightDate}
-            // onChange={onChange}
+            onChange={(e) => setFlightDate(e.target.value)}
           ></input>
           <Image3
-            style={{background: hover1}}
+            style={{background: hover1, position: 'absolute', right: 55}}
             onMouseEnter={() => setHover1('rgba(207,117,0,1)')} 
             onMouseLeave={() => setHover1('rgba(240,165,0,1)')} 
             src={require("../assets/images/search.png").default}
-            onClick={() => history.push({
-              pathname: '/admin/flights',
-              showAll: false,
-              flightData: flightData
-            })}
+            onClick={handle}
           ></Image3>
+        
         </MaterialFixedLabelTextboxRow>
         <Or5Row>
           <Or5>OR</Or5>
@@ -113,6 +123,25 @@ function AdminHome(props) {
           >List all availaible flights</LoremIpsum3>
         </Or5Row>
       </Rect2>
+      <div style={{height: 300, display: 'flex', flexDirection: 'row'}}>
+        <Image
+          style={{width: 150, height: 150, alignSelf: 'center', marginLeft: 50}} 
+          src={require("../assets/images/add-flight.png").default}
+        />
+        <div style={{height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: 50, marginTop: 10}}>
+            <text style={{fontFamily: 'Archivo Black', fontSize: 30, color: '#000000', marginTop: -30}}>WANT TO ADD A NEW FLIGHT?</text>
+            <Button1 
+              title={'Create Flight'}
+              onClick={() => history.push('/admin/create')}
+              style={{
+                width: 200,
+                height: 50,
+                marginTop: 20
+              }}
+            />
+        </div>
+      </div>
+      <Footer/>
     </Container>
 
   );
@@ -152,9 +181,10 @@ const Image3 = styled.img`
   width: 57px;
   height: 57px;
   border-radius: 100px;
-  margin-left: 55px;
-  margin-top: -3px;
   cursor: pointer;
+`;
+const Image = styled.img`
+
 `;
 
 const MaterialFixedLabelTextboxRow = styled.div`

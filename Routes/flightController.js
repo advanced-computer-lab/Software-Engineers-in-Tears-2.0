@@ -37,12 +37,17 @@ exports.updateFlight = (req, res)=>{
 
 
   exports.searchFlights = (req, res) => {
+    console.log(req.body)
     Flights.find(
-      (true != null ? {FlightNumber: '540'} : null),
-      (true != null ? {AirportTerminal: 'E1'} : null),  
-      ).then(result => {
-        res.header("Content-Type",'application/json');
-        res.send(JSON.stringify(result, null, 4));
+    {
+      DepartureTime: req.body.DepartureTime,
+      ArrivalTime: req.body.ArrivalTime,
+      Flight_Date: req.body.Flight_Date,
+      AirportTerminal: req.body.AirportTerminal,
+      FlightNumber: req.body.FlightNumber
+    }
+    ).then(result => {
+        res.send(result);
       })
       .catch(err => {
         console.log(err);
