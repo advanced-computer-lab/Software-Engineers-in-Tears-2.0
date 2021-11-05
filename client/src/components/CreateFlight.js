@@ -12,12 +12,15 @@ function CreateFlight() {
 
   
 const [input, setInput]=useState({
- 
+  FlightNumber:'',
+  AirportTerminal:'',
+  DepartureTime:'',
+  ArrivalTime:'',
   From:'',
   To:'',
   Flight_Date:'',
   Cabin:'',
-  Seats_Available:''
+  Seats_Available_on_Flight:''
 })
   
   function create(event){
@@ -35,11 +38,15 @@ const [input, setInput]=useState({
    event.preventDefault();
 
    const newFlight={
-     From:input.From,
-     To:input.To,
-     Flight_Date:input.Flight_Date,
-     Cabin:input.Cabin,
-     Seats_Available:input.Seats_Available
+    FlightNumber: input.FlightNumber,
+    AirportTerminal: input.AirportTerminal,
+    DepartureTime: input.DepartureTime,
+    ArrivalTime: input.ArrivalTime,
+    From:input.From,
+    To:input.To,
+    Flight_Date:input.Flight_Date,
+    Cabin:input.Cabin,
+    Seats_Available_on_Flight:input.Seats_Available_on_Flight
 
 
    }
@@ -55,12 +62,33 @@ const [input, setInput]=useState({
   return (
     <div>
 <header> Create a Flight</header> <br/>
-<form name="createflight" id="createflight" >
+<form name="admincreateflights" id="admincreateflights" >
 
 
 
-    <label>From</label> <br/>
+    
     <div class="form-group">
+    <label>FlightNumber</label> <br/>
+        <input type="text" value={input.FlightNumber} class="form-control" id="fnumber" onChange={create} name="FlightNumber" /> <br/>
+        </div>
+
+        <div class="form-group">
+    <label>AirportTerminal</label> <br/>
+        <input type="text" value={input.AirportTerminal} class="form-control" id="terminal" onChange={create} name="AirportTerminal" /> <br/>
+        </div> 
+
+        <div class="form-group">
+    <label>DepartureTime</label> <br/>
+        <input type="time" value={input.DepartureTime} class="form-control" id="dtime" onChange={create} name="DepartureTime" /> <br/>
+        </div> 
+
+        <div class="form-group">
+    <label>ArrivalTime</label> <br/>
+        <input type="time" value={input.ArrivalTime} class="form-control" id="atime" onChange={create} name="ArrivalTime" /> <br/>
+        </div>
+
+        <div class="form-group">
+    <label>From</label> <br/>
         <input type="text" value={input.From} class="form-control" id="from" onChange={create} name="From" /> <br/>
         </div>
 
@@ -81,7 +109,7 @@ const [input, setInput]=useState({
         </div>
         <label>Seats Available</label> <br/>
         <div class="form-group">
-        <input type="text" value={input.Seats_Available} class="form-control" id="ecs" onChange={create} name="Seats_Available" /><br/>
+        <input type="number" value={input.Seats_Available_on_Flight} class="form-control" id="ecs" onChange={create} name="Seats_Available_on_Flight" /><br/>
         </div>
       
       <button onClick={handle}>Create</button>
