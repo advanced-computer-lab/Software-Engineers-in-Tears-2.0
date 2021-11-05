@@ -1,15 +1,30 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import { useHistory } from "react-router-dom"; 
 import Button1 from "../components/Button1";
 import ProfileCard from "../components/ProfileCard";
+//import { deleteFlight } from "../../../Routes/flightController";
+
+
+/*const deleteflight=(id)=> {
+  Axios.delete('http:localhost:3000/admin/flights/${id}');
+};
+*/
+
+const onDelete=(id)=>{
+  alert(id);
+  axios.delete('http:localhost:3000/admin/flights/${id}').then((res)=>{
+    alert("deleted succesfully")
+  })
+
+}; 
 
 function AdminFlights(props) {
 
   const history = useHistory();
   const [flights, setFlights] = useState([]);
-
+  
   useEffect(() => {
     if(props.location.showAll){
       axios
@@ -67,7 +82,7 @@ function AdminFlights(props) {
           <td>{flight.Cabin}</td>
           <td>{flight.Seats_Available_on_Flight}</td>
           <td><Button1 title={'Update'} style={{width: 30, height: 30}} onClick={() => history.push(`/admin/update/${flight._id}`)}/></td>
-          <td><Button1 title={'Delete'} style={{width: 30, height: 30}}/></td>
+          <td><Button1 title={'Delete'} style={{width: 30, height: 30}} onClick={() => this.delete(flight._id)}/></td>
         </tr>
       ))}
     </tbody>
@@ -75,6 +90,7 @@ function AdminFlights(props) {
     </Container>
   );
 }
+
 
 const Container = styled.div`
   display: flex;

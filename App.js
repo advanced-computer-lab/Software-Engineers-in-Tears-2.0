@@ -35,6 +35,7 @@ app.get("/Home", (req, res) => {
 app.get("/adminflights", flightController.listAllFlights);
 app.post("/adminsearchflights", flightController.searchFlights);
 app.post("/admincreateflights", flightController.createFlight);
+app.delete("/adminflights",flightController.deleteFlight);
 
 
 

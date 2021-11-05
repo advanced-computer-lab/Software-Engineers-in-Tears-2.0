@@ -24,6 +24,13 @@ exports.updateFlight = (req, res)=>{
     .catch(err => console.log(err));
   }
 
+exports.deleteFlight= (req,res) =>{
+    Flights.findByIdAndDelete(req.params.id, req.body)
+    .then(result => {
+      res.status(200).send("Flight deleted");
+      console.log('Flight has been deleted successfully')})
+    .catch(err => console.log(err));
+  }
 
   exports.listAllFlights = (req, res) => {
     Flights.find({})
