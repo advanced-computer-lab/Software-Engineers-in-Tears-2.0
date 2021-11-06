@@ -15,7 +15,7 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path='/' component={HomeScreen} />
+          <Route exact path='/' component={AdminHome} />
           <Route path='/login' component={LoginScreen} />
           <Route exact path='/admin/update/:id' component = {FlightUpdate} />
           <Route exact path='/admin/create' component={CreateFlight} />

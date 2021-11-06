@@ -103,7 +103,7 @@ function AdminFlights(props) {
               <tr style={{ height: 50 }}>
                 <td style={{ textAlign: 'center' }}>{flight.From}</td>
                 <td style={{ textAlign: 'center' }}>{flight.To}</td>
-                <td style={{ textAlign: 'center' }}>{flight.Flight_Date}</td>
+                <td style={{ textAlign: 'center' }}>{flight.Flight_Date!=null?flight.Flight_Date.substring(0,10):null}</td>
                 <td style={{ textAlign: 'center' }}>{flight.Cabin}</td>
                 <td style={{ textAlign: 'center' }}>{flight.Seats_Available_on_Flight}</td>
                 <td style={{ display: 'flex', marginLeft: 70, marginTop: 8 }}><Button1 title={'View Flight'} style={{ width: 160, height: 35 }} /></td>

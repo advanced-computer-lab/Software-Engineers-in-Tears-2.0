@@ -10,7 +10,7 @@ function Button1(props) {
       onClick={props.onClick}
       style={{...props.style, background: hover, cursor: 'pointer', borderRadius: 10, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', boxShadow: '0px 1px 5px  0.35px #000'}}
     >
-      <text style={{fontFamily: 'Archivo', fontSize: props.style.fontSize||20, color: 'rgba(244,244,244,1)'}}>{props.title}</text>
+      <text style={{fontFamily: 'Archivo', fontSize: props.style.fontSize||20, color: props.style.color||'rgba(244,244,244,1)'}}>{props.title}</text>
     </div>
   );
 }
