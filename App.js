@@ -29,6 +29,7 @@ app.post("/adminsearchflights", flightController.searchFlights);
 app.put('/adminUpdateFlight/:id', flightController.updateFlight);
 app.get('/adminUpdateFlight/:id', flightController.viewFlightDetails);
 app.post("/admincreateflights", flightController.createFlight);
+app.delete("/adminflights/delete/:id",flightController.deleteFlight);
 
 // Starting server
 app.listen(port, () => {
