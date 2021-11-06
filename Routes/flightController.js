@@ -1,17 +1,5 @@
 const Flights = require('../Models/Flights');
 
-
-
-
-exports.updateFlight = (req, res)=>{
-  Flights.findByIdAndUpdate(req.params.id, req.body)
-  .then(result => {
-      res.status(200).send("Flight updated");
-      console.log('Flight has been updated successfully')})
-  .catch(err => console.log(err));
-}
-
-
 exports.createFlight = (req, res)=>{
   const FlightNumber= req.body.FlightNumber;
   const AirportTerminal= req.body.AirportTerminal;
@@ -41,7 +29,7 @@ exports.updateFlight = (req, res)=>{
     .then(result => {
         res.status(200).send("Flight updated");
         console.log('Flight has been updated successfully')})
-    .catch(err => console.log(err));
+    .catch(err => {console.log(err); res.status(500);});
   }
 
 exports.deleteFlight= (req,res) =>{
@@ -64,17 +52,15 @@ exports.deleteFlight= (req,res) =>{
 
 
   exports.searchFlights = (req, res) => {
-    console.log(req.body)
-    Flights.find(
-    { $or:[
-      {DepartureTime: req.body.DepartureTime},
-      {ArrivalTime: req.body.ArrivalTime},
-      {Flight_Date: req.body.Flight_Date},
-      {AirportTerminal: req.body.AirportTerminal},
-      {FlightNumber: req.body.FlightNumber}
-    ]
+    // req.body
+    var terms = {};
+    for(elem in req.body){
+      if(!isNullorWhiteSpace(req.body[elem])){
+        terms[elem] = req.body[elem];
+      }
     }
-    ).then(result => {
+    Flights.find(terms)
+    .then(result => {
         res.send(result);
       })
       .catch(err => {
@@ -88,3 +74,14 @@ exports.deleteFlight= (req,res) =>{
     .catch(err => console.error(err));
   }
 
+  function isNullorWhiteSpace(string) {
+    if (string == null) {
+      return true;
+    }
+    if (typeof (string) != "string") {
+      return false;
+    };
+  
+    const x = string.trim();
+    return x.length === 0;
+  }
