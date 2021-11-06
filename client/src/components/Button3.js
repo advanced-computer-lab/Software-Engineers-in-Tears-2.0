@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-function Button1(props) {
-  const [hover, setHover] = useState('rgba(240,165,0,1)');
+function Button3(props) {
+  const [hover, setHover] = useState('rgba(0,153,0,1)');
 
   return (
     <div
-      onMouseEnter={() => setHover('rgba(207,117,0,1)')} 
-      onMouseLeave={() => setHover('rgba(240,165,0,1)')}
+      onMouseEnter={() => setHover('rgba(0,102,0,1)')} 
+      onMouseLeave={() => setHover('rgba(0,153,0,1)')} 
       onClick={props.onClick}
       style={{...props.style, background: hover, cursor: 'pointer', borderRadius: 10, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', boxShadow: '0px 1px 5px  0.35px #000'}}
     >
@@ -15,4 +15,4 @@ function Button1(props) {
   );
 }
 
-export default Button1;
+export default Button3;

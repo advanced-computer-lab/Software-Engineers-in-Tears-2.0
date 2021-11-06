@@ -4,20 +4,20 @@ const Schema = mongoose.Schema;
 const flightsSchema = new Schema({
     FlightNumber:{
       type: String,
-      required: false,
+      required: true,
     },
     AirportTerminal:{
       type:String,
-      required: false,
+      required: true,
     },
 
     DepartureTime:{
       type:String,
-      required: false,
+      required: true,
     },
     ArrivalTime:{
       type:String,
-      required: false,
+      required: true,
     },
     From: {
       type: String,
