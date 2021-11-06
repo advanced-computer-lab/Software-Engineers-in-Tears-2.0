@@ -39,7 +39,7 @@ function CreateFlight() {
         To:to,
         Flight_Date:flightDate,
         Cabin:cabin,
-        Seats_Available:seats,
+        Seats_Available_on_Flight:seats,
         FlightNumber: flightNumber,
         AirportTerminal: airportTerminal,
         DepartureTime: departureTime,
