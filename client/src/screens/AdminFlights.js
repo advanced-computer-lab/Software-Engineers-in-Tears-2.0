@@ -7,22 +7,6 @@ import Modal from 'react-bootstrap/Modal';
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
 import ProfileCard from "../components/ProfileCard";
-//import { deleteFlight } from "../../../Routes/flightController";
-
-
-/*const deleteflight=(id)=> {
-  Axios.delete('http:localhost:3000/admin/flights/${id}');
-};
-*/
-
-/*const onDelete=(id)=>{
-  alert(id);
-  axios.delete('http:localhost:3000/admin/flights/${id}').then((res)=>{
-    alert("deleted succesfully")
-  })
-
-}; 
-*/
 
 
 function AdminFlights(props) {

@@ -66,12 +66,13 @@ exports.deleteFlight= (req,res) =>{
   exports.searchFlights = (req, res) => {
     console.log(req.body)
     Flights.find(
-    {
-      DepartureTime: req.body.DepartureTime,
-      ArrivalTime: req.body.ArrivalTime,
-      Flight_Date: req.body.Flight_Date,
-      AirportTerminal: req.body.AirportTerminal,
-      FlightNumber: req.body.FlightNumber
+    { $or:[
+      {DepartureTime: req.body.DepartureTime},
+      {ArrivalTime: req.body.ArrivalTime},
+      {Flight_Date: req.body.Flight_Date},
+      {AirportTerminal: req.body.AirportTerminal},
+      {FlightNumber: req.body.FlightNumber}
+    ]
     }
     ).then(result => {
         res.send(result);
