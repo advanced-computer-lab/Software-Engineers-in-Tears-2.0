@@ -8,7 +8,7 @@ const MongoURI = process.env.ATLAS_URI
 //App variables
 const app = express();
 const port = process.env.PORT || "8000";
-//const Flights = require('./models/Flights');    once collections are altered
+var cors = require('cors');
 
 // configurations
 app.use(express.urlencoded({extended: true}));
@@ -24,11 +24,10 @@ app.get("/Home", (req, res) => {
   res.status(200).send("You have everything installed !");
 });
 
-
 app.get("/adminflights", flightController.listAllFlights);
 app.post("/adminsearchflights", flightController.searchFlights);
-
-
+app.post("/admincreateflights", flightController.createFlight);
+app.delete("/adminflights/delete/:id",flightController.deleteFlight);
 
 // Starting server
 app.listen(port, () => {
