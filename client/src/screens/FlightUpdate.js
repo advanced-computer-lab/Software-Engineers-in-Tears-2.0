@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import axios from 'axios';
 import ProfileCard from "../components/ProfileCard";
@@ -33,7 +34,8 @@ class FlightUpdateScreen extends Component {
       Flight_Date: null,
       Cabin: '',
       Seats_Available_on_Flight: null,
-      deleteModal: false
+      updateModal: false,
+      updated:false
     };
     this.orig = {};
   };
@@ -88,18 +90,18 @@ class FlightUpdateScreen extends Component {
     return year + "-" + month + "-" + day;
   }
 
-  preSubmit = (e) =>{
+  preSubmit = (e) => {
     const list = document.getElementById('updateflight').children;
     console.log("before loop");
     for (let child of list) {
       console.log("in loop");
-      if (isNullorWhiteSpace(this.state[child.name])&&child.required == true) {
-        this.setState({ deleteModal: true });
+      if (isNullorWhiteSpace(this.state[child.name]) && child.required == true) {
+        this.setState({ updateModal: true });
         return;
       }
     };
     this.onSubmit(e);
-    
+
   }
 
   onSubmit = e => {
@@ -118,20 +120,26 @@ class FlightUpdateScreen extends Component {
     };
 
     axios.put('http://localhost:8000/adminUpdateFlight/' + this.props.match.params.id, data)
+      .then(result=> {
+        this.setState(data);
+        this.setState({Flight_Date : this.displayDate()});
+        this.orig = this.state; 
+        this.setState({updated: true}); 
+      })
       .catch(err => console.log(err));
   }
 
   render() {
     return (
       <>
-        <Modal style={{ width: '40%', position: 'fixed', top: '35%', left: '30%', backgroundColor: '#000000', borderRadius: 20, boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)', zIndex: 1000 }} show={this.state.deleteModal}>
+        <Modal style={{ width: '40%', position: 'fixed', top: '35%', left: '30%', backgroundColor: '#000000', borderRadius: 20, boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)', zIndex: 1000 }} show={this.state.updateModal}>
           <Modal.Header>
             <Modal.Title style={{ color: 'rgba(244,244,244,1)', fontFamily: 'Archivo Black', textAlign: 'center', marginTop: 40 }}>Are you sure you want to update this flight?</Modal.Title>
             <Modal.Dialog style={{ color: 'rgba(244,244,244,1)', fontFamily: 'Archivo', textAlign: 'center', marginTop: 40 }}>Updating when the required fields are empty will keep their previous value</Modal.Dialog>
           </Modal.Header>
           <Modal.Footer style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 120 }}>
             <Button2
-              onClick={() => this.setState({ deleteModal: false })}
+              onClick={() => this.setState({ updateModal: false })}
               title={'Cancel'}
               style={{
                 width: 150,
@@ -139,8 +147,8 @@ class FlightUpdateScreen extends Component {
               }}
             />
             <Button1
-              onClick={(e)=>{
-                this.setState({deleteModal:false})
+              onClick={(e) => {
+                this.setState({ updateModal: false })
                 this.onSubmit(e)
               }}
               title={'Update'}
@@ -152,18 +160,29 @@ class FlightUpdateScreen extends Component {
             />
           </Modal.Footer>
         </Modal>
-        <Container style={{ opacity: this.state.deleteModal === true ? 0.5 : 1, pointerEvents: this.state.deleteModal === true ? 'none' : 'initial' }}>
+        <Container style={{ opacity: this.state.updateModal === true ? 0.5 : 1, pointerEvents: this.state.updateModal === true ? 'none' : 'initial' }}>
           <Rect>
-            <Image4Row>
+            <Image4Row style={{ cursor: 'pointer' }} onClick={() => this.props.history.push('/admin')}>
               <Image4 src={require("../assets/images/logo3.png").default}></Image4>
               <DuneAirlines>DUNE</DuneAirlines>
             </Image4Row>
             <ProfileCard
               title={'Admin'}
+              onClick={() => this.props.history.push('/admin')}
             />
           </Rect>
           <Rect2>
             <UpdateFlight>UPDATE FLIGHT</UpdateFlight>
+            {this.state.updated?
+            <span
+            style={{color:"#F0A500", fontSize:"22px", fontFamily:"Archivo Black", zIndex:100, position:"absolute", top:139, left:"40%"}}
+            >Flight Updated Successfully</span>
+            :null}
+            <Button1
+              title="Restore Original Values"
+              style={{ width: 250, height: 69, position: "absolute", right: "2%", top: 115, color:"black" }}
+              onClick={() => {this.setState(this.orig); this.setState({updated:false})}}
+            />
           </Rect2>
           <form name="updateflight" id="updateflight" style={{ marginTop: 30 }} onSubmit={this.onSubmit}>
             <Field>Flight Number</Field>
@@ -171,7 +190,6 @@ class FlightUpdateScreen extends Component {
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
               type="text"
-              placeholder={this.orig.FlightNumber}
               name="FlightNumber"
               value={this.state.FlightNumber}
               onChange={this.onChange}
@@ -181,7 +199,6 @@ class FlightUpdateScreen extends Component {
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
               type="text"
-              placeholder={this.orig.DepartureTime}
               name="DepartureTime"
               value={this.state.DepartureTime}
               onChange={this.onChange}
@@ -191,7 +208,6 @@ class FlightUpdateScreen extends Component {
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
               type="text"
-              placeholder={this.orig.ArrivalTime}
               name="ArrivalTime"
               value={this.state.ArrivalTime}
               onChange={this.onChange}
@@ -200,10 +216,6 @@ class FlightUpdateScreen extends Component {
             <Input
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
-              // onEmptied={(e)=>{
-              //   console.log('in emptied');
-              //   e.target.value = this.state.Date;
-              // }}
               type="date"
               name="Flight_Date"
               value={this.state.Flight_Date}
@@ -215,7 +227,6 @@ class FlightUpdateScreen extends Component {
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
               type="text"
-              placeholder={this.orig.AirportTerminal}
               name="AirportTerminal"
               value={this.state.AirportTerminal}
               onChange={this.onChange}
@@ -225,13 +236,12 @@ class FlightUpdateScreen extends Component {
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
               type="number"
-              placeholder={this.orig.Seats_Available_on_Flight}
               name="Seats_Available_on_Flight"
               value={this.state.Seats_Available_on_Flight}
               onChange={this.onChange}
               required='true'
             />
-            <Button1 title="Save" style={{ width: 300, height: 69, fontSize: 40, color: "#F4F4F4", marginLeft: 50 }} onClick={this.preSubmit}></Button1>
+            <Button1 title="Save" style={{ width: 300, height: 69, fontSize: 40, color: "black", marginLeft: 50, }} onClick={this.preSubmit}></Button1>
           </form>
         </Container>
       </>
