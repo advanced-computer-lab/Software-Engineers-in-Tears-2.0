@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import HomeScreen from './screens/HomeScreen.js';
+//import HomeScreen from './screens/HomeScreen.js';
 import LoginScreen from './screens/LoginScreen';
 import CreateFlight from './screens/CreateFlight.js';
 import AdminHome from './screens/AdminHome';

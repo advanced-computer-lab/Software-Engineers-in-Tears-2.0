@@ -1,15 +1,12 @@
 import React from 'react';
 import styled from "styled-components";
 import  {useState} from 'react';
-import ProfileCard from "../components/ProfileCard";
+import ProfileHeader from "../components/ProfileHeader";
 import Footer from "../components/Footer";
-import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Button1 from '../components/Button1';
 
 function CreateFlight() {
-
-  const history = useHistory();
 
   const[from, setFrom] = useState('');
   const[to, setTo] = useState('');
@@ -67,123 +64,161 @@ function CreateFlight() {
   
   return (
     <Container>
-    <Rect>
-      <Image4Row style={{cursor: 'pointer'}} onClick={() => history.push('/admin')}>
-          <Image4 src={require("../assets/images/logo3.png").default}></Image4>
-          <DuneAirlines>DUNE</DuneAirlines>
-      </Image4Row>
-      <ProfileCard
-        title={'Admin'}
-      />
-    </Rect>
-    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 1100}}>
-      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#AAA7A6', height: 980, borderRadius: 20, width: '50%', border:'2px solid #F0A500'}}>
-        <text style={{fontFamily: 'Archivo Black', fontSize: 30, color: 'rgba(244,244,244,1)', marginTop: 0}}>CREATE FLIGHT</text>
-        <label style={{marginTop: 30}}>From:</label>
+    <ProfileHeader title={'Admin'}/>
+    <div style={{height: 80, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+      <text style={{fontFamily: 'Archivo Black', color: '#f4f4f4', fontSize: 30, marginLeft: 50}}>Create Flight</text>
+    </div>
+      <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
+        <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>From: <label style={{color: '#F0A500'}}>*</label></label>
         <input
             type='text'
             value={from}
             style={{
-              height: 43,
-              width: 192,
+              height: 39,
+              borderRadius: 4,
+              width: 300,
               marginTop: 7,
-              borderRadius: 10
+              borderBottom: '2px solid #F0A500',
+              borderTop: 'none',
+              borderRight: 'none',
+              borderLeft: 'none',
+              backgroundColor: 'rgba(0,0,0,0.03)'
             }}
             onChange={(e) => setFrom(e.target.value)}
             required/>
-          <label>To:</label>
+          <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>To: <label style={{color: '#F0A500'}}>*</label></label>
         <input
             type='text'
             value={to}
             style={{
-              height: 43,
-              width: 192,
+              height: 39,
+              borderRadius: 4,
+              width: 300,
               marginTop: 7,
-              borderRadius: 10
+              borderBottom: '2px solid #F0A500',
+              borderTop: 'none',
+              borderRight: 'none',
+              borderLeft: 'none',
+              backgroundColor: 'rgba(0,0,0,0.03)'
             }}
             onChange={(e) => setTo(e.target.value)}
             required/> 
-           <label>Flight Date:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Flight Date: <label style={{color: '#F0A500'}}>*</label></label>
         <input
             type='date'
             value={flightDate}
             style={{
-              height: 43,
-              width: 192,
+              height: 39,
+              borderRadius: 4,
+              width: 300,
               marginTop: 7,
-              borderRadius: 10
+              borderBottom: '2px solid #F0A500',
+              borderTop: 'none',
+              borderRight: 'none',
+              borderLeft: 'none',
+              backgroundColor: 'rgba(0,0,0,0.03)'
             }}
             onChange={(e) => setFlightDate(e.target.value)}
             required/> 
-           <label>Cabin:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Cabin: <label style={{color: '#F0A500'}}>*</label></label>
         <input
             type='text'
             value={cabin}
             style={{
-              height: 43,
-              width: 192,
+              height: 39,
+              borderRadius: 4,
+              width: 300,
               marginTop: 7,
-              borderRadius: 10
+              borderBottom: '2px solid #F0A500',
+              borderTop: 'none',
+              borderRight: 'none',
+              borderLeft: 'none',
+              backgroundColor: 'rgba(0,0,0,0.03)'
             }}
             onChange={(e) => setCabin(e.target.value)}
             required /> 
-           <label>Seats Available:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Seats Available: <label style={{color: '#F0A500'}}>*</label></label>
         <input
-            type='text'
+            type='number'
             value={seats}
             style={{
-              height: 43,
-              width: 192,
+              height: 39,
+              borderRadius: 4,
+              width: 300,
               marginTop: 7,
-              borderRadius: 10
+              borderBottom: '2px solid #F0A500',
+              borderTop: 'none',
+              borderRight: 'none',
+              borderLeft: 'none',
+              backgroundColor: 'rgba(0,0,0,0.03)'
             }}
             onChange={(e) => setSeats(e.target.value)}
            required />
-           <label>Flight Number:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Flight Number:</label>
            <input
             type='text'
             value={flightNumber}
             style={{
-              height: 43,
-              width: 192,
+              height: 39,
+              borderRadius: 4,
+              width: 300,
               marginTop: 7,
-              borderRadius: 10
+              borderBottom: '2px solid #F0A500',
+              borderTop: 'none',
+              borderRight: 'none',
+              borderLeft: 'none',
+              backgroundColor: 'rgba(0,0,0,0.03)'
             }}
             onChange={(e) => setFlightNumber(e.target.value)}
            />
-           <label>Airport Terminal:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Airport Terminal:</label>
            <input
             type='text'
             value={airportTerminal}
             style={{
-              height: 43,
-              width: 192,
+              height: 39,
+              borderRadius: 4,
+              width: 300,
               marginTop: 7,
-              borderRadius: 10
+              borderBottom: '2px solid #F0A500',
+              borderTop: 'none',
+              borderRight: 'none',
+              borderLeft: 'none',
+              backgroundColor: 'rgba(0,0,0,0.03)'
             }}
             onChange={(e) => setAirportTerminal(e.target.value)}
            />
-           <label>Departure Time:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Departure Time:</label>
            <input
             type='text'
             value={departureTime}
             style={{
-              height: 43,
-              width: 192,
+              height: 39,
+              borderRadius: 4,
+              width: 300,
               marginTop: 7,
-              borderRadius: 10
+              borderBottom: '2px solid #F0A500',
+              borderTop: 'none',
+              borderRight: 'none',
+              borderLeft: 'none',
+              backgroundColor: 'rgba(0,0,0,0.03)'
             }}
             onChange={(e) => setDepartureTime(e.target.value)}
            />
-           <label>Arrival Time:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Arrival Time:</label>
            <input
             type='text'
             value={arrivalTime}
             style={{
-              height: 43,
-              width: 192,
+              height: 39,
+              borderRadius: 4,
+              width: 300,
               marginTop: 7,
-              borderRadius: 10
+              borderBottom: '2px solid #F0A500',
+              borderTop: 'none',
+              borderRight: 'none',
+              borderLeft: 'none',
+              backgroundColor: 'rgba(0,0,0,0.03)'
             }}
             onChange={(e) => setArrivalTime(e.target.value)}
            />
@@ -199,7 +234,6 @@ function CreateFlight() {
           {created ? <text style={{fontFamily: 'Archivo', color: '#047305', marginTop: 40, fontSize: 20}}>Flight successfully created!</text> : null}
           {error ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 40, fontSize: 20}}>Please fill in all the details!</text> : null}
       </div>  
-    </div>
     <Footer />
   </Container>
   )
@@ -208,38 +242,6 @@ function CreateFlight() {
  const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Rect = styled.div`
-  height: 100px;
-  background-color: rgba(0,0,0,1);
-  flex-direction: row;
-  display: flex;
-`;
-
-const Image4 = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  margin-top: -10px;
-`;
-
-const DuneAirlines = styled.span`
-  font-family: Archivo;
-  font-style: normal;
-  font-weight: 400;
-  color: rgba(244,244,244,1);
-  font-size: 30px;
-  margin-left: 10px;
-`;
-
-const Image4Row = styled.div`
-  height: 49px;
-  flex-direction: row;
-  display: flex;
-  margin-right: 100px;
-  margin-left: 50px;
-  margin-top: 37px;
 `;
 
 export default CreateFlight;

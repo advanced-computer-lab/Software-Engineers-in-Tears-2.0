@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import axios from 'axios';
-import ProfileCard from "../components/ProfileCard";
+import Footer from "../components/Footer";
+import ProfileHeader from "../components/ProfileHeader";
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
 import Modal from 'react-bootstrap/Modal';
@@ -95,7 +95,7 @@ class FlightUpdateScreen extends Component {
     console.log("before loop");
     for (let child of list) {
       console.log("in loop");
-      if (isNullorWhiteSpace(this.state[child.name]) && child.required == true) {
+      if (isNullorWhiteSpace(this.state[child.name]) && child.required === true) {
         this.setState({ updateModal: true });
         return;
       }
@@ -161,19 +161,14 @@ class FlightUpdateScreen extends Component {
           </Modal.Footer>
         </Modal>
         <Container style={{ opacity: this.state.updateModal === true ? 0.5 : 1, pointerEvents: this.state.updateModal === true ? 'none' : 'initial' }}>
-          <Rect>
-            <Image4Row style={{ cursor: 'pointer' }} onClick={() => this.props.history.push('/admin')}>
-              <Image4 src={require("../assets/images/logo3.png").default}></Image4>
-              <DuneAirlines>DUNE</DuneAirlines>
-            </Image4Row>
-            <ProfileCard
-              title={'Admin'}
-              onClick={() => this.props.history.push('/admin')}
-            />
-          </Rect>
-          <Rect2>
-            <UpdateFlight>UPDATE FLIGHT</UpdateFlight>
-            {this.state.updated?
+        <ProfileHeader title={'Admin'}/>
+          <div style={{height: 80, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          <text style={{fontFamily: 'Archivo Black', color: '#f4f4f4', fontSize: 30, marginLeft: 50}}>Update Flight</text>
+          <Button1 
+            title={'Restore Original Values'}
+            style={{width: 230, position: 'absolute', right: 50, height: 40}}
+          /> 
+            {/* {this.state.updated?
             <span
             style={{color:"#F0A500", fontSize:"22px", fontFamily:"Archivo Black", zIndex:100, position:"absolute", top:139, left:"40%"}}
             >Flight Updated Successfully</span>
@@ -182,10 +177,10 @@ class FlightUpdateScreen extends Component {
               title="Restore Original Values"
               style={{ width: 250, height: 69, position: "absolute", right: "2%", top: 115, color:"black" }}
               onClick={() => {this.setState(this.orig); this.setState({updated:false})}}
-            />
-          </Rect2>
-          <form name="updateflight" id="updateflight" style={{ marginTop: 30 }} onSubmit={this.onSubmit}>
-            <Field>Flight Number</Field>
+            /> */}
+          </div>
+          <form name="updateflight" id="updateflight" style={{display: 'flex', flexDirection: 'column', marginLeft: 50}} onSubmit={this.onSubmit}>
+          <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Flight Number: <label style={{color: '#F0A500'}}>*</label></label>
             <Input
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
@@ -194,7 +189,7 @@ class FlightUpdateScreen extends Component {
               value={this.state.FlightNumber}
               onChange={this.onChange}
             />
-            <Field>Departure Time</Field>
+            <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Departure Time:</label>
             <Input
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
@@ -203,7 +198,7 @@ class FlightUpdateScreen extends Component {
               value={this.state.DepartureTime}
               onChange={this.onChange}
             />
-            <Field>Arrival Time</Field>
+            <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Arrival Time:</label>
             <Input
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
@@ -212,7 +207,7 @@ class FlightUpdateScreen extends Component {
               value={this.state.ArrivalTime}
               onChange={this.onChange}
             />
-            <Field>Flight Date<Field style={{ color: "#CF7500", marginLeft: "0px" }}> *</Field></Field>
+            <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Flight Date: <label style={{color: '#F0A500'}}>*</label></label>
             <Input
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
@@ -222,7 +217,7 @@ class FlightUpdateScreen extends Component {
               onChange={this.onChange}
               required='true'
             />
-            <Field>Airport Terminal</Field>
+            <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Airport Terminal:</label>
             <Input
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
@@ -231,7 +226,7 @@ class FlightUpdateScreen extends Component {
               value={this.state.AirportTerminal}
               onChange={this.onChange}
             />
-            <Field>Number of {this.state.Cabin} Class seats<Field style={{ color: "#CF7500", marginLeft: "0px" }}> *</Field></Field>
+            <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Number of {this.state.Cabin} class seats: <label style={{color: '#F0A500'}}>*</label></label>
             <Input
               onMouseEnter={this.onHover}
               onMouseLeave={this.onHoverLeave}
@@ -241,8 +236,14 @@ class FlightUpdateScreen extends Component {
               onChange={this.onChange}
               required='true'
             />
-            <Button1 title="Save" style={{ width: 300, height: 69, fontSize: 40, color: "black", marginLeft: 50, }} onClick={this.preSubmit}></Button1>
+            <Button1 title="Save" style={{ width: 200, height: 50, marginTop: 30}} onClick={this.preSubmit}></Button1>
+            {this.state.updated?
+              <span
+              style={{fontFamily: 'Archivo', color: '#047305', marginTop: 30, fontSize: 20}}
+              >Flight Updated Successfully!</span>
+            :null}
           </form>
+          <Footer />
         </Container>
       </>
     );
@@ -257,85 +258,16 @@ const Container = styled.div`
   display: flex;
   background-color: rgba(244,244,244,1);
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
 `;
 
 const Input = styled.input`
-  height: 29px;
+  height: 39px;
   width: 300px;
   border-top: none;
   border-right: none;
   border-left: none;
   background: rgba(0,0,0,0.03);
   border-bottom: 2px solid #F0A500;
-  border-radius: 4px;
-  flex-direction: row;
-  display: flex;
-  font-size: 19px;
-  margin-left: 50px;
-  margin-right: 81px;
-  margin-bottom: 10px;
-`;
-
-const Rect2 = styled.div`
-  height: 100px;
-  background-color: rgba(0,0,0,1);
-  flex-direction: row;
-  display: flex;
-  border-top: 1px solid gray;
-`;
-
-const UpdateFlight = styled.span`
-  font-family: Archivo Black;
-  font-style: normal;
-  font-weight: 400;
-  color: rgba(244,244,244,1);
-  font-size: 39px;
-  margin-top: 25px;
-  margin-left: 50px;
-`;
-
-const Field = styled.span`
-  font-family: Archivo Black;
-  font-style: normal;
-  font-weight: 400;
-  color: rgba(0,0,0,1);
-  font-size: 22px;
-  margin-top: 0px;
-  margin-left: 50px;
-`;
-
-const Rect = styled.div`
-  height: 100px;
-  background-color: rgba(0,0,0,1);
-  flex-direction: row;
-  display: flex;
-`;
-
-const Image4 = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  margin-top: -10px;
-`;
-
-const Image4Row = styled.div`
-  height: 49px;
-  flex-direction: row;
-  display: flex;
-  margin-right: 100px;
-  margin-left: 50px;
-  margin-top: 37px;
-`;
-
-const DuneAirlines = styled.span`
-  font-family: Archivo;
-  font-style: normal;
-  font-weight: 400;
-  color: rgba(244,244,244,1);
-  font-size: 30px;
-  margin-left: 10px;
 `;
 
 export default FlightUpdateScreen;

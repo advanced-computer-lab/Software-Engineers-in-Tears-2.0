@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import ProfileCard from "../components/ProfileCard";
+import ProfileHeader from "../components/ProfileHeader";
 import Button1 from "../components/Button1";
 import Footer from "../components/Footer";
 
@@ -25,7 +25,7 @@ function AdminHome(props) {
         FlightNumber: flightNumber, 
         DepartureTime: departureTime,
         ArrivalTime: arrivalTime,
-        Flight_Date: (flightDate != null && flightDate.trim().length!=0)?new Date(flightDate).setHours(2):null,
+        Flight_Date: (flightDate != null && flightDate.trim().length!==0)?new Date(flightDate).setHours(2):null,
         AirportTerminal: airportTerminal,
       }
     });
@@ -33,15 +33,7 @@ function AdminHome(props) {
 
   return (
     <Container>
-    <Rect>
-        <Image4Row style={{cursor: 'pointer'}} onClick={() => history.push('/admin')}>
-            <Image4 src={require("../assets/images/logo3.png").default}></Image4>
-            <DuneAirlines>DUNE</DuneAirlines>
-        </Image4Row>
-        <ProfileCard
-          title={'Admin'}
-        />
-    </Rect>
+    <ProfileHeader title={'Admin'}/>
     <Rect2>
         <SearchFlight>SEARCH FLIGHT</SearchFlight>
         <MaterialFixedLabelTextboxRow>  
@@ -51,7 +43,7 @@ function AdminHome(props) {
             placeholder={'Flight Number'}
             style={{
               height: 43,
-              width: 192,
+              width: '14%',
               marginTop: 7
             }}
             onChange={(e) => setFlightNumber(e.target.value)}
@@ -59,7 +51,7 @@ function AdminHome(props) {
           <input
             style={{
               height: 43,
-              width: 159,
+              width: '14%',
               marginLeft: 20,
               marginTop: 7
             }}
@@ -70,7 +62,7 @@ function AdminHome(props) {
           <input
             style={{
               height: 43,
-              width: 235,
+              width: '17%',
               marginLeft: 20,
               marginTop: 7
             }}
@@ -81,7 +73,7 @@ function AdminHome(props) {
           <input
             style={{
               height: 43,
-              width: 235,
+              width: '17%',
               marginLeft: 20,
               marginTop: 7
             }}
@@ -93,7 +85,7 @@ function AdminHome(props) {
             type='date'
             style={{
               height: 43,
-              width: 182,
+              width: '15%',
               marginLeft: 20,
               marginTop: 7
             }}
@@ -120,12 +112,12 @@ function AdminHome(props) {
               pathname: '/admin/flights',
               showAll: true,
             })}
-          >List all availaible flights</LoremIpsum3>
+          >List all available flights</LoremIpsum3>
         </Or5Row>
       </Rect2>
-      <div style={{height: 300, display: 'flex', flexDirection: 'row'}}>
+      <div style={{height: 300, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
         <Image
-          style={{width: 150, height: 150, alignSelf: 'center', marginLeft: 50}} 
+          style={{width: 150, height: 150, marginLeft: 50}} 
           src={require("../assets/images/add-flight.png").default}
         />
         <div style={{height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: 50, marginTop: 10}}>
@@ -150,13 +142,6 @@ function AdminHome(props) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Rect = styled.div`
-  height: 100px;
-  background-color: rgba(0,0,0,1);
-  flex-direction: row;
-  display: flex;
 `;
 
 const Rect2 = styled.div`
@@ -193,7 +178,6 @@ const MaterialFixedLabelTextboxRow = styled.div`
   display: flex;
   margin-top: 31px;
   margin-left: 50px;
-  margin-right: 81px;
 `;
 
 const Or5 = styled.span`
@@ -220,31 +204,6 @@ const Or5Row = styled.div`
   display: flex;
   margin-top: 37px;
   margin-left: 50px;
-`;
-
-const Image4 = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  margin-top: -10px;
-`;
-
-const DuneAirlines = styled.span`
-  font-family: Archivo;
-  font-style: normal;
-  font-weight: 400;
-  color: rgba(244,244,244,1);
-  font-size: 30px;
-  margin-left: 10px;
-`;
-
-const Image4Row = styled.div`
-  height: 49px;
-  flex-direction: row;
-  display: flex;
-  margin-right: 100px;
-  margin-left: 50px;
-  margin-top: 37px;
 `;
 
 

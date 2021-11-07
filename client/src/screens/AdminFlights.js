@@ -6,7 +6,7 @@ import Button4 from "../components/Button4";
 import Modal from 'react-bootstrap/Modal';
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
-import ProfileCard from "../components/ProfileCard";
+import ProfileHeader from "../components/ProfileHeader";
 
 
 function AdminFlights(props) {
@@ -21,7 +21,7 @@ function AdminFlights(props) {
     axios.delete("http://localhost:8000/adminflights/delete/" + id)
       .then(() => {
         setFlights(flights.filter((flight) => {
-          return flight._id != id;
+          return flight._id !== id;
         }))
       });
   }
@@ -76,15 +76,7 @@ function AdminFlights(props) {
         </Modal.Footer>
       </Modal>
       <Container style={{ opacity: deleteModal === true ? 0.5 : 1, pointerEvents: deleteModal === true ? 'none' : 'initial' }}>
-        <Rect>
-          <Image4Row style={{ cursor: 'pointer' }} onClick={() => history.push('/admin')}>
-            <Image4 src={require("../assets/images/logo3.png").default}></Image4>
-            <DuneAirlines>DUNE</DuneAirlines>
-          </Image4Row>
-          <ProfileCard
-            title={'Admin'}
-          />
-        </Rect>
+      <ProfileHeader title={'Admin'}/>
         <table>
           <thead>
             <tr>
@@ -122,38 +114,6 @@ function AdminFlights(props) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const Rect = styled.div`
-  height: 100px;
-  background-color: rgba(0,0,0,1);
-  flex-direction: row;
-  display: flex;
-`;
-
-const Image4 = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  margin-top: -10px;
-`;
-
-const DuneAirlines = styled.span`
-  font-family: Archivo;
-  font-style: normal;
-  font-weight: 400;
-  color: rgba(244,244,244,1);
-  font-size: 30px;
-  margin-left: 10px;
-`;
-
-const Image4Row = styled.div`
-  height: 49px;
-  flex-direction: row;
-  display: flex;
-  margin-right: 100px;
-  margin-left: 50px;
-  margin-top: 37px;
 `;
 
 export default AdminFlights;
