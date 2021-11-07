@@ -27,8 +27,7 @@ function CreateFlight() {
 
   function create(event){
    event.preventDefault();
-    if(from === '' | to === '' | flightDate === ''  | cabin === '' | seats === '' | flightNumber === ''
-    | airportTerminal === '' | departureTime === '' | arrivalTime === ''){
+    if(from === '' | to === '' | flightDate === ''  | cabin === '' | seats === '' ){
       setError(true)
       setCreated(false)
     }
@@ -91,7 +90,7 @@ function CreateFlight() {
               borderRadius: 10
             }}
             onChange={(e) => setFrom(e.target.value)}
-           />
+            required/>
           <label>To:</label>
         <input
             type='text'
@@ -103,7 +102,7 @@ function CreateFlight() {
               borderRadius: 10
             }}
             onChange={(e) => setTo(e.target.value)}
-           /> 
+            required/> 
            <label>Flight Date:</label>
         <input
             type='date'
@@ -115,7 +114,7 @@ function CreateFlight() {
               borderRadius: 10
             }}
             onChange={(e) => setFlightDate(e.target.value)}
-           /> 
+            required/> 
            <label>Cabin:</label>
         <input
             type='text'
@@ -127,7 +126,7 @@ function CreateFlight() {
               borderRadius: 10
             }}
             onChange={(e) => setCabin(e.target.value)}
-           /> 
+            required /> 
            <label>Seats Available:</label>
         <input
             type='text'
@@ -139,7 +138,7 @@ function CreateFlight() {
               borderRadius: 10
             }}
             onChange={(e) => setSeats(e.target.value)}
-           />
+           required />
            <label>Flight Number:</label>
            <input
             type='text'
