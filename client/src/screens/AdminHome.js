@@ -25,7 +25,7 @@ function AdminHome(props) {
         FlightNumber: flightNumber, 
         DepartureTime: departureTime,
         ArrivalTime: arrivalTime,
-        Flight_Date: Date.parse(flightDate+'T22:00:00.000+00:00'),
+        Flight_Date: (flightDate != null && flightDate.trim().length!=0)?new Date(flightDate).setHours(2):null,
         AirportTerminal: airportTerminal,
       }
     });
