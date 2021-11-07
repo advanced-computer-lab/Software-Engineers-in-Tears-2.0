@@ -1,41 +1,147 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
-import Button2 from "../components/Button2";
+import NormalHeader from "../components/NormalHeader";
 import Button1 from "../components/Button1";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 //import axios from 'axios';
 
 function HomeScreen(props) {
 
-  const history = useHistory();
+  //const history = useHistory();
+  const [hover1, setHover1] = useState('rgba(240,165,0,1)');
 
   return (
     <Container>
-      <Rect>
-        <Image4Row style={{cursor: 'pointer'}} onClick={() => history.push('/')}>
-            <Image4 src={require("../assets/images/logo3.png").default}></Image4>
-            <DuneAirlines>DUNE</DuneAirlines>
-        </Image4Row>
-        <Row2>
-          <Button2
-            style={{
-              height: 36,
-              width: 100,
-              marginLeft: 850
-            }}
-            title={'LOG IN'}
-            onClick={() => history.push("/login")}
-          />
-          <Button1
-            style={{
-              height: 36,
-              width: 100,
-              marginLeft: 13
-            }}
-            title={'SIGN UP'}
-          />
-        </Row2>
-      </Rect>
+      <NormalHeader />
+      <div style={{height: 190, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+        <input
+          type='text'
+          //value={flightNumber}
+          placeholder={'From'}
+          style={{
+            height: 50,
+            width: '9%',
+            marginLeft: 50,
+            backgroundColor: '#000',
+            borderTop: 'none',
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderBottom: '2px solid #F0A500',
+            color: '#f4f4f4'
+          }}
+          //onChange={(e) => setFlightNumber(e.target.value)}
+        />
+        <Image120 style={{height: 40, width: 40, marginLeft: 25}} src={require("../assets/images/2arrow.png").default}></Image120> 
+        <input
+          type='text'
+          //value={flightNumber}
+          placeholder={'To'}
+          style={{
+            height: 50,
+            width: '9%',
+            marginLeft: 25,
+            backgroundColor: '#000',
+            borderTop: 'none',
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderBottom: '2px solid #F0A500',
+            color: '#f4f4f4'
+          }}
+          //onChange={(e) => setFlightNumber(e.target.value)}
+        />
+        <input
+          type='number'
+          //value={flightNumber}
+          placeholder={'Number of Adults'}
+          style={{
+            height: 50,
+            width: '10%',
+            marginLeft: 25,
+            backgroundColor: '#000',
+            borderTop: 'none',
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderBottom: '2px solid #F0A500',
+            color: '#f4f4f4'
+          }}
+          //onChange={(e) => setFlightNumber(e.target.value)}
+        />
+        <input
+          type='number'
+          //value={flightNumber}
+          placeholder={'Number of Children'}
+          style={{
+            height: 50,
+            width: '10%',
+            marginLeft: 25,
+            backgroundColor: '#000',
+            borderTop: 'none',
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderBottom: '2px solid #F0A500',
+            color: '#f4f4f4'
+          }}
+          //onChange={(e) => setFlightNumber(e.target.value)}
+        />
+        <input
+          type='number'
+          //value={flightNumber}
+          placeholder={'Cabin Class'}
+          style={{
+            height: 50,
+            width: '10%',
+            marginLeft: 25,
+            backgroundColor: '#000',
+            borderTop: 'none',
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderBottom: '2px solid #F0A500',
+            color: '#f4f4f4'
+          }}
+          //onChange={(e) => setFlightNumber(e.target.value)}
+        />
+        <input
+          type='date'
+          //value={flightNumber}
+          placeholder={'To'}
+          style={{
+            height: 50,
+            width: '10%',
+            marginLeft: 25,
+            backgroundColor: '#000',
+            borderTop: 'none',
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderBottom: '2px solid #F0A500',
+            color: '#f4f4f4',
+          }}
+          //onChange={(e) => setFlightNumber(e.target.value)}
+        />
+        <input
+          type='date'
+          //value={flightNumber}
+          placeholder={'To'}
+          style={{
+            height: 50,
+            width: '10%',
+            marginLeft: 25,
+            backgroundColor: '#000',
+            borderTop: 'none',
+            borderRight: 'none',
+            borderLeft: 'none',
+            borderBottom: '2px solid #F0A500',
+            color: '#f4f4f4'
+          }}
+          //onChange={(e) => setFlightNumber(e.target.value)}
+        />
+        <Image35
+          style={{backgroundColor: hover1, position: 'absolute', right: 50, width: 50, height: 50, cursor: 'pointer', borderRadius: 100}}
+          onMouseEnter={() => setHover1('rgba(207,117,0,1)')} 
+          onMouseLeave={() => setHover1('rgba(240,165,0,1)')} 
+          src={require("../assets/images/search.png").default}
+          //onClick={handle}
+        ></Image35>   
+      </div>
       <Image3>
         <LoremIpsum>REDISCOVER THE JOY<br/>OF TRAVELING</LoremIpsum>
         <LoremIpsum2>
@@ -51,8 +157,8 @@ function HomeScreen(props) {
           title={'GET STARTED'}
         />
       </Image3>
-      <LoremIpsum3>THE DUNE CUSTOMER EXPERIENCE</LoremIpsum3>
-      <LoremIpsum4>Supporting You Through Your Travel Journey</LoremIpsum4>
+      <LoremIpsum3 style={{textAlign: 'center'}}>THE DUNE CUSTOMER EXPERIENCE</LoremIpsum3>
+      <LoremIpsum4 style={{textAlign: 'center'}}>Supporting You Through Your Travel Journey</LoremIpsum4>
       <Image5Row>
         <Image5 src={require("../assets/images/43687521.png").default}></Image5>
         <Image6 src={require("../assets/images/30501287.png").default}></Image6>
@@ -126,54 +232,15 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const Rect = styled.div`
-  height: 100px;
-  background-color: rgba(0,0,0,1);
-  flex-direction: row;
-  display: flex;
-`;
-
-const Image4 = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  margin-top: -10px;
-`;
-
-const DuneAirlines = styled.span`
-  font-family: Archivo;
-  font-style: normal;
-  font-weight: 400;
-  color: rgba(244,244,244,1);
-  font-size: 30px;
-  margin-left: 10px;
-`;
-
-const Image4Row = styled.div`
-  height: 49px;
-  flex-direction: row;
-  display: flex;
-  flex: 1 1 0%;
-  margin-right: 100px;
-  margin-left: 50px;
-  margin-top: 37px;
-`;
-const Row2 = styled.div`
-  height: 69px;
-  flex-direction: row;
-  display: flex;
-  flex: 1 1 0%;
-  margin-right: 68px;
-  margin-left: -120px;
-  margin-top: 33px;
-`;
-
 const Image3 = styled.div`
   height: 365px;
   flex-direction: column;
   display: flex;
   background-image: url(${require("../assets/images/425451.jpg").default});
   background-size: cover;
+`;
+
+const Image35 = styled.div`
 `;
 
 const LoremIpsum = styled.span`
@@ -202,7 +269,6 @@ const LoremIpsum3 = styled.span`
   color: rgba(0,0,0,1);
   font-size: 25px;
   margin-top: 26px;
-  margin-left: 435px;
 `;
 
 const LoremIpsum4 = styled.span`
@@ -212,7 +278,6 @@ const LoremIpsum4 = styled.span`
   color: rgba(0,0,0,1);
   font-size: 40px;
   margin-top: 15px;
-  margin-left: 291px;
 `;
 
 const Image5 = styled.img`
@@ -220,6 +285,9 @@ const Image5 = styled.img`
   height: 170px;
   margin-top: 1px;
   object-fit: contain;
+`;
+
+const Image120 = styled.img`
 `;
 
 const Image6 = styled.img`

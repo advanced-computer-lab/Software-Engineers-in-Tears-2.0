@@ -94,13 +94,12 @@ function AdminHome(props) {
             onChange={(e) => setFlightDate(e.target.value)}
           ></input>
           <Image3
-            style={{background: hover1, position: 'absolute', right: 55}}
+            style={{background: hover1, position: 'absolute', right: 50}}
             onMouseEnter={() => setHover1('rgba(207,117,0,1)')} 
             onMouseLeave={() => setHover1('rgba(240,165,0,1)')} 
             src={require("../assets/images/search.png").default}
             onClick={handle}
-          ></Image3>
-        
+          ></Image3>  
         </MaterialFixedLabelTextboxRow>
         <Or5Row>
           <Or5>OR</Or5>
@@ -120,15 +119,15 @@ function AdminHome(props) {
           style={{width: 150, height: 150, marginLeft: 50}} 
           src={require("../assets/images/add-flight.png").default}
         />
-        <div style={{height: 300, display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: 50, marginTop: 10}}>
-            <text style={{fontFamily: 'Archivo Black', fontSize: 30, color: '#000000', marginTop: -30}}>WANT TO ADD A NEW FLIGHT?</text>
+        <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
+            <text style={{fontFamily: 'Archivo Black', fontSize: 30, color: '#000000', marginTop: -10}}>WANT TO ADD A NEW FLIGHT?</text>
             <Button1 
               title={'Create Flight'}
               onClick={() => history.push('/admin/create')}
               style={{
                 width: 200,
                 height: 50,
-                marginTop: 20
+                marginTop: 10
               }}
             />
         </div>

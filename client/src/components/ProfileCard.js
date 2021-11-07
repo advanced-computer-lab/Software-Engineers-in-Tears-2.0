@@ -6,10 +6,10 @@ function ProfileCard(props) {
   const [hover, setHover] = useState('transparent');
 
   return (
-    <Container
+    <div
       onMouseEnter={() => setHover('rgba(207,117,0,1)')} 
       onMouseLeave={() => setHover('transparent')}
-      style={{...props.style, background: hover, height: 60, width: 140, marginTop: 20, position: 'absolute', right: 55}}
+      style={{background: hover, height: 60, width: 140,  position: 'absolute', right: 50, cursor: 'pointer', borderRadius: 20, display: 'flex', flexDirection: 'row', alignItems: 'center'}}
       onClick={props.onClick}  
     >
         <Image2
@@ -20,18 +20,9 @@ function ProfileCard(props) {
                 color: hover === 'transparent' ? 'rgba(240,165,0,1)' : 'rgba(244, 244, 244,1)'
               }}
         >{props.title}</Admin>
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  cursor: pointer;
-  background-color: transparent;
-  border-radius: 20px;
-  align-items: center;
-  flex-direction: row;
-`;
 
 const Image2 = styled.img`
   width: 50px;
