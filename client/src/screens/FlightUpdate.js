@@ -167,6 +167,7 @@ class FlightUpdateScreen extends Component {
           <Button1 
             title={'Restore Original Values'}
             style={{width: 230, position: 'absolute', right: 50, height: 40}}
+            onClick={() => {this.setState(this.orig); this.setState({updated:false})}}
           /> 
             {/* {this.state.updated?
             <span
