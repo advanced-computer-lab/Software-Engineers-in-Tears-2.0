@@ -9,7 +9,7 @@ function ProfileHeader(props) {
 
   return (
     <div style={{height: 100, backgroundColor: '#000', flexDirection: 'row', display: 'flex', alignItems: 'center'}}>
-        <div style={{cursor: 'pointer', flexDirection: 'row', display: 'flex', marginLeft: 50, alignItems: 'center'}} onClick={() => history.push('/admin')}>
+        <div style={{cursor: 'pointer', flexDirection: 'row', display: 'flex', marginLeft: 50, alignItems: 'center'}} onClick={() => history.push(props.path)}>
             <Image4 src={require("../assets/images/logo3.png").default}></Image4>
             <DuneAirlines>DUNE</DuneAirlines>
         </div>

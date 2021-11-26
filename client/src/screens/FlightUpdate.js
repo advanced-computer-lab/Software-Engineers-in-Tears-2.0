@@ -161,7 +161,7 @@ class FlightUpdateScreen extends Component {
           </Modal.Footer>
         </Modal>
         <Container style={{ opacity: this.state.updateModal === true ? 0.5 : 1, pointerEvents: this.state.updateModal === true ? 'none' : 'initial' }}>
-        <ProfileHeader title={'Admin'}/>
+        <ProfileHeader title={'Admin'} path={'/admin'}/>
           <div style={{height: 80, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
           <text style={{fontFamily: 'Archivo Black', color: '#f4f4f4', fontSize: 30, marginLeft: 50}}>Update Flight</text>
           <Button1 

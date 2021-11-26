@@ -10,7 +10,6 @@ const flightsSchema = new Schema({
       type:String,
       required: false,
     },
-
     DepartureTime:{
       type:String,
       required: false,
@@ -31,6 +30,10 @@ const flightsSchema = new Schema({
       type: Date,
       required: true,
     },
+    Price: {
+      type: Number,
+      required: false,
+    },
     Cabin: {
       type: String,
       required: true
@@ -38,6 +41,10 @@ const flightsSchema = new Schema({
     Seats_Available_on_Flight: {
       type: Number,
       required: true
+    },
+    SeatsBooked: {
+      type: Array,
+      required: false
     }
   }, { timestamps: true });
   

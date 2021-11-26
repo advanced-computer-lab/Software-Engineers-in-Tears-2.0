@@ -33,7 +33,7 @@ function AdminHome(props) {
 
   return (
     <Container>
-    <ProfileHeader title={'Admin'}/>
+    <ProfileHeader title={'Admin'} path={'/admin'}/>
     <Rect2>
         <SearchFlight>SEARCH FLIGHT</SearchFlight>
         <MaterialFixedLabelTextboxRow>  

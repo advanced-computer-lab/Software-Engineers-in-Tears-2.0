@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require('mongoose');
 var cors = require('cors');
 const flightController = require('./Routes/flightController.js');
+const userController = require('./Routes/userController.js');
+const bookingController = require('./Routes/bookingController.js');
 require("dotenv").config({ path: "./config.env" });
 const MongoURI = process.env.ATLAS_URI
 
@@ -25,10 +27,16 @@ app.get("/Home", (req, res) => {
 });
 
 app.get("/adminflights", flightController.listAllFlights);
+app.post("/getUserByID", userController.getUserByID);
 app.post("/adminsearchflights", flightController.searchFlights);
+app.post("/createbooking", bookingController.createBooking);
+app.post("/getBookingByID", bookingController.getBookingByID);
+app.put("/updateBooking/:id", bookingController.updateBooking);
+app.put("/addBooking/:userID", userController.addBooking)
 app.put('/adminUpdateFlight/:id', flightController.updateFlight);
 app.get('/adminUpdateFlight/:id', flightController.viewFlightDetails);
 app.post("/admincreateflights", flightController.createFlight);
+app.post("/viewFlightDetails", flightController.viewFlightDetails)
 app.delete("/adminflights/delete/:id",flightController.deleteFlight);
 
 // Starting server

@@ -11,7 +11,7 @@ function Button2(props) {
       onClick={props.onClick}
       style={{...props.style, background: hover, cursor: 'pointer', borderRadius: 10, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}
     >
-      <text style={{fontFamily: 'Archivo', fontSize: 20,  color: hover === 'transparent' ? 'rgba(240,165,0,1)' : 'rgba(244, 244, 244,1)'}}>{props.title}</text>
+      <label style={{fontFamily: 'Archivo', fontSize: 20,  color: hover === 'transparent' ? 'rgba(240,165,0,1)' : 'rgba(244, 244, 244,1)', cursor: 'pointer'}}>{props.title}</label>
     </div>
   );
 }

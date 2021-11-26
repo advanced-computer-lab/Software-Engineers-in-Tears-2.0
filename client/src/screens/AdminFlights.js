@@ -76,7 +76,7 @@ function AdminFlights(props) {
         </Modal.Footer>
       </Modal>
       <Container style={{ opacity: deleteModal === true ? 0.5 : 1, pointerEvents: deleteModal === true ? 'none' : 'initial' }}>
-      <ProfileHeader title={'Admin'}/>
+      <ProfileHeader title={'Admin'} path={'/admin'}/>
         <table>
           <thead>
             <tr>

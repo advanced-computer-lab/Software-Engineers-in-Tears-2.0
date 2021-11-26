@@ -64,7 +64,7 @@ function CreateFlight() {
   
   return (
     <Container>
-    <ProfileHeader title={'Admin'}/>
+    <ProfileHeader title={'Admin'} path={'/admin'}/>
     <div style={{height: 80, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
       <text style={{fontFamily: 'Archivo Black', color: '#f4f4f4', fontSize: 30, marginLeft: 50}}>Create Flight</text>
     </div>

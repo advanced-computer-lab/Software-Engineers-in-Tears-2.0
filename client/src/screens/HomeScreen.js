@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import NormalHeader from "../components/NormalHeader";
 import Button1 from "../components/Button1";
+import Footer from "../components/Footer";
 //import { useHistory } from "react-router-dom";
 //import axios from 'axios';
 
@@ -84,7 +85,7 @@ function HomeScreen(props) {
           //onChange={(e) => setFlightNumber(e.target.value)}
         />
         <input
-          type='number'
+          type='text'
           //value={flightNumber}
           placeholder={'Cabin Class'}
           style={{
@@ -135,7 +136,7 @@ function HomeScreen(props) {
           //onChange={(e) => setFlightNumber(e.target.value)}
         />
         <Image35
-          style={{backgroundColor: hover1, position: 'absolute', right: 50, width: 50, height: 50, cursor: 'pointer', borderRadius: 100}}
+          style={{background: hover1, position: 'absolute', right: 50, width: 50, height: 50}}
           onMouseEnter={() => setHover1('rgba(207,117,0,1)')} 
           onMouseLeave={() => setHover1('rgba(240,165,0,1)')} 
           src={require("../assets/images/search.png").default}
@@ -159,11 +160,13 @@ function HomeScreen(props) {
       </Image3>
       <LoremIpsum3 style={{textAlign: 'center'}}>THE DUNE CUSTOMER EXPERIENCE</LoremIpsum3>
       <LoremIpsum4 style={{textAlign: 'center'}}>Supporting You Through Your Travel Journey</LoremIpsum4>
+
       <Image5Row>
         <Image5 src={require("../assets/images/43687521.png").default}></Image5>
         <Image6 src={require("../assets/images/30501287.png").default}></Image6>
         <Image7 src={require("../assets/images/bell.png").default}></Image7>
       </Image5Row>
+
       <Rect2Row>
         <Rect2>
           <LoremIpsum10>WHAT IS THE CURRENT<br/>FLIGHT SCHEDULE?</LoremIpsum10>
@@ -220,9 +223,7 @@ function HomeScreen(props) {
           />
         </Rect4>
       </Rect2Row>
-      <Rect5>
-        <LoremIpsum13>© DUNE AIRLINES. ALL RIGHTS RESERVED.</LoremIpsum13>
-      </Rect5>
+      <Footer />
     </Container>
   );
 }
@@ -240,7 +241,9 @@ const Image3 = styled.div`
   background-size: cover;
 `;
 
-const Image35 = styled.div`
+const Image35 = styled.img`
+  border-radius: 100px;
+  cursor: pointer;
 `;
 
 const LoremIpsum = styled.span`
@@ -280,27 +283,24 @@ const LoremIpsum4 = styled.span`
   margin-top: 15px;
 `;
 
+const Image120 = styled.img`
+`;
+
 const Image5 = styled.img`
   width: 100%;
   height: 170px;
-  margin-top: 1px;
   object-fit: contain;
-`;
-
-const Image120 = styled.img`
 `;
 
 const Image6 = styled.img`
   width: 100%;
   height: 170px;
-  margin-left: 269px;
   object-fit: contain;
 `;
 
 const Image7 = styled.img`
   width: 100%;
   height: 170px;
-  margin-left: 271px;
   object-fit: contain;
 `;
 
@@ -309,8 +309,6 @@ const Image5Row = styled.div`
   flex-direction: row;
   display: flex;
   margin-top: 66px;
-  margin-left: 159px;
-  margin-right: 157px;
 `;
 
 const Rect2 = styled.div`
@@ -423,25 +421,6 @@ const Rect2Row = styled.div`
   flex-direction: row;
   display: flex;
   margin-top: 35px;
-  margin-left: 52px;
-  margin-right: 49px;
-`;
-
-const Rect5 = styled.div`
-  height: 80px;
-  background-color: rgba(0,0,0,1);
-  flex-direction: column;
-  display: flex;
-  margin-top: 36px;
-`;
-
-const LoremIpsum13 = styled.span`
-  font-family: Archivo;
-  font-style: normal;
-  font-weight: 400;
-  color: rgba(244,244,244,1);
-  margin-top: 32px;
-  margin-left: 505px;
 `;
 
 
