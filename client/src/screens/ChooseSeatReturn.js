@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 import Button1 from "../components/Button1";
 import ProfileHeader from "../components/ProfileHeader";
 
-function ChooseSeatDepart(props) {
+function ChooseSeatReturn(props) {
 
     const history = useHistory();
 
@@ -39,7 +39,7 @@ function ChooseSeatDepart(props) {
         .catch(err => {
             console.log(err);
         })
-        axios.post('http://localhost:8000/adminsearchflights/', {_id: booking.departFlightID})
+        axios.post('http://localhost:8000/adminsearchflights/', {_id: booking.returnFlightID})
         .then(res => {
             setFlight(res.data[0]);
             setSeatsBooked(res.data[0].SeatsBooked)
@@ -50,7 +50,7 @@ function ChooseSeatDepart(props) {
             console.log(err);
         })   
         setLoading(false)
-    }, [bookingID, booking.departFlightID, booking.userID]);
+    }, [bookingID, booking.returnFlightID, booking.userID]);
     
     function handleSubmit() {
         setLoading2(true)
@@ -60,7 +60,7 @@ function ChooseSeatDepart(props) {
             SeatsBooked: arr
         }
         const data2 = {
-            departFlightSeats: currentSelection
+            returnFlightSeats: currentSelection
         }
         axios.put('http://localhost:8000/updateBooking/' + bookingID, data2)
         .then(result=> {
@@ -69,7 +69,7 @@ function ChooseSeatDepart(props) {
         .catch(err => console.log(err));
         axios.put('http://localhost:8000/adminUpdateFlight/' + flight._id, data)
         .then(result=> {
-            history.push(`/booking/${bookingID}/seats/return`);
+            history.push(`/booking/${bookingID}/confirmation`);
             setLoading2(false);
         })
         .catch(err => console.log(err));
@@ -86,6 +86,7 @@ function ChooseSeatDepart(props) {
         else if(currentSelection.length < booking.PassengerCount){
             const arr = currentSelection.slice();
             arr.push(i);
+
             setCurrentSelection(arr)
             console.log(arr)
             
@@ -107,7 +108,7 @@ function ChooseSeatDepart(props) {
         for (let i = 1; i <= flight.Seats_Available_on_Flight; i+=5) {
           seats.push(
               <div style={{display: 'flex', flexDirection: 'column', height: 50, width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 25, marginBottom: 25, marginLeft: 25, marginRight: 25}}>
-                <Image1 
+               <Image1 
                     key={i} 
                     style={{width: 50, height: 50, cursor: seatsBooked.includes(i) ? null : 'pointer' }} 
                     src={seatsBooked.includes(i) ? require("../assets/images/unavailable-seat.png").default : (currentSelection.includes(i) ?  require("../assets/images/selected-seat.png").default :  require("../assets/images/available-seat.png").default)}
@@ -156,7 +157,7 @@ function ChooseSeatDepart(props) {
               </div>
           )
         }
-       
+        
         //setLoading(false);
         return seats;
     }
@@ -204,4 +205,4 @@ const Container = styled.div`
 const Image1 = styled.img`
 `;
 
-export default ChooseSeatDepart;
+export default ChooseSeatReturn;

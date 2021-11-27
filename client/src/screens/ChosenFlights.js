@@ -88,7 +88,7 @@ function ChosenFlights(props) {
     <Container>
       {logged ? <ProfileHeader title={user.First_Name} path={'/'}/> : <NormalHeader />}
       {loading ? 
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#f4f4f4'}}>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#fff'}}>
             <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
         </div> 
       : 
@@ -129,7 +129,7 @@ function ChosenFlights(props) {
               </div>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Price</label>
-                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{passengerCount} x ${flight1.Price != null ? flight1.Price : 'N/A'}</label>
+                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>${flight1.Price != null ? flight1.Price*passengerCount : 'N/A'}</label>
               </div>
             </div>
 
@@ -166,7 +166,7 @@ function ChosenFlights(props) {
               </div>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Price</label>
-                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{passengerCount} x ${flight2.Price != null ? flight2.Price : 'N/A'}</label>
+                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>${flight2.Price != null ? flight2.Price*passengerCount  : 'N/A'}</label>
               </div>
             </div>
             <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35}}>
