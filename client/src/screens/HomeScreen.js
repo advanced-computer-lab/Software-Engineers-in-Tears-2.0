@@ -3,13 +3,40 @@ import styled from "styled-components";
 import NormalHeader from "../components/NormalHeader";
 import Button1 from "../components/Button1";
 import Footer from "../components/Footer";
-//import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 //import axios from 'axios';
 
 function HomeScreen(props) {
 
-  //const history = useHistory();
+ const history = useHistory();
   const [hover1, setHover1] = useState('rgba(240,165,0,1)');
+
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+  const [cabin, setCabin] = useState('');
+  const [fromdate, setFromDate] = useState('');
+  const [todate, setToDate] = useState('');
+  
+
+  function handle(event){
+    event.preventDefault();
+    var pcount = parseInt(adults, 10)+parseInt(children,10);
+    history.push({
+      pathname: '/flights',
+      showAll: false,
+      flightData: {
+        From: from, 
+        To: to,
+        Cabin:cabin,
+        PassengerCount: pcount,
+        FromDate:fromdate,
+        ToDate: todate,
+        
+      }
+    });
+   }
 
   return (
     <Container>
@@ -17,7 +44,7 @@ function HomeScreen(props) {
       <div style={{height: 190, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
         <input
           type='text'
-          //value={flightNumber}
+          value={from}
           placeholder={'From'}
           style={{
             height: 50,
@@ -30,12 +57,12 @@ function HomeScreen(props) {
             borderBottom: '2px solid #F0A500',
             color: '#f4f4f4'
           }}
-          //onChange={(e) => setFlightNumber(e.target.value)}
+          onChange={(e) => setFrom(e.target.value)}
         />
         <Image120 style={{height: 40, width: 40, marginLeft: 25}} src={require("../assets/images/2arrow.png").default}></Image120> 
         <input
           type='text'
-          //value={flightNumber}
+          value={to}
           placeholder={'To'}
           style={{
             height: 50,
@@ -48,11 +75,11 @@ function HomeScreen(props) {
             borderBottom: '2px solid #F0A500',
             color: '#f4f4f4'
           }}
-          //onChange={(e) => setFlightNumber(e.target.value)}
+          onChange={(e) => setTo(e.target.value)}
         />
         <input
           type='number'
-          //value={flightNumber}
+          value={adults}
           placeholder={'Number of Adults'}
           style={{
             height: 50,
@@ -65,11 +92,11 @@ function HomeScreen(props) {
             borderBottom: '2px solid #F0A500',
             color: '#f4f4f4'
           }}
-          //onChange={(e) => setFlightNumber(e.target.value)}
+          onChange={(e) =>  {e.target.value < 0 ? setAdults(0) : setAdults(e.target.value)}}
         />
         <input
           type='number'
-          //value={flightNumber}
+          value={children}
           placeholder={'Number of Children'}
           style={{
             height: 50,
@@ -82,12 +109,12 @@ function HomeScreen(props) {
             borderBottom: '2px solid #F0A500',
             color: '#f4f4f4'
           }}
-          //onChange={(e) => setFlightNumber(e.target.value)}
+          onChange={(e) => {e.target.value < 0 ? setChildren(0) : setChildren(e.target.value)} }
         />
         <input
           type='text'
-          //value={flightNumber}
-          placeholder={'Cabin Class'}
+          value={cabin}
+          placeholder={'Cabin'}
           style={{
             height: 50,
             width: '10%',
@@ -99,12 +126,12 @@ function HomeScreen(props) {
             borderBottom: '2px solid #F0A500',
             color: '#f4f4f4'
           }}
-          //onChange={(e) => setFlightNumber(e.target.value)}
+          onChange={(e) => setCabin(e.target.value)}
         />
         <input
           type='date'
-          //value={flightNumber}
-          placeholder={'To'}
+          value={todate}
+          placeholder={'Fromdate'}
           style={{
             height: 50,
             width: '10%',
@@ -116,12 +143,12 @@ function HomeScreen(props) {
             borderBottom: '2px solid #F0A500',
             color: '#f4f4f4',
           }}
-          //onChange={(e) => setFlightNumber(e.target.value)}
+          onChange={(e) => setFromDate(e.target.value)}
         />
         <input
           type='date'
-          //value={flightNumber}
-          placeholder={'To'}
+          value={todate}
+          placeholder={'Todate'}
           style={{
             height: 50,
             width: '10%',
@@ -133,14 +160,14 @@ function HomeScreen(props) {
             borderBottom: '2px solid #F0A500',
             color: '#f4f4f4'
           }}
-          //onChange={(e) => setFlightNumber(e.target.value)}
+          onChange={(e) => setToDate(e.target.value)}
         />
         <Image35
           style={{background: hover1, position: 'absolute', right: 50, width: 50, height: 50}}
           onMouseEnter={() => setHover1('rgba(207,117,0,1)')} 
           onMouseLeave={() => setHover1('rgba(240,165,0,1)')} 
           src={require("../assets/images/search.png").default}
-          //onClick={handle}
+          onClick={handle}
         ></Image35>   
       </div>
       <Image3>

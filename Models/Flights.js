@@ -45,6 +45,10 @@ const flightsSchema = new Schema({
     SeatsBooked: {
       type: Array,
       required: false
+    },
+    Baggage_Allowance: {
+      type: Number,
+      required: false
     }
   }, { timestamps: true });
   

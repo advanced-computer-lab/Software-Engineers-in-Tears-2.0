@@ -10,6 +10,7 @@ import FlightUpdate from './screens/FlightUpdate';
 import AdminFlights from './screens/AdminFlights';
 import ChosenFlights from './screens/ChosenFlights';
 import ChooseSeatDepart from './screens/ChooseSeatDepart';
+import UserSearch from './screens/UserSearch';
 
 
 class App extends Component {
@@ -22,6 +23,7 @@ class App extends Component {
           <Route exact path='/admin/update/:id' component = {FlightUpdate} />
           <Route exact path='/summary/:id1/:id2/:passengerCount/userID=:userID' component={ChosenFlights} />
           <Route exact path='/summary/:id1/:id2/:passengerCount' component={ChosenFlights} />
+          <Route exact path='/flights' component={UserSearch} />
           <Route exact path='/booking/:bookingID/seats/depart' component={ChooseSeatDepart} />
           <Route exact path='/admin/create' component={CreateFlight} />
           <Route exact path='/admin' component={AdminHome} />
