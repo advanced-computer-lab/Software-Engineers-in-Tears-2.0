@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
-import Footer from "../components/Footer";
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import ButtonIcon from "../components/ButtonIcon";

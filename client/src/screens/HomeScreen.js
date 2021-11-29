@@ -21,8 +21,8 @@ function HomeScreen(props) {
   const [children, setChildren] = useState('');
   const [cabin, setCabin] = useState('');
   const [user, setUser] = useState({});
-  const [fromdate, setFromDate] = useState('');
-  const [todate, setToDate] = useState('');
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const userID = localStorage.getItem("userID");
 
   useEffect(() => {
@@ -42,23 +42,18 @@ function HomeScreen(props) {
 
     event.preventDefault();
     var pcount = parseInt(adults === '' ? 0 : adults, 10)+parseInt(children === '' ? 0 : children,10);
-    var f= new Date(fromdate);
-    var t= new Date(todate);
+
+    var f = new Date(fromDate)
+    var t = new Date(toDate)
 
     if(pcount===0){
-      alert("You have to insert a number of passengers");
+      alert("You have to insert a number of passengers!");
     }
-    else if(adults<0||children<0){
-      alert("Invalid number of passengers");
+    else if(t.getTime()<f.getTime){
+      alert('Your arrival date is before your departure date!')
     }
-    else if(t.getTime()<f.getTime()){
-      alert("Your arrival date is before your departure date");
-    }
-    else if(from===''||to===''||todate===''||fromdate===''||cabin===''){
-      alert("Please fill all fields")
-    }
-    else if(cabin!=="Economy"||cabin!=="economy"||cabin!=="First"||cabin!=="first"||cabin!=="Business"||cabin!=="business"){
-      alert("Cabin classes should be either First,Business, or Economy")
+    else if(from === '' || to === ''){
+      alert("Please specify your departure and arrival airport terminals!");
     }
     else{
     history.push({
@@ -69,8 +64,8 @@ function HomeScreen(props) {
         To: to,
         Cabin:cabin,
         PassengerCount: pcount,
-        FromDate:fromdate,
-        ToDate: todate, 
+        FromDate:fromDate,
+        ToDate: toDate, 
       }
     });}
    }
@@ -169,7 +164,7 @@ function HomeScreen(props) {
           <label style={{color: '#F0A500', fontFamily: 'Archivo Black'}}>Depart Date</label>
         <input
           type='date'
-          value={fromdate}
+          value={fromDate}
           placeholder={'Fromdate'}
           style={{
             height: 50,
@@ -188,7 +183,7 @@ function HomeScreen(props) {
           <label style={{color: '#F0A500', fontFamily: 'Archivo Black'}}>Arrival Date</label>
         <input
           type='date'
-          value={todate}
+          value={toDate}
           placeholder={'Todate'}
           style={{
             height: 50,

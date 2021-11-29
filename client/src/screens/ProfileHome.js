@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
-import Footer from "../components/Footer";
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import ButtonIcon from "../components/ButtonIcon";
@@ -41,7 +40,12 @@ function ProfileHome(props) {
             <ButtonIcon path={"bookings"} style={{width: '100%', height: 70, fontSize: 15}} title={'Bookings'} onClick={() => history.push('/profile/bookings')}/>
             <Button1 style={{width: 100, height: 40, fontSize: 15, position: 'absolute', bottom: 30}} title={'Logout'} onClick={() => {localStorage.clear(); history.push('/')}}/>
         </div>
-        <label>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</label>
+        <div style={{display: 'flex', flexDirection: 'column', width: window.innerWidth-200, height: window.innerHeight, alignItems: 'center'}}>
+            <div style={{width: '90%', height: 300, backgroundColor:'#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 50}}>
+                <label>HOME SCREEEEN SHET</label>
+                <label>AAAAAAAAAAAAAAAAAAAAAAAAAAA</label>
+            </div>
+        </div>
     </Container>
   );
 }
