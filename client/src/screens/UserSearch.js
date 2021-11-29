@@ -16,7 +16,9 @@ function UserSearch(props) {
   const [departflights, setDepartFlights] = useState([]);
   const [returnflights, setReturnFlights] = useState([]);
   const [selectedDepart, setSelectedDepart] = useState();
-  const [viewdetailsid, setViewDetailsid] = useState();
+  const [selectedReturn, setSelectedReturn] = useState();
+  const [viewDepartDetailsID, setViewDepartDetailsID] = useState();
+  const [viewReturnDetailsID, setViewReturnDetailsID] = useState();
 
 
 
@@ -42,11 +44,11 @@ function UserSearch(props) {
                   console.log(props.location.flightData.PassengerCount);
                   console.log(arr[i].Seats_Available_on_Flight);
                   console.log(arr[i].SeatsBooked.length);
-                   arr.splice(i, 1)
+                   arr.splice(i, 1);
                    i--;
                }
             }
-            setDepartFlights(arr)
+            setDepartFlights(arr);
         })
         .catch(err => {
           console.log(err);
@@ -54,13 +56,23 @@ function UserSearch(props) {
         axios
         .post('http://localhost:8000/adminsearchflights', returnFlightData)
         .then(res => {
-            setReturnFlights(res.data);
+          const arr = res.data;
+            for(let i=0;i<arr.length;i++){
+               if(props.location.flightData.PassengerCount>(arr[i].Seats_Available_on_Flight-arr[i].SeatsBooked.length)){
+                  console.log(props.location.flightData.PassengerCount);
+                  console.log(arr[i].Seats_Available_on_Flight);
+                  console.log(arr[i].SeatsBooked.length);
+                   arr.splice(i, 1);
+                   i--;
+               }
+            }
+            setReturnFlights(arr);
         })
         .catch(err => {
           console.log(err);
         })
     
-  }, []);
+  }, [props.location.flightData.Cabin, props.location.flightData.From, props.location.flightData.FromDate, props.location.flightData.PassengerCount, props.location.flightData.To, props.location.flightData.ToDate]);
 
   return (
     
@@ -90,9 +102,9 @@ function UserSearch(props) {
                 <td style={{ textAlign: 'center' }}>{flight.Flight_Date!=null?flight.Flight_Date.substring(0,10):null}</td>
                 <td style={{ textAlign: 'center' }}>{flight.Cabin}</td>
                 <td style={{ textAlign: 'center' }}>{flight.Seats_Available_on_Flight}</td>
-                <td style={{ display: 'flex', marginLeft: 70, marginTop: 8 }}><Button1 title={'View Details'} style={{ width: 160, height: 35 }} onClick={() => setViewDetailsid(flight._id)} /></td>
+                <td style={{ display: 'flex', marginLeft: 70, marginTop: 8 }}><Button1 title={'View Details'} style={{ width: 160, height: 35 }} onClick={() => setViewDepartDetailsID(flight._id)} /></td>
                 <td>{selectedDepart === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35 }}  /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35 }}  onClick={() => setSelectedDepart(flight._id)}/>}</td>
-                {viewdetailsid != null && viewdetailsid===flight._id ? 
+                {viewDepartDetailsID != null && viewDepartDetailsID===flight._id ? 
                 <div style={{height: 60, width: '100%', display: 'flex'}}>
                     <label>{flight.From}</label>
                     <label>{flight.To}</label>
@@ -132,8 +144,19 @@ function UserSearch(props) {
                 <td style={{ textAlign: 'center' }}>{flight.Flight_Date!=null?flight.Flight_Date.substring(0,10):null}</td>
                 <td style={{ textAlign: 'center' }}>{flight.Cabin}</td>
                 <td style={{ textAlign: 'center' }}>{flight.Seats_Available_on_Flight}</td>
-                <td style={{ display: 'flex', marginLeft: 70, marginTop: 8 }}><Button1 title={'View Details'} style={{ width: 160, height: 35 }} /></td>
-                <td><Button1 title={'Select Flight'} style={{ width: 160, height: 35 }}  /></td>
+                <td style={{ display: 'flex', marginLeft: 70, marginTop: 8 }}><Button1 title={'View Details'} style={{ width: 160, height: 35 }} onClick={() => setViewReturnDetailsID(flight._id)}/></td>
+                <td>{selectedReturn === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35 }}  /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35 }}  onClick={() => setSelectedReturn(flight._id)}/>}</td>
+                {viewReturnDetailsID != null && viewReturnDetailsID===flight._id ? 
+                <div style={{height: 60, width: '100%', display: 'flex'}}>
+                    <label>{flight.From}</label>
+                    <label>{flight.To}</label>
+                    <label>{flight.DepartureTime}</label>
+                    <label>{flight.ArrivalTime}</label>
+                    <label>{flight.Cabin}</label>
+                    <label>{flight.Baggage_Allowance}</label>
+
+                </div>
+                : null}
               </tr>
             ))}
           </tbody>
