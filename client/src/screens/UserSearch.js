@@ -55,13 +55,12 @@ function UserSearch(props) {
             const arr = res.data;
             for(let i=0;i<arr.length;i++){
                if(props.location.flightData.PassengerCount>(arr[i].Seats_Available_on_Flight-arr[i].SeatsBooked.length)){
-                  console.log(props.location.flightData.PassengerCount);
-                  console.log(arr[i].Seats_Available_on_Flight);
-                  console.log(arr[i].SeatsBooked.length);
+                
                    arr.splice(i, 1);
                    i--;
                }
             }
+
             setDepartFlights(arr);
         })
         .catch(err => {
@@ -72,9 +71,7 @@ function UserSearch(props) {
           const arr = res.data;
             for(let i=0;i<arr.length;i++){
                if(props.location.flightData.PassengerCount>(arr[i].Seats_Available_on_Flight-arr[i].SeatsBooked.length)){
-                  console.log(props.location.flightData.PassengerCount);
-                  console.log(arr[i].Seats_Available_on_Flight);
-                  console.log(arr[i].SeatsBooked.length);
+                  
                    arr.splice(i, 1);
                    i--;
                }
@@ -166,12 +163,15 @@ function UserSearch(props) {
                 <td>{selectedReturn === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35 }}  /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35 }}  onClick={() => setSelectedReturn(flight._id)}/>}</td>
                 {viewReturnDetailsID != null && viewReturnDetailsID===flight._id ? 
                 <div style={{height: 60, width: '100%', display: 'flex'}}>
-                    <label>{flight.From}</label>
-                    <label>{flight.To}</label>
-                    <label>{flight.DepartureTime}</label>
-                    <label>{flight.ArrivalTime}</label>
-                    <label>{flight.Cabin}</label>
-                    <label>{flight.Baggage_Allowance}</label>
+                    <label>Number:{flight.FlightNumber}</label>
+                    <label>From:{flight.From}</label><br></br>
+                    <label>To:{flight.To}</label><br></br>
+                    <label>Depart time:{flight.DepartureTime}</label><br></br>
+                    <label>Arrival time:{flight.ArrivalTime}</label><br></br>
+                    <label>Cabin class:{flight.Cabin}</label><br></br>
+                    <label>Baggage Allowance:{flight.Baggage_Allowance}</label><br></br>
+                    <label>Trip duration:{flight.Trip_Duration}</label><br></br>
+                    <label>Price:{flight.Price}</label><br></br>
                 </div>
                 : null}
               </tr>

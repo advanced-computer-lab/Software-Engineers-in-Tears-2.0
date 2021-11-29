@@ -39,8 +39,28 @@ function HomeScreen(props) {
   
 
   function handle(event){
+
     event.preventDefault();
     var pcount = parseInt(adults === '' ? 0 : adults, 10)+parseInt(children === '' ? 0 : children,10);
+    var f= new Date(fromdate);
+    var t= new Date(todate);
+
+    if(pcount===0){
+      alert("You have to insert a number of passengers");
+    }
+    else if(adults<0||children<0){
+      alert("Invalid number of passengers");
+    }
+    else if(t.getTime()<f.getTime()){
+      alert("Your arrival date is before your departure date");
+    }
+    else if(from===''||to===''||todate===''||fromdate===''||cabin===''){
+      alert("Please fill all fields")
+    }
+    else if(cabin!=="Economy"||cabin!=="economy"||cabin!=="First"||cabin!=="first"||cabin!=="Business"||cabin!=="business"){
+      alert("Cabin classes should be either First,Business, or Economy")
+    }
+    else{
     history.push({
       pathname: '/flights',
       showAll: false,
@@ -52,7 +72,7 @@ function HomeScreen(props) {
         FromDate:fromdate,
         ToDate: todate, 
       }
-    });
+    });}
    }
 
   return (
