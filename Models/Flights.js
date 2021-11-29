@@ -30,6 +30,8 @@ const flightsSchema = new Schema({
       type: Date,
       required: true,
     },
+    
+    
     Price: {
       type: Number,
       required: false,
@@ -47,6 +49,14 @@ const flightsSchema = new Schema({
       required: false
     },
     Baggage_Allowance: {
+      type: Number,
+      required: false
+    },
+    Trip_Duration: {
+      type: Number,
+      required: false
+    },
+    Price: {
       type: Number,
       required: false
     }
