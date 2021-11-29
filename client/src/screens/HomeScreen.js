@@ -1,28 +1,46 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import NormalHeader from "../components/NormalHeader";
+import ProfileHeader from "../components/ProfileHeader";
 import Button1 from "../components/Button1";
 import Footer from "../components/Footer";
 import { useHistory } from "react-router-dom";
-//import axios from 'axios';
+import axios from 'axios';
 
 function HomeScreen(props) {
 
- const history = useHistory();
+  const history = useHistory();
   const [hover1, setHover1] = useState('rgba(240,165,0,1)');
+
+  localStorage.setItem('userID', '619ff5980bb5b4ed8b4f7f64')
+  //localStorage.clear()
 
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
-  const [adults, setAdults] = useState(0);
-  const [children, setChildren] = useState(0);
+  const [adults, setAdults] = useState('');
+  const [children, setChildren] = useState('');
   const [cabin, setCabin] = useState('');
+  const [user, setUser] = useState({});
   const [fromdate, setFromDate] = useState('');
   const [todate, setToDate] = useState('');
+  const userID = localStorage.getItem("userID");
+
+  useEffect(() => {
+    if(userID){
+      axios.post('http://localhost:8000/getUserByID/', {_id: userID})
+      .then(res => {
+        setUser(res.data[0]);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+  }, [userID]);
   
 
   function handle(event){
     event.preventDefault();
-    var pcount = parseInt(adults, 10)+parseInt(children,10);
+    var pcount = parseInt(adults === '' ? 0 : adults, 10)+parseInt(children === '' ? 0 : children,10);
     history.push({
       pathname: '/flights',
       showAll: false,
@@ -32,15 +50,14 @@ function HomeScreen(props) {
         Cabin:cabin,
         PassengerCount: pcount,
         FromDate:fromdate,
-        ToDate: todate,
-        
+        ToDate: todate, 
       }
     });
    }
 
   return (
     <Container>
-      <NormalHeader />
+      {userID ? <ProfileHeader title={user.First_Name} path={'/'}/> : <NormalHeader />}
       <div style={{height: 190, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
         <input
           type='text'
@@ -48,7 +65,7 @@ function HomeScreen(props) {
           placeholder={'From'}
           style={{
             height: 50,
-            width: '9%',
+            width: '8%',
             marginLeft: 50,
             backgroundColor: '#000',
             borderTop: 'none',
@@ -66,7 +83,7 @@ function HomeScreen(props) {
           placeholder={'To'}
           style={{
             height: 50,
-            width: '9%',
+            width: '8%',
             marginLeft: 25,
             backgroundColor: '#000',
             borderTop: 'none',
@@ -83,7 +100,7 @@ function HomeScreen(props) {
           placeholder={'Number of Adults'}
           style={{
             height: 50,
-            width: '10%',
+            width: '11%',
             marginLeft: 25,
             backgroundColor: '#000',
             borderTop: 'none',
@@ -100,7 +117,7 @@ function HomeScreen(props) {
           placeholder={'Number of Children'}
           style={{
             height: 50,
-            width: '10%',
+            width: '11%',
             marginLeft: 25,
             backgroundColor: '#000',
             borderTop: 'none',
@@ -128,14 +145,15 @@ function HomeScreen(props) {
           }}
           onChange={(e) => setCabin(e.target.value)}
         />
+        <div style={{display: "flex", flexDirection: 'column', alignItems: 'center', width: '10%', marginLeft: 25}}>
+          <label style={{color: '#F0A500', fontFamily: 'Archivo Black'}}>Depart Date</label>
         <input
           type='date'
-          value={todate}
+          value={fromdate}
           placeholder={'Fromdate'}
           style={{
             height: 50,
-            width: '10%',
-            marginLeft: 25,
+            width: '100%',
             backgroundColor: '#000',
             borderTop: 'none',
             borderRight: 'none',
@@ -145,23 +163,26 @@ function HomeScreen(props) {
           }}
           onChange={(e) => setFromDate(e.target.value)}
         />
+        </div>
+        <div style={{display: "flex", flexDirection: 'column', alignItems: 'center', width: '10%', marginLeft: 25}}>
+          <label style={{color: '#F0A500', fontFamily: 'Archivo Black'}}>Arrival Date</label>
         <input
           type='date'
           value={todate}
           placeholder={'Todate'}
           style={{
             height: 50,
-            width: '10%',
-            marginLeft: 25,
+            width: '100%',
             backgroundColor: '#000',
             borderTop: 'none',
             borderRight: 'none',
             borderLeft: 'none',
             borderBottom: '2px solid #F0A500',
-            color: '#f4f4f4'
+            color: '#f4f4f4',
           }}
           onChange={(e) => setToDate(e.target.value)}
         />
+        </div>
         <Image35
           style={{background: hover1, position: 'absolute', right: 50, width: 50, height: 50}}
           onMouseEnter={() => setHover1('rgba(207,117,0,1)')} 
@@ -194,7 +215,7 @@ function HomeScreen(props) {
         <Image7 src={require("../assets/images/bell.png").default}></Image7>
       </Image5Row>
 
-      <Rect2Row>
+      <Rect2Row style={{justifyContent: 'center'}}>
         <Rect2>
           <LoremIpsum10>WHAT IS THE CURRENT<br/>FLIGHT SCHEDULE?</LoremIpsum10>
           <LoremIpsum11>

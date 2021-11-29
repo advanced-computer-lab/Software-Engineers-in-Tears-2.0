@@ -2,41 +2,55 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import Button4 from "../components/Button4";
-import Modal from 'react-bootstrap/Modal';
+import ProfileHeader from "../components/ProfileHeader";
 import Button1 from "../components/Button1";
 import Button3 from "../components/Button3";
 import NormalHeader from "../components/NormalHeader";
 import Footer from "../components/Footer";
+import ReactLoading from 'react-loading';
 
 
 function UserSearch(props) {
 
   const history = useHistory();
+
+  const [loading, setLoading] = useState(true);
+
   const [departflights, setDepartFlights] = useState([]);
   const [returnflights, setReturnFlights] = useState([]);
-  const [selectedDepart, setSelectedDepart] = useState();
-  const [selectedReturn, setSelectedReturn] = useState();
+  const [selectedDepart, setSelectedDepart] = useState('');
+  const [selectedReturn, setSelectedReturn] = useState('');
   const [viewDepartDetailsID, setViewDepartDetailsID] = useState();
   const [viewReturnDetailsID, setViewReturnDetailsID] = useState();
-
-
+  const [logged, setLogged] = useState(false);
+  const [user, setUser] = useState({});
+  const userID = localStorage.getItem("userID");
 
   useEffect(() => {
-        const departFlightData = {
-            From: props.location.flightData.From, 
-            To: props.location.flightData.To,
-            Cabin:props.location.flightData.Cabin,
-            Flight_Date:props.location.flightData.FromDate,
-        }
-        const returnFlightData = {
-            From: props.location.flightData.To, 
-            To: props.location.flightData.From,
-            Cabin:props.location.flightData.Cabin,
-            Flight_Date:props.location.flightData.ToDate,
-        }
-      axios
-        .post('http://localhost:8000/adminsearchflights', departFlightData)
+      setLoading(true)
+      const departFlightData = {
+        From: props.location.flightData.From, 
+        To: props.location.flightData.To,
+        Cabin:props.location.flightData.Cabin,
+        Flight_Date:props.location.flightData.FromDate,
+      }
+      const returnFlightData = {
+        From: props.location.flightData.To, 
+        To: props.location.flightData.From,
+        Cabin:props.location.flightData.Cabin,
+        Flight_Date:props.location.flightData.ToDate,
+      }
+      if(userID){
+        axios.post('http://localhost:8000/getUserByID/', {_id: userID})
+        .then(res => {
+          setLogged(true)
+          setUser(res.data[0]);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      }
+      axios.post('http://localhost:8000/adminsearchflights', departFlightData)
         .then(res => {
             const arr = res.data;
             for(let i=0;i<arr.length;i++){
@@ -53,8 +67,7 @@ function UserSearch(props) {
         .catch(err => {
           console.log(err);
         })
-        axios
-        .post('http://localhost:8000/adminsearchflights', returnFlightData)
+      axios.post('http://localhost:8000/adminsearchflights', returnFlightData)
         .then(res => {
           const arr = res.data;
             for(let i=0;i<arr.length;i++){
@@ -67,20 +80,26 @@ function UserSearch(props) {
                }
             }
             setReturnFlights(arr);
+            setLoading(false)
         })
         .catch(err => {
           console.log(err);
         })
-    
-  }, [props.location.flightData.Cabin, props.location.flightData.From, props.location.flightData.FromDate, props.location.flightData.PassengerCount, props.location.flightData.To, props.location.flightData.ToDate]);
+  }, [props.location.flightData.Cabin, props.location.flightData.From, props.location.flightData.FromDate, props.location.flightData.PassengerCount, props.location.flightData.To, props.location.flightData.ToDate, userID]);
 
   return (
-    
       <Container >
-      <NormalHeader />
-      <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)'}}>
-        <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>Choose Depart Flight</label>
-      </div>
+      {logged ? <ProfileHeader title={user.First_Name} path={'/'}/> : <NormalHeader />}
+      {
+        loading ?
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#fff'}}>
+            <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
+        </div> 
+        :
+        <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
+        <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)'}}>
+          <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>Choose Depart Flight</label>
+        </div>
         <table>
           <thead>
             <tr>
@@ -112,7 +131,6 @@ function UserSearch(props) {
                     <label>{flight.ArrivalTime}</label>
                     <label>{flight.Cabin}</label>
                     <label>{flight.Baggage_Allowance}</label>
-
                 </div>
                 : null}
               </tr>
@@ -154,19 +172,22 @@ function UserSearch(props) {
                     <label>{flight.ArrivalTime}</label>
                     <label>{flight.Cabin}</label>
                     <label>{flight.Baggage_Allowance}</label>
-
                 </div>
                 : null}
               </tr>
             ))}
           </tbody>
         </table>
+        </div>
+      }
+        <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35, marginTop: 30}}>
+          <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Booking Total: <label style={{fontFamily: 'Archivo Black', color: '#F0A500'}}></label></label>
+          <Button1 disabled={selectedDepart === '' || selectedReturn === ''} onClick={() => history.push(`/summary/${selectedDepart}/${selectedReturn}/${props.location.flightData.PassengerCount}`)} title={'Confirm Selection'} style={{fontSize: 20, position: 'absolute', right: 50, width: 180, height: 40}}/>
+        </div>
         <Footer/>
-      </Container>
-    
+      </Container>   
   );
 }
-
 
 const Container = styled.div`
   display: flex;

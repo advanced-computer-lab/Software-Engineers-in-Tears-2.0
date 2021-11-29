@@ -20,11 +20,8 @@ function ChooseSeatDepart(props) {
     const bookingID = useState(props.match.params.bookingID)[0];
     const [booking, setBooking] = useState({});
 
-    console.log('rerender')
-
     useEffect(() => {
         setLoading(true)
-        
         axios.post('http://localhost:8000/getBookingByID/', {_id: bookingID})
         .then(res => {
             setBooking(res.data[0]);
@@ -32,7 +29,7 @@ function ChooseSeatDepart(props) {
         .catch(err => {
             console.log(err);
         })
-        axios.post('http://localhost:8000/getUserByID/', {_id: booking.userID})
+        axios.post('http://localhost:8000/getUserByID/', {_id: localStorage.getItem("userID")})
         .then(res => {
             setUser(res.data[0]);
         })
@@ -43,13 +40,11 @@ function ChooseSeatDepart(props) {
         .then(res => {
             setFlight(res.data[0]);
             setSeatsBooked(res.data[0].SeatsBooked)
-
+            setLoading(false)
         })
-
         .catch(err => {
             console.log(err);
         })   
-        setLoading(false)
     }, [bookingID, booking.departFlightID, booking.userID]);
     
     function handleSubmit() {
@@ -75,20 +70,16 @@ function ChooseSeatDepart(props) {
         .catch(err => console.log(err));
     }
 
-    function handleSelect(i) {
-        
+    function handleSelect(i) { 
         if(currentSelection.includes(i)){
             const arr = currentSelection.slice();
             arr.splice(currentSelection.indexOf(i), 1)
             setCurrentSelection(arr)
-            console.log(arr)
         }
         else if(currentSelection.length < booking.PassengerCount){
             const arr = currentSelection.slice();
             arr.push(i);
-            setCurrentSelection(arr)
-            console.log(arr)
-            
+            setCurrentSelection(arr)  
         }
     }
 
@@ -156,7 +147,6 @@ function ChooseSeatDepart(props) {
               </div>
           )
         }
-       
         //setLoading(false);
         return seats;
     }

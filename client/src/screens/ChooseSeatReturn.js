@@ -20,11 +20,8 @@ function ChooseSeatReturn(props) {
     const bookingID = useState(props.match.params.bookingID)[0];
     const [booking, setBooking] = useState({});
 
-    console.log('rerender')
-
     useEffect(() => {
         setLoading(true)
-        
         axios.post('http://localhost:8000/getBookingByID/', {_id: bookingID})
         .then(res => {
             setBooking(res.data[0]);
@@ -32,7 +29,7 @@ function ChooseSeatReturn(props) {
         .catch(err => {
             console.log(err);
         })
-        axios.post('http://localhost:8000/getUserByID/', {_id: booking.userID})
+        axios.post('http://localhost:8000/getUserByID/', {_id: localStorage.getItem("userID")})
         .then(res => {
             setUser(res.data[0]);
         })
@@ -43,13 +40,12 @@ function ChooseSeatReturn(props) {
         .then(res => {
             setFlight(res.data[0]);
             setSeatsBooked(res.data[0].SeatsBooked)
-
+            setLoading(false)
         })
 
         .catch(err => {
             console.log(err);
         })   
-        setLoading(false)
     }, [bookingID, booking.returnFlightID, booking.userID]);
     
     function handleSubmit() {
@@ -75,21 +71,16 @@ function ChooseSeatReturn(props) {
         .catch(err => console.log(err));
     }
 
-    function handleSelect(i) {
-        
+    function handleSelect(i) {  
         if(currentSelection.includes(i)){
             const arr = currentSelection.slice();
             arr.splice(currentSelection.indexOf(i), 1)
             setCurrentSelection(arr)
-            console.log(arr)
         }
         else if(currentSelection.length < booking.PassengerCount){
             const arr = currentSelection.slice();
             arr.push(i);
-
-            setCurrentSelection(arr)
-            console.log(arr)
-            
+            setCurrentSelection(arr)      
         }
     }
 
@@ -104,6 +95,7 @@ function ChooseSeatReturn(props) {
     }
 
     const renderSeats = () => {
+        //setLoading(true)
         let seats = [];
         for (let i = 1; i <= flight.Seats_Available_on_Flight; i+=5) {
           seats.push(
@@ -157,9 +149,10 @@ function ChooseSeatReturn(props) {
               </div>
           )
         }
-        
+                
         //setLoading(false);
         return seats;
+        
     }
 
   return ( 
@@ -173,7 +166,7 @@ function ChooseSeatReturn(props) {
         :
             <div style={{display: 'flex', flexDirection: 'column', width: '100%', minHeight: 557, backgroundColor: '#fff'}}>
                 <div style={{height: 70, width: '100%', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                    <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>Depart Flight From {flight.From} to {flight.To}</label>
+                    <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>Return Flight From {flight.From} to {flight.To}</label>
                 </div>
                 <div style={{height: 120, width: '100%', backgroundColor: '#fff', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                     <Image1 style={{width: 50, height: 50}} src={require("../assets/images/available-seat.png").default}/>

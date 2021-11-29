@@ -15,6 +15,7 @@ function ProfileHeader(props) {
         </div>
         <ProfileCard
           title={props.title}
+          onClick={() => history.push('/profile/home')}
         />
     </div>
   );
