@@ -16,7 +16,7 @@ exports.getUserByID = (req, res) => {
       });
 }
 
-exports.addBooking = (req, res)=>{
+exports.updateUser = (req, res)=>{
   Users.findByIdAndUpdate(req.params.userID, req.body)
   .then(result => {
       res.status(200).send("Booking updated")})

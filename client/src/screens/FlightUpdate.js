@@ -189,7 +189,7 @@ class FlightUpdateScreen extends Component {
             <form name="updateflight" id="updateflight" style={{ display: 'flex', flexDirection: 'column', marginTop: 20 }} onSubmit={this.onSubmit}>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Div1 id="d1">
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Flight Number: <label style={{ color: '#F0A500' }}>*</label></label>
+                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Flight Number: </label>
                   <Input
                     onMouseEnter={this.onHover}
                     onMouseLeave={this.onHoverLeave}
