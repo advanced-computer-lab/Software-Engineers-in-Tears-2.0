@@ -16,10 +16,10 @@ exports.getUserByID = (req, res) => {
       });
 }
 
-exports.addBooking = (req, res)=>{
+exports.updateUser = (req, res)=>{
   Users.findByIdAndUpdate(req.params.userID, req.body)
   .then(result => {
-      res.status(200).send("Booking updated")})
+      res.status(200).send("User updated")})
   .catch(err => {console.log(err); res.status(500);});
 }
 

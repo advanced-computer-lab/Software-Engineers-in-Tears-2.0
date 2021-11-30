@@ -68,7 +68,7 @@ function ChosenFlights(props) {
           const data = {
             Bookings: arr
           }
-          axios.put('http://localhost:8000/addBooking/' + userID, data)
+          axios.put('http://localhost:8000/updateUser/' + userID, data)
             .then(result=> {
           })
             .catch(err => console.log(err));
