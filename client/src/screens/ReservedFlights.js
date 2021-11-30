@@ -23,7 +23,7 @@ function deleteflight(id) {
     axios.delete("http://localhost:8000/deleteBooking/" + id)
       .then(() => {
         setBooking(booking.filter((booking) => {
-          return Booking._id !== id;
+          return booking._id !== id;
         }))
       }); 
   }
