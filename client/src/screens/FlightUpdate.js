@@ -200,13 +200,13 @@ class FlightUpdateScreen extends Component {
                   value={this.state.DepartureTime}
                   onChange={this.onChange}
                 />
-                <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Arrival Time:</label>
+                <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Airport Terminal:</label>
                 <Input
                   onMouseEnter={this.onHover}
                   onMouseLeave={this.onHoverLeave}
                   type="text"
-                  name="ArrivalTime"
-                  value={this.state.ArrivalTime}
+                  name="AirportTerminal"
+                  value={this.state.AirportTerminal}
                   onChange={this.onChange}
                 />
               </Div1>
@@ -221,15 +221,16 @@ class FlightUpdateScreen extends Component {
                   onChange={this.onChange}
                   required='true'
                 />
-                <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Airport Terminal:</label>
+                <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Arrival Time:</label>
                 <Input
                   onMouseEnter={this.onHover}
                   onMouseLeave={this.onHoverLeave}
                   type="text"
-                  name="AirportTerminal"
-                  value={this.state.AirportTerminal}
+                  name="ArrivalTime"
+                  value={this.state.ArrivalTime}
                   onChange={this.onChange}
                 />
+                
                 <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Number of {this.state.Cabin} class seats: <label style={{ color: '#F0A500' }}>*</label></label>
                 <Input
                   onMouseEnter={this.onHover}
