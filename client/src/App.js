@@ -11,6 +11,11 @@ import AdminFlights from './screens/AdminFlights';
 import ChosenFlights from './screens/ChosenFlights';
 import ChooseSeatDepart from './screens/ChooseSeatDepart';
 import ReservedFlights from './screens/ReservedFlights';
+import UserSearch from './screens/UserSearch';
+import ChooseSeatReturn from './screens/ChooseSeatReturn';
+import ProfileHome from './screens/ProfileHome';
+import ProfileBookings from './screens/ProfileBookings';
+
 
 class App extends Component {
   render() {
@@ -20,9 +25,12 @@ class App extends Component {
           <Route exact path='/' component={HomeScreen} />
           <Route exact path='/login' component={LoginScreen} />
           <Route exact path='/admin/update/:id' component = {FlightUpdate} />
-          <Route exact path='/summary/:id1/:id2/:passengerCount/userID=:userID' component={ChosenFlights} />
           <Route exact path='/summary/:id1/:id2/:passengerCount' component={ChosenFlights} />
+          <Route exact path='/flights' component={UserSearch} />
+          <Route exact path='/profile/home' component={ProfileHome} />
+          <Route exact path='/profile/bookings' component={ProfileBookings} />
           <Route exact path='/booking/:bookingID/seats/depart' component={ChooseSeatDepart} />
+          <Route exact path='/booking/:bookingID/seats/return' component={ChooseSeatReturn} />
           <Route exact path='/admin/create' component={CreateFlight} />
           <Route exact path='/admin' component={AdminHome} />
           <Route exact path='/admin/flights' component={AdminFlights} />

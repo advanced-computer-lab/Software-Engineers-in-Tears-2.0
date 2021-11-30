@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 import Button1 from "../components/Button1";
 import ProfileHeader from "../components/ProfileHeader";
 
-function ChooseSeatDepart(props) {
+function ChooseSeatReturn(props) {
 
     const history = useHistory();
 
@@ -36,16 +36,17 @@ function ChooseSeatDepart(props) {
         .catch(err => {
             console.log(err);
         })
-        axios.post('http://localhost:8000/adminsearchflights/', {_id: booking.departFlightID})
+        axios.post('http://localhost:8000/adminsearchflights/', {_id: booking.returnFlightID})
         .then(res => {
             setFlight(res.data[0]);
             setSeatsBooked(res.data[0].SeatsBooked)
             setLoading(false)
         })
+
         .catch(err => {
             console.log(err);
         })   
-    }, [bookingID, booking.departFlightID, booking.userID]);
+    }, [bookingID, booking.returnFlightID, booking.userID]);
     
     function handleSubmit() {
         setLoading2(true)
@@ -55,7 +56,7 @@ function ChooseSeatDepart(props) {
             SeatsBooked: arr
         }
         const data2 = {
-            departFlightSeats: currentSelection
+            returnFlightSeats: currentSelection
         }
         axios.put('http://localhost:8000/updateBooking/' + bookingID, data2)
         .then(result=> {
@@ -64,13 +65,13 @@ function ChooseSeatDepart(props) {
         .catch(err => console.log(err));
         axios.put('http://localhost:8000/adminUpdateFlight/' + flight._id, data)
         .then(result=> {
-            history.push(`/booking/${bookingID}/seats/return`);
+            history.push(`/booking/${bookingID}/confirmation`);
             setLoading2(false);
         })
         .catch(err => console.log(err));
     }
 
-    function handleSelect(i) { 
+    function handleSelect(i) {  
         if(currentSelection.includes(i)){
             const arr = currentSelection.slice();
             arr.splice(currentSelection.indexOf(i), 1)
@@ -79,7 +80,7 @@ function ChooseSeatDepart(props) {
         else if(currentSelection.length < booking.PassengerCount){
             const arr = currentSelection.slice();
             arr.push(i);
-            setCurrentSelection(arr)  
+            setCurrentSelection(arr)      
         }
     }
 
@@ -94,11 +95,12 @@ function ChooseSeatDepart(props) {
     }
 
     const renderSeats = () => {
+        //setLoading(true)
         let seats = [];
         for (let i = 1; i <= flight.Seats_Available_on_Flight; i+=5) {
           seats.push(
               <div style={{display: 'flex', flexDirection: 'column', height: 50, width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 25, marginBottom: 25, marginLeft: 25, marginRight: 25}}>
-                <Image1 
+               <Image1 
                     key={i} 
                     style={{width: 50, height: 50, cursor: seatsBooked.includes(i) ? null : 'pointer' }} 
                     src={seatsBooked.includes(i) ? require("../assets/images/unavailable-seat.png").default : (currentSelection.includes(i) ?  require("../assets/images/selected-seat.png").default :  require("../assets/images/available-seat.png").default)}
@@ -147,8 +149,10 @@ function ChooseSeatDepart(props) {
               </div>
           )
         }
+                
         //setLoading(false);
         return seats;
+        
     }
 
   return ( 
@@ -162,7 +166,7 @@ function ChooseSeatDepart(props) {
         :
             <div style={{display: 'flex', flexDirection: 'column', width: '100%', minHeight: 557, backgroundColor: '#fff'}}>
                 <div style={{height: 70, width: '100%', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                    <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>Depart Flight From {flight.From} to {flight.To}</label>
+                    <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>Return Flight From {flight.From} to {flight.To}</label>
                 </div>
                 <div style={{height: 120, width: '100%', backgroundColor: '#fff', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                     <Image1 style={{width: 50, height: 50}} src={require("../assets/images/available-seat.png").default}/>
@@ -194,4 +198,4 @@ const Container = styled.div`
 const Image1 = styled.img`
 `;
 
-export default ChooseSeatDepart;
+export default ChooseSeatReturn;

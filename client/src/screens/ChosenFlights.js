@@ -14,26 +14,22 @@ function ChosenFlights(props) {
 
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(false);
-    const [logged, setLogged] = useState(false);
     const [user, setUser] = useState({});
     const [bookings, setBookings] = useState([])
     const [flight1, setFlight1] = useState({});
     const [flight2, setFlight2] = useState({});
     const id1 = useState(props.match.params.id1)[0];
     const id2 = useState(props.match.params.id2)[0];
-    const userID = useState(props.match.params.userID)[0];
+    const userID = localStorage.getItem("userID");
     const passengerCount = useState(props.match.params.passengerCount)[0];
 
     useEffect(() => {
         setLoading(true)
-        if(userID != null){
+        if(userID){
           axios.post('http://localhost:8000/getUserByID/', {_id: userID})
           .then(res => {
-            setLogged(true)
-            //console.log(res.data[0])
             setUser(res.data[0]);
             setBookings(res.data[0].Bookings)
-            //console.log(user)
           })
           .catch(err => {
             console.log(err);
@@ -54,11 +50,10 @@ function ChosenFlights(props) {
         .catch(err => {
             console.log(err);
         })
-        //setLoading(false)
     }, [id1, id2, userID]);
     
     function handleSubmit() {
-      if(logged){
+      if(userID){
         setLoading2(true)
         const newBooking={
           departFlightID: id1,
@@ -86,9 +81,9 @@ function ChosenFlights(props) {
 
   return ( 
     <Container>
-      {logged ? <ProfileHeader title={user.First_Name} path={'/'}/> : <NormalHeader />}
+      {userID ? <ProfileHeader title={user.First_Name} path={'/'}/> : <NormalHeader />}
       {loading ? 
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#f4f4f4'}}>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#fff'}}>
             <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
         </div> 
       : 
@@ -97,7 +92,7 @@ function ChosenFlights(props) {
               <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>Booking Summary</label>
             </div>
             <div style={{height: 70, width: '100%', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-              <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Depart <label style={{fontFamily: 'Archivo Black', color: '#fff'}}>{flight1.Flight_Date}</label></label>
+              <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Depart <label style={{fontFamily: 'Archivo Black', color: '#fff'}}>{flight1.Flight_Date!=null?flight1.Flight_Date.substring(0,10):null}</label></label>
               <Image1 src={require("../assets/images/flight-icon.png").default} style={{position: 'absolute', right: 50, width: 35, height: 35}}/>
             </div>
             <div style={{display: "flex", flexDirection: 'row', alignItems: 'center', height: 300}}>
@@ -129,12 +124,12 @@ function ChosenFlights(props) {
               </div>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Price</label>
-                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{passengerCount} x ${flight1.Price != null ? flight1.Price : 'N/A'}</label>
+                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>${flight1.Price != null ? flight1.Price*passengerCount : 'N/A'}</label>
               </div>
             </div>
 
             <div style={{height: 70, width: '100%', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-              <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Return <label style={{fontFamily: 'Archivo Black', color: '#fff'}}>{flight2.Flight_Date}</label></label>
+              <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Return <label style={{fontFamily: 'Archivo Black', color: '#fff'}}>{flight2.Flight_Date!=null?flight2.Flight_Date.substring(0,10):null}</label></label>
               <Image1 src={require("../assets/images/flight-icon-inverse.png").default} style={{position: 'absolute', right: 50, width: 35, height: 35}}/>
             </div>
             <div style={{display: "flex", flexDirection: 'row', alignItems: 'center', height: 300}}>
@@ -166,7 +161,7 @@ function ChosenFlights(props) {
               </div>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Price</label>
-                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{passengerCount} x ${flight2.Price != null ? flight2.Price : 'N/A'}</label>
+                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>${flight2.Price != null ? flight2.Price*passengerCount  : 'N/A'}</label>
               </div>
             </div>
             <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35}}>
