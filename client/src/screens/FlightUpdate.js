@@ -186,7 +186,7 @@ class FlightUpdateScreen extends Component {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: 'rgb(244, 244, 244)' }}>
               <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
             </div> :
-            <form name="updateflight" id="updateflight" style={{ display: 'flex', flexDirection: 'column', marginTop: 20 }} onSubmit={this.onSubmit}>
+            <form name="updateflight" id="updateflight" style={{ display: 'flex', flexDirection: 'column', marginTop: 20 }} >
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Div1 id="d1">
                   <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Flight Number: </label>
@@ -287,6 +287,7 @@ const Input = styled.input`
   margin-bottom: 40px;
   background: rgba(0,0,0,0.03);
   border-bottom: 2px solid #F0A500;
+  font-size: 15px;
 `;
 
 const Div1 = styled.div`
