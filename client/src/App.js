@@ -15,6 +15,7 @@ import UserSearch from './screens/UserSearch';
 import ChooseSeatReturn from './screens/ChooseSeatReturn';
 import ProfileHome from './screens/ProfileHome';
 import ProfileBookings from './screens/ProfileBookings';
+import UserUpdate from './screens/UserUpdate'
 
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
           <Route exact path='/flights' component={UserSearch} />
           <Route exact path='/profile/home' component={ProfileHome} />
           <Route exact path='/profile/bookings' component={ProfileBookings} />
+          <Route exact path='/profile/account' component={UserUpdate} />
           <Route exact path='/booking/:bookingID/seats/depart' component={ChooseSeatDepart} />
           <Route exact path='/booking/:bookingID/seats/return' component={ChooseSeatReturn} />
           <Route exact path='/admin/create' component={CreateFlight} />

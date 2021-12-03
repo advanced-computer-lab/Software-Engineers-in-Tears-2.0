@@ -6,11 +6,16 @@ import Footer from "../components/Footer";
 import axios from 'axios';
 import Button1 from '../components/Button1';
 
+
+
+  
+
 function CreateFlight() {
 
   const[from, setFrom] = useState('');
   const[to, setTo] = useState('');
   const[flightDate, setFlightDate] = useState('');
+  const[arrivalDate, setArrivalDate] = useState('');
   const[cabin, setCabin] = useState('');
   const[seats, setSeats] = useState('');
   const[flightNumber, setFlightNumber] = useState('');
@@ -21,19 +26,74 @@ function CreateFlight() {
 
   const[created, setCreated] = useState(false);
   const[error, setError] = useState(false);
+  const[timeerror, setTimeError] = useState(false);
+  const[time1formaterror, setTime1FormatError] = useState(false);
+  const[time2formaterror, setTime2FormatError] = useState(false);
 
+ 
   function create(event){
    event.preventDefault();
-    if(from === '' | to === '' | flightDate === ''  | cabin === '' | seats === '' ){
-      setError(true)
-      setCreated(false)
+ 
+  
+
+
+
+
+   var time1Date= new Date(("01/01/2000").concat(departureTime));
+   var time2Date= new Date(("01/01/2000").concat(arrivalTime));
+
+   var isValidDep = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(departureTime);
+   var isValidReturn = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(arrivalTime);
+
+   
+
+    if(from === '' | to === '' | flightDate === ''  | cabin === '' | seats === ''|arrivalTime===''|departureTime===''|seats===''|airportTerminal==='' ){
+      setError(true);
+      setCreated(false);
+      setTime2FormatError(false);
+      setTimeError(false);
+      setTime1FormatError(false);
+    }
+    else if(isValidDep===false){
+      console.log("not valid dep");
+      console.log(isValidDep);
+      console.log(time1Date);
+      console.log(departureTime);
+      setTime2FormatError(false);
+      setTime1FormatError(true);
+      setCreated(false);
+      setError(false);
+      setTimeError(false);
+     
+    }
+    else if(isValidReturn===false){
+      setTime1FormatError(false);
+      console.log("not valid ret");
+     setTime2FormatError(true);
+     setCreated(false);
+     setError(false);
+     setTimeError(false);
+    }
+    
+    else if(departureTime>arrivalTime){
+      console.log("yes");
+      setTimeError(true);
+      setTime1FormatError(false);
+      setTime2FormatError(false);
+      setCreated(false);
+      setError(false);
+
     }
     else{
-      setError(false)
+      setTimeError(false);
+      setTime1FormatError(false);
+      setTime2FormatError(false);
+      setError(false);
       const newFlight={
         From:from,
         To:to,
         Flight_Date:flightDate,
+        Arrival_Date:arrivalDate,
         Cabin:cabin,
         Seats_Available_on_Flight:seats,
         FlightNumber: flightNumber,
@@ -51,6 +111,7 @@ function CreateFlight() {
        setCabin('')
        setTo('')
        setFlightDate('')
+       setArrivalDate('')
        setFrom('')
        setSeats('')
        setAirportTerminal('')
@@ -120,6 +181,23 @@ function CreateFlight() {
             }}
             onChange={(e) => setFlightDate(e.target.value)}
             required/> 
+            <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Flight Date: <label style={{color: '#F0A500'}}>*</label></label>
+        <input
+            type='date'
+            value={arrivalDate}
+            style={{
+              height: 39,
+              borderRadius: 4,
+              width: 300,
+              marginTop: 7,
+              borderBottom: '2px solid #F0A500',
+              borderTop: 'none',
+              borderRight: 'none',
+              borderLeft: 'none',
+              backgroundColor: 'rgba(0,0,0,0.03)'
+            }}
+            onChange={(e) => setArrivalDate(e.target.value)}
+            required/> 
            <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Cabin: <label style={{color: '#F0A500'}}>*</label></label>
         <input
             type='text'
@@ -154,7 +232,7 @@ function CreateFlight() {
             }}
             onChange={(e) => setSeats(e.target.value)}
            required />
-           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Flight Number:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Flight Number: <label style={{color: '#F0A500'}}>*</label></label>
            <input
             type='text'
             value={flightNumber}
@@ -171,7 +249,7 @@ function CreateFlight() {
             }}
             onChange={(e) => setFlightNumber(e.target.value)}
            />
-           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Airport Terminal:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Airport Terminal: <label style={{color: '#F0A500'}}>*</label></label>
            <input
             type='text'
             value={airportTerminal}
@@ -188,7 +266,7 @@ function CreateFlight() {
             }}
             onChange={(e) => setAirportTerminal(e.target.value)}
            />
-           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Departure Time:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Departure Time: <label style={{color: '#F0A500'}}>*</label></label>
            <input
             type='text'
             value={departureTime}
@@ -205,7 +283,7 @@ function CreateFlight() {
             }}
             onChange={(e) => setDepartureTime(e.target.value)}
            />
-           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Arrival Time:</label>
+           <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Arrival Time: <label style={{color: '#F0A500'}}>*</label></label>
            <input
             type='text'
             value={arrivalTime}
@@ -220,7 +298,7 @@ function CreateFlight() {
               borderLeft: 'none',
               backgroundColor: 'rgba(0,0,0,0.03)'
             }}
-            onChange={(e) => setArrivalTime(e.target.value)}
+            onChange={(e) =>setArrivalTime(e.target.value)}
            />
            <Button1 
             style={{
@@ -233,6 +311,11 @@ function CreateFlight() {
            /> 
           {created ? <text style={{fontFamily: 'Archivo', color: '#047305', marginTop: 40, fontSize: 20}}>Flight successfully created!</text> : null}
           {error ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 40, fontSize: 20}}>Please fill in all the details!</text> : null}
+          {timeerror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 40, fontSize: 20}}>Your Departure time is after your Arrival time!</text> : null}
+          {time1formaterror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 40, fontSize: 20}}>Please enter correct departure time format : hh:mm:ss!</text> : null}
+          {time2formaterror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 40, fontSize: 20}}>Please enter correct arrival time format : hh:mm:ss!</text> : null}
+
+
       </div>  
     <Footer />
   </Container>

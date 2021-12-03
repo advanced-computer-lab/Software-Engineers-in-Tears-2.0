@@ -35,7 +35,7 @@ function ProfileHome(props) {
             </div>
             <Button1 style={{width: 170, height: 40, fontSize: 15, position: 'absolute', top: 100}} title={'Back To Home Page'} onClick={() => history.push('/')}/>
             <ButtonIcon path={'home'} style={{width: '100%', height: 70, fontSize: 15}} title={'Home'} selected={true}/>
-            <ButtonIcon path={"profile2"} style={{width: '100%', height: 70, fontSize: 15}} title={'My Profile'}/>
+            <ButtonIcon path={"profile2"} style={{width: '100%', height: 70, fontSize: 15}} title={'My Profile'} onClick={() => history.push('/profile/account')}/>
             <ButtonIcon path={"wallet"} style={{width: '100%', height: 70, fontSize: 15}} title={'Wallet'}/>
             <ButtonIcon path={"bookings"} style={{width: '100%', height: 70, fontSize: 15}} title={'Bookings'} onClick={() => history.push('/profile/bookings')}/>
             <Button1 style={{width: 100, height: 40, fontSize: 15, position: 'absolute', bottom: 30}} title={'Logout'} onClick={() => {localStorage.clear(); history.push('/')}}/>

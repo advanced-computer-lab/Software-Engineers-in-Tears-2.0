@@ -5,7 +5,7 @@ function ButtonIcon(props) {
   const [hover, setHover] = useState('rgba(240,165,0,1)');
   const [hover2, setHover2] = useState('#000');
   const path = useState(props.path.toString())[0];
-  console.log(path)
+  //console.log(path)
 
   return (
     <div

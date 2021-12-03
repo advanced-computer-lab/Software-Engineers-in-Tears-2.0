@@ -31,10 +31,9 @@ const flightsSchema = new Schema({
       required: true,
     },
     
-    
-    Price: {
-      type: Number,
-      required: false,
+    Arrival_Date: {
+      type: Date,
+      required: true,
     },
     Cabin: {
       type: String,
