@@ -5,7 +5,8 @@ function ReservedFlights(props){
     const [loading, setLoading] = useState(true);
     const bookingID = props.match.params.bookingID;
     const [booking, setBooking] = useState({});
-    
+    //const [toDelete, setToDelete] = useState('');
+
 useEffect(() => {
 
     setLoading(true)
@@ -18,7 +19,7 @@ useEffect(() => {
 }, [bookingID]);//TODO:booking.userID
 
 
-function deleteflight(id) {
+function deleteBooking(id) {
     
     axios.delete("http://localhost:8000/deleteBooking/" + id)
       .then(() => {
@@ -30,6 +31,7 @@ function deleteflight(id) {
 
 return(
     <p>hi</p>
+    
 )
 }
 

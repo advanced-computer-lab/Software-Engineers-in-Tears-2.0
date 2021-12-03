@@ -38,6 +38,8 @@ app.put("/updateBooking/:id", bookingController.updateBooking);
 app.put("/updateUser/:userID", userController.updateUser)
 app.put('/adminUpdateFlight/:id', flightController.updateFlight);
 app.delete("/adminflights/delete/:id",flightController.deleteFlight);
+app.delete("/deleteBooking/:id", bookingController.deleteBooking);
+//app.post("/displayFlightFrom/:id",flightController.getFlightName);
 
 // Starting server
 app.listen(port, () => {

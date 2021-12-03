@@ -24,7 +24,7 @@ exports.updateBooking = (req, res)=>{
   .catch(err => {console.log(err); res.status(500);});
 }
 exports.deleteBooking =(req,res)=>{
-  BookingsfindByIdAndDelete(req.params.id)
+  Bookings.findByIdAndDelete(req.params.id)
   .then(result => {
     res.status(200).send("Reservation Deleted");
     console.log('Booking has been deleted successfully')})
