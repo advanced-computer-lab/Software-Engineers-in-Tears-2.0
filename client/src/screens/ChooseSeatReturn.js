@@ -65,7 +65,10 @@ function ChooseSeatReturn(props) {
         .catch(err => console.log(err));
         axios.put('http://localhost:8000/adminUpdateFlight/' + flight._id, data)
         .then(result=> {
-            history.push(`/booking/${bookingID}/confirmation`);
+            history.push({
+                pathname:'/booking/payment',
+                bookingID:bookingID
+            });
             setLoading2(false);
         })
         .catch(err => console.log(err));
