@@ -33,14 +33,6 @@ function CreateFlight() {
  
   function create(event){
    event.preventDefault();
- 
-  
-
-
-
-
-   var time1Date= new Date(("01/01/2000").concat(departureTime));
-   var time2Date= new Date(("01/01/2000").concat(arrivalTime));
 
    var isValidDep = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(departureTime);
    var isValidReturn = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(arrivalTime);
@@ -57,7 +49,6 @@ function CreateFlight() {
     else if(isValidDep===false){
       console.log("not valid dep");
       console.log(isValidDep);
-      console.log(time1Date);
       console.log(departureTime);
       setTime2FormatError(false);
       setTime1FormatError(true);

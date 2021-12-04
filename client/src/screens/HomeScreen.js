@@ -4,6 +4,7 @@ import NormalHeader from "../components/NormalHeader";
 import ProfileHeader from "../components/ProfileHeader";
 import Button1 from "../components/Button1";
 import Footer from "../components/Footer";
+import "./styles.css";
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
@@ -35,9 +36,20 @@ function HomeScreen(props) {
         console.log(err);
       })
     }
-  }, [userID]);
+    const listener = event => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        console.log("Enter key was pressed. Run your function.");
+        handle(event)
+      }
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, [handle, userID]);
   
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function handle(event){
 
     event.preventDefault();
@@ -266,6 +278,7 @@ function HomeScreen(props) {
               marginLeft: 30
             }}
             title={'MODIFY FLIGHT'}
+            onClick={() => (userID ? history.push('/profile/bookings') : null)}
           />
         </Rect3>
         <Rect4>

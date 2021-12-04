@@ -15,38 +15,28 @@ function ChooseSeatReturn(props) {
     const [loading2, setLoading2] = useState(false);
     const [user, setUser] = useState({});
     const [flight, setFlight] = useState({});
-    const [seatsBooked, setSeatsBooked] = useState([]);
+    const [seatsBooked, setSeatsBooked] = useState();
     const [currentSelection, setCurrentSelection] = useState([]);
     const bookingID = useState(props.match.params.bookingID)[0];
     const [booking, setBooking] = useState({});
 
     useEffect(() => {
         setLoading(true)
-        axios.post('http://localhost:8000/getBookingByID/', {_id: bookingID})
-        .then(res => {
-            setBooking(res.data[0]);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-        axios.post('http://localhost:8000/getUserByID/', {_id: localStorage.getItem("userID")})
-        .then(res => {
-            setUser(res.data[0]);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-        axios.post('http://localhost:8000/adminsearchflights/', {_id: booking.returnFlightID})
-        .then(res => {
-            setFlight(res.data[0]);
-            setSeatsBooked(res.data[0].SeatsBooked)
-            setLoading(false)
-        })
+        getData();
+    }, []);
 
-        .catch(err => {
-            console.log(err);
-        })   
-    }, [bookingID, booking.returnFlightID, booking.userID]);
+    const getData = async() => {
+        const res = await axios.post('http://localhost:8000/getBookingByID/', {_id: bookingID})
+        setBooking(res.data[0])
+        const res2 = await axios.post('http://localhost:8000/getUserByID/', {_id: localStorage.getItem("userID")})
+        setUser(res2.data[0])
+        const res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res.data[0].returnFlightID})
+        console.log(res.data[0].returnFlightID)
+        console.log(res3.data[0])
+        setFlight(res3.data[0])
+        setSeatsBooked(res3.data[0].SeatsBooked)
+        setLoading(false) 
+    }
     
     function handleSubmit() {
         setLoading2(true)
@@ -82,6 +72,12 @@ function ChooseSeatReturn(props) {
             arr.push(i);
             setCurrentSelection(arr)      
         }
+        else if(booking.PassengerCount === 1){
+            const arr = currentSelection.slice();
+            arr.splice(currentSelection.indexOf(0), 1)
+            arr.push(i);
+            setCurrentSelection(arr) 
+        }
     }
 
     const renderText = () => {
@@ -95,12 +91,11 @@ function ChooseSeatReturn(props) {
     }
 
     const renderSeats = () => {
-        //setLoading(true)
         let seats = [];
         for (let i = 1; i <= flight.Seats_Available_on_Flight; i+=5) {
           seats.push(
               <div style={{display: 'flex', flexDirection: 'column', height: 50, width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 25, marginBottom: 25, marginLeft: 25, marginRight: 25}}>
-               <Image1 
+                <Image1 
                     key={i} 
                     style={{width: 50, height: 50, cursor: seatsBooked.includes(i) ? null : 'pointer' }} 
                     src={seatsBooked.includes(i) ? require("../assets/images/unavailable-seat.png").default : (currentSelection.includes(i) ?  require("../assets/images/selected-seat.png").default :  require("../assets/images/available-seat.png").default)}
@@ -149,10 +144,8 @@ function ChooseSeatReturn(props) {
               </div>
           )
         }
-                
         //setLoading(false);
         return seats;
-        
     }
 
   return ( 
@@ -177,7 +170,7 @@ function ChooseSeatReturn(props) {
                     <label style={{color: '#000', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 10}}>= Unavailable Seat</label>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', minHeight: 350}}>
-                    {renderSeats()}
+                    {loading ? null : renderSeats()}
                 </div>
                 <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35, marginTop: 50}}>
                     <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Chosen Seats: {renderText()}</label>
