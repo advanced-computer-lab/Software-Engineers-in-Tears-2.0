@@ -30,6 +30,14 @@ const flightsSchema = new Schema({
       type: Date,
       required: true,
     },
+<<<<<<< HEAD
+=======
+    
+    Arrival_Date: {
+      type: Date,
+      required: true,
+    },
+>>>>>>> 13c974afffab009b4fed4b3384f372aa472f5e47
     Cabin: {
       type: String,
       required: true
