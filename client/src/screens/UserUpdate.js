@@ -81,7 +81,7 @@ class UserUpdateScreen extends Component {
             }
           })
           .catch(err => console.log(err));
-      }, 1000);
+      }, 750);
 
     }
   }
