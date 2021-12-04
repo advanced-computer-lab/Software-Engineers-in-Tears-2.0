@@ -53,15 +53,16 @@ function HomeScreen(props) {
   function handle(event){
 
     event.preventDefault();
-    var pcount = parseInt(adults === '' ? 0 : adults, 10)+parseInt(children === '' ? 0 : children,10);
-
+    var pcount = parseInt((adults === '' ? 0 : adults), 10)+parseInt((children === '' ? 0 : children),10);
+   
+    
     var f = new Date(fromDate)
     var t = new Date(toDate)
 
     if(pcount===0){
       alert("You have to insert a number of passengers!");
     }
-    else if(t.getTime()<f.getTime){
+    else if(t.getTime()<f.getTime()){
       alert('Your arrival date is before your departure date!')
     }
     else if(from === '' || to === ''){
@@ -75,11 +76,14 @@ function HomeScreen(props) {
         From: from, 
         To: to,
         Cabin:cabin,
-        PassengerCount: pcount,
+        PassengerCount: parseInt((adults === '' ? 0 : adults), 10)+parseInt((children === '' ? 0 : children),10),
         FromDate:fromDate,
-        ToDate: toDate, 
+        ToDate: toDate
       }
-    });}
+     
+    }
+    );}
+    console.log(parseInt((adults === '' ? 0 : adults), 10)+parseInt((children === '' ? 0 : children),10));
    }
 
   return (
