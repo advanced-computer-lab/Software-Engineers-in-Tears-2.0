@@ -42,8 +42,7 @@ function ProfileHome(props) {
         </div>
         <div style={{display: 'flex', flexDirection: 'column', width: window.innerWidth-200, height: window.innerHeight, alignItems: 'center'}}>
             <div style={{width: '90%', height: 300, backgroundColor:'#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 50}}>
-                <label>FARAHHHHH IS SO </label>
-                <label>COOL AND AMAZINGGGGGG</label>
+                
             </div>
         </div>
     </Container>

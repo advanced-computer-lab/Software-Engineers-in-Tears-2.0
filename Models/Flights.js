@@ -30,8 +30,6 @@ const flightsSchema = new Schema({
       type: Date,
       required: true,
     },
-    
-    
     Price: {
       type: Number,
       required: false,
