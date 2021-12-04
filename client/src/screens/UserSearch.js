@@ -39,8 +39,6 @@ function UserSearch(props) {
       Cabin: props.location.flightData.Cabin,
       Flight_Date: props.location.flightData.FromDate,
       Arrival_Date: props.location.flightData.ToDate,
-
-
     }
     const returnFlightData = {
       From: props.location.flightData.To,
@@ -121,7 +119,11 @@ function UserSearch(props) {
             <label style={{ textAlign: 'center', fontFamily: 'Archivo Black', position: 'absolute', left: 250}}>Flight Date</label>
             <label style={{ textAlign: 'center', fontFamily: 'Archivo Black', position: 'absolute', left: 400 }}>Cabin</label>
           </div>
-        {departFlights.map((flight) => (
+        {departFlights.map((flight) => {
+          if(selectedReturnDate !== '' && new Date(flight.Flight_Date).getTime()>new Date(selectedReturnDate).getTime()){
+            return null;
+          }
+          return(
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <div style={{ height: 80, display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 50}}>               
               <label style={{ textAlign: 'center', fontFamily: 'Archivo' }}>{flight.From}</label>
@@ -129,20 +131,20 @@ function UserSearch(props) {
               <label style={{ textAlign: 'center', fontFamily: 'Archivo', position: 'absolute', left: 250}}>{flight.Flight_Date!=null?flight.Flight_Date.substring(0,10):null}</label>
               <label style={{ textAlign: 'center', fontFamily: 'Archivo', position: 'absolute', left: 400 }}>{flight.Cabin}</label>
               <Button1 title={'View Details'} style={{ width: 160, height: 35, position: 'absolute', right: 230  }} onClick={() => viewDepartDetailsID === flight._id ? setViewDepartDetailsID('') : (setViewDepartDetailsID(flight._id))} />
-              {selectedDepart === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50 }}  /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50  }}  onClick={() => setSelectedDepart(flight._id)}/>}
+              {selectedDepart === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50 }} onClick={()=>{setSelectedDepart('');setselectedDepDate(''); }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50  }}  onClick={() => {setSelectedDepart(flight._id); setselectedDepDate(flight.Flight_Date)}}/>}
             </div>
             {viewDepartDetailsID != null && viewDepartDetailsID===flight._id ? 
                 <div style={{height: 80, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                     <label style={{fontFamily: 'Archivo'}}>Flight Number:{flight.FlightNumber?flight.FlightNumber:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Depart time: {flight.DepartureTime?flight.DepartureTime:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Arrival time: {flight.ArrivalTime?flight.ArrivalTime:'N/A'}</label>
-                    <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Trip duration: {flight.Trip_Duration?flight.Trip_Duration:'N/A'}</label>
+                    <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Trip duration:  {flight.Flight_Date === flight.Arrival_Date? (flight.ArrivalTime - flight.DepartureTime) : ((((new Date(flight.Arrival_Date).getTime() - new Date(flight.Flight_Date).getTime()) / (1000 * 3600 * 24)) - 2) * 24) + (24 - new Date(flight.Flight_Date).getHours()) + new Date(flight.Arrival_Date).getHours()}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Baggage Allowance: {flight.Baggage_Allowance?flight.Baggage_Allowance:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Price: ${flight.Price?flight.Price:'N/A'}</label>
                 </div>
               : null}
           </div>
-            ))}
+        );})}
         <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000'}}>
         <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25}}>Choose Return Flight</label>
       </div>
@@ -152,7 +154,11 @@ function UserSearch(props) {
             <label style={{ textAlign: 'center', fontFamily: 'Archivo Black', position: 'absolute', left: 250}}>Flight Date</label>
             <label style={{ textAlign: 'center', fontFamily: 'Archivo Black', position: 'absolute', left: 400 }}>Cabin</label>
           </div>
-        {returnFlights.map((flight) => (
+        {returnFlights.map((flight) => {
+          if(selectedDepDate !== '' && new Date(flight.Flight_Date).getTime()<new Date(selectedDepDate).getTime()){
+            return null;
+          }
+          return (
           <div style={{display: 'flex', flexDirection: 'column'}}>
             <div style={{ height: 80, display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 50}}>               
               <label style={{ textAlign: 'center', fontFamily: 'Archivo' }}>{flight.From}</label>
@@ -160,20 +166,20 @@ function UserSearch(props) {
               <label style={{ textAlign: 'center', fontFamily: 'Archivo', position: 'absolute', left: 250}}>{flight.Flight_Date!=null?flight.Flight_Date.substring(0,10):null}</label>
               <label style={{ textAlign: 'center', fontFamily: 'Archivo', position: 'absolute', left: 400 }}>{flight.Cabin}</label>
               <Button1 title={'View Details'} style={{ width: 160, height: 35, position: 'absolute', right: 230  }} onClick={() => viewReturnDetailsID === flight._id ? setViewReturnDetailsID('') : (setViewReturnDetailsID(flight._id))} />
-              {selectedReturn === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50 }}  /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50  }}  onClick={() => setSelectedReturn(flight._id)}/>}
+              {selectedReturn === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50 }} onClick={()=>{setSelectedReturn(''); setselectedReturnDate(''); }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50  }}  onClick={() => {setSelectedReturn(flight._id);setselectedReturnDate(flight.Flight_Date)}}/>}
             </div>
             {viewReturnDetailsID != null && viewReturnDetailsID===flight._id ? 
                 <div style={{height: 80, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                     <label style={{fontFamily: 'Archivo'}}>Flight Number:{flight.FlightNumber?flight.FlightNumber:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Depart time: {flight.DepartureTime?flight.DepartureTime:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Arrival time: {flight.ArrivalTime?flight.ArrivalTime:'N/A'}</label>
-                    <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Trip duration: {flight.Trip_Duration?flight.Trip_Duration:'N/A'}</label>
+                    <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Trip duration: {flight.Flight_Date === flight.Arrival_Date? (flight.ArrivalTime - flight.DepartureTime) : ((((new Date(flight.Arrival_Date).getTime() - new Date(flight.Flight_Date).getTime()) / (1000 * 3600 * 24)) - 2) * 24) + (24 - new Date(flight.Flight_Date).getHours()) + new Date(flight.Arrival_Date).getHours()}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Baggage Allowance: {flight.Baggage_Allowance?flight.Baggage_Allowance:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Price: ${flight.Price?flight.Price:'N/A'}</label>
                 </div>
               : null}
           </div>
-            ))}
+        );})}
         <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35}}>
           <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Round Trip Flight: <label style={{fontFamily: 'Archivo Black', color: '#F0A500'}}>{props.location.flightData.From} - {props.location.flightData.To}</label></label>
           <Button1 disabled={selectedDepart === '' || selectedReturn === ''} onClick={() => history.push(`/summary/${selectedDepart}/${selectedReturn}/${props.location.flightData.PassengerCount}`)} title={'Confirm Selection'} style={{fontSize: 20, position: 'absolute', right: 50, width: 180, height: 40}}/>
