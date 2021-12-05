@@ -57,7 +57,9 @@ function ChooseSeatReturn(props) {
         .then(result=> {
             history.push({
                 pathname:'/booking/payment',
-                bookingID:bookingID
+                state:{
+                    bookingID:bookingID
+                }
             });
             setLoading2(false);
         })
