@@ -7,6 +7,7 @@ import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
 import Modal from 'react-bootstrap/Modal';
 import ReactLoading from 'react-loading';
+import { durationString } from "../Utils.js";
 
 function isNullorWhiteSpace(string) {
   if (string == null) {
@@ -34,7 +35,7 @@ class FlightUpdateScreen extends Component {
       Seats_Available_on_Flight: null,
       Baggage_Allowance: null,
       Price: null,
-      SeatsBooked:null,
+      SeatsBooked: null,
       updateModal: false,
       updated: false,
       badDate: false,
@@ -66,6 +67,12 @@ class FlightUpdateScreen extends Component {
       .catch(err => console.error(err));
   };
 
+  calcDuration = () => {
+    var d1 = new Date(this.state.Flight_Date + "T" + this.state.DepartureTime);
+    var d2 = new Date(this.state.Arrival_Date + "T" + this.state.ArrivalTime);
+    return d2 - d1;
+  }
+
   onChange = e => {
     var value = e.target.value
     this.setState({ [e.target.name]: value });
@@ -90,33 +97,18 @@ class FlightUpdateScreen extends Component {
   }
 
   preSubmit = (e) => {
-    this.setState({updated:false})
-    this.setState({badDate: false})
+    this.setState({ updated: false })
+    this.setState({ badDate: false })
     var array1 = Array.prototype.slice.call(document.getElementById("d1").children, 0);
     var array2 = Array.prototype.slice.call(document.getElementById("d2").children, 0);
     var array3 = document.getElementsByName('Price')[0];
     const list = array1.concat(array2).concat(array3);
-    console.log(list);
     for (let child of list) {
-      console.log("in loop");
       if (isNullorWhiteSpace(this.state[child.name]) && child.required === true) {
         this.setState({ updateModal: true });
         return;
       }
     };
-    var dep = new Date(this.state.Flight_Date+"T"+this.state.DepartureTime);
-    var arr = new Date(this.state.Arrival_Date+"T"+this.state.ArrivalTime);
-    if(dep>arr){
-      this.setState({badDate: true});
-      return;
-    }
-
-    if(this.state.SeatsBooked && this.state.Seats_Available_on_Flight<this.state.SeatsBooked.length){
-      alert(`There are ${this.state.SeatsBooked.length} booked seats, so the number of available seats cannot fall below this number.\nThis feature will be added shortly. Sorry for any inconvenience!`);
-      this.setState({Seats_Available_on_Flight:this.orig.Seats_Available_on_Flight});
-      return;
-    }
-    
     this.onSubmit(e);
 
   }
@@ -136,10 +128,25 @@ class FlightUpdateScreen extends Component {
       Price: isNullorWhiteSpace(this.state.Price) ? this.orig.Price : this.state.Price
     };
 
+    console.log(this.displayDate(data.Arrival_Date.getTime()));
+    var dep = new Date(this.displayDate(data.Flight_Date.getTime()) + "T" + data.DepartureTime);
+    var arr = new Date(this.displayDate(data.Arrival_Date.getTime()) + "T" + data.ArrivalTime);
+    console.log(arr);
+    if (dep > arr) {
+      this.setState({ badDate: true });
+      return;
+    }
+    if (this.state.SeatsBooked && data.Seats_Available_on_Flight < this.state.SeatsBooked.length) {
+      alert(`There are ${this.state.SeatsBooked.length} booked seats, so the number of available seats cannot fall below this number.\nThis feature will be added shortly. Sorry for any inconvenience!`);
+      this.setState({ Seats_Available_on_Flight: this.orig.Seats_Available_on_Flight });
+      return;
+    }
+
+    data['Trip_Duration'] = arr-dep;
     axios.put('http://localhost:8000/adminUpdateFlight/' + this.props.match.params.id, data)
       .then(result => {
         this.setState(data);
-        this.setState({ Flight_Date: this.displayDate(this.state.Flight_Date), Arrival_Date:this.displayDate(this.state.Arrival_Date) });
+        this.setState({ Flight_Date: this.displayDate(this.state.Flight_Date), Arrival_Date: this.displayDate(this.state.Arrival_Date) });
         this.orig = this.state;
         this.setState({ updated: true });
       })
@@ -305,15 +312,15 @@ class FlightUpdateScreen extends Component {
                 />
                 {this.state.updated ?
                   <span
-                    style={{ fontFamily: 'Archivo', color: '#047305', marginTop: -20, marginBottom:0, fontSize: 20 }}
+                    style={{ fontFamily: 'Archivo', color: '#047305', marginTop: -20, marginBottom: 0, fontSize: 20 }}
                   >Flight Updated Successfully!</span>
-                  : 
-                    (this.state.badDate?
-                    <span
-                    style={{ fontFamily: 'Archivo', color: '#b33435', marginTop: -20, marginBottom:0, fontSize: 20 }}
-                  >Departure is after arrival! Please fix this and try again</span>
                   :
-                  null
+                  (this.state.badDate ?
+                    <span
+                      style={{ fontFamily: 'Archivo', color: '#b33435', marginTop: -20, marginBottom: 0, fontSize: 20 }}
+                    >Departure is after arrival! Please fix this and try again</span>
+                    :
+                    null
                   )}
                 <Button1 title="Save" style={{ width: 200, height: 50, marginTop: 30 }} onClick={this.preSubmit}></Button1>
               </div>
