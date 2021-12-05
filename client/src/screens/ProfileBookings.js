@@ -21,8 +21,8 @@ function ProfileBookings(props) {
   const [bookings, setBookings] = useState([]);
   const [toDelete, setToDelete] = useState({});
   const id1 = useState(props.match.params.id1)[0];
-  const [departFlights, setDepartFlights] = useState([]);
-  const [returnFlights, setReturnFlights] = useState([]);
+  const [departFlights, setDepartFlights] = useState({});
+  const [returnFlights, setReturnFlights] = useState({});
   const [i,seti]=useState();
 
   useEffect(() => {
@@ -36,11 +36,11 @@ function ProfileBookings(props) {
         })
     }
 
-    axios.post('http://localhost:8000/getBookingByID/', { _id: bookingID })
-      .then(res => {
-        setBookings(res.data);
-      })
-    getData();
+    // axios.post('http://localhost:8000/getBookingByID/', { _id: bookingID })
+    //   .then(res => {
+    //     setBookings(res.data);
+    //   })
+    getData(); 
     
 
   }, [userID, bookingID]);
@@ -62,15 +62,24 @@ function ProfileBookings(props) {
     setUser(res.data[0]);
     console.log(res.data[0].Bookings[0]);
     const arr = [];
-    const arr2 = [];
-    const arr3 = [];
+    const arr2 = {};
+    const arr3 = {};
     for (let i = 0; i < res.data[0].Bookings.length; i++) {
       let res2 = await axios.post('http://localhost:8000/getBookingByID/', { _id: res.data[0].Bookings[i] })
-      let res3 = await axios.post('http://localhost:8000/adminsearchflights/', { _id: res2.data[0].departFlightID })
-      let res4 = await axios.post('http://localhost:8000/adminsearchflights/', { _id: res2.data[0].returnFlightID })
+      console.log(res2);
+      if(!res2){
+        console.log('in if statement')
+        continue;
+      }
       arr.push(res2.data[0]);
-      arr2.push(res3.data[0]);
-      arr3.push(res4.data[0]);
+      if (!arr2[res2.data[0].departFlightID]){
+        let res3 = await axios.post('http://localhost:8000/adminsearchflights/', { _id: res2.data[0].departFlightID })
+        arr2[res2.data[0].departFlightID] = res3.data[0];
+      }
+      if (!arr3[res2.data[0].returnFlightID]){
+        let res4 = await axios.post('http://localhost:8000/adminsearchflights/', { _id: res2.data[0].returnFlightID })
+        arr3[res2.data[0].returnFlightID] = res4.data[0];
+      }
     }
     console.log('Bookings: ', arr)
     console.log('Dep: ', arr2)
@@ -89,8 +98,8 @@ function ProfileBookings(props) {
           return booking._id !== toDel._id;
         }))
 
-        var TotalPrice = (departFlights[i].Price*toDel.PassengerCount)+(returnFlights[i].Price*toDel.PassengerCount);
-        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[i].From}) to (${departFlights[i].To}) has been cancelled upon your request.(${TotalPrice}) will be refunded to your bank account`;
+        var TotalPrice = (departFlights[toDel.departFlightID].Price*toDel.PassengerCount)+(returnFlights[toDel.returnFlightID].Price*toDel.PassengerCount);
+        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[toDel.departFlightID].From}) to (${departFlights[toDel.departFlightID].To}) has been cancelled upon your request.(${TotalPrice}) will be refunded to your bank account`;
         let mailOptions = {
           from: 'dunesairlines@gmail.com',
           to: user.Email,
@@ -109,10 +118,10 @@ function ProfileBookings(props) {
           console.log('user updated')
         })
 
-        const arrF1 = departFlights[i].SeatsBooked.filter((b)=>{
+        const arrF1 = departFlights[toDel.departFlightID].SeatsBooked.filter((b)=>{
           return !toDel.departFlightSeats.includes(b);
         })
-        const arrF2 = returnFlights[i].SeatsBooked.filter((b)=>{
+        const arrF2 = returnFlights[toDel.returnFlightID].SeatsBooked.filter((b)=>{
           return !toDel.returnFlightSeats.includes(b);
         })
 
@@ -188,8 +197,12 @@ function ProfileBookings(props) {
           {/* page title */}
           <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20 }}> Your Reservations </label>
           {/* grey boxes */}
-          {bookings.map((onebooking, i) => {
-            var TPrice = (departFlights[i].Price*onebooking.PassengerCount)+(returnFlights[i].Price*onebooking.PassengerCount);
+          
+          {
+          bookings.length>0?
+          bookings.map((onebooking, i) => {
+            console.log(bookings.length);
+            var TPrice = (departFlights[onebooking.departFlightID].Price*onebooking.PassengerCount)+(returnFlights[onebooking.returnFlightID].Price*onebooking.PassengerCount);
             return (
               <div style={{ width: '90%', height: 400, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 150 }}>
                 {/* text inside boxes */}
@@ -206,11 +219,11 @@ function ProfileBookings(props) {
                   <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20, marginLeft: 30 }}>Departure Flight Details:</label>
                   <br />
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> From:
-                    {' ' + (departFlights[i] ? departFlights[i].From : "NA")}
+                    {' ' + (departFlights[onebooking.departFlightID] ? departFlights[onebooking.departFlightID].From : "NA")}
                     <br />
                   </label>
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> To:
-                    {' ' + (departFlights[i] ? departFlights[i].To : "NA")}
+                    {' ' + (departFlights[onebooking.departFlightID] ? departFlights[onebooking.departFlightID].To : "NA")}
                     <br />
                   </label>
 
@@ -223,11 +236,11 @@ function ProfileBookings(props) {
                   <br />
 
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> From:
-                    {' ' + (departFlights[i] ? departFlights[i].To : "NA")}
+                    {' ' + (departFlights[onebooking.departFlightID] ? departFlights[onebooking.departFlightID].To : "NA")}
                     <br />
                   </label>
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> To:
-                    {' ' + (departFlights[i] ? departFlights[i].From : "NA")}
+                    {' ' + (departFlights[onebooking.departFlightID] ? departFlights[onebooking.departFlightID].From : "NA")}
                     <br />
                   </label>
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> Return Flight Seats:
@@ -244,7 +257,10 @@ function ProfileBookings(props) {
               </div>
             );
           }
-          )}
+          )
+          :
+          null
+        }
         </div>
           }
       </Container>
