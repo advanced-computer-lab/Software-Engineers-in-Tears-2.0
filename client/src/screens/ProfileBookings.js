@@ -88,7 +88,8 @@ function ProfileBookings(props) {
           return booking._id !== toDel._id;
         }))
 
-        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[i].From}) to (${departFlights[i].To}) has been cancelled upon your request.(${departFlights[i].Price}) will be refunded to your bank account`;
+        var TotalPrice = (departFlights[i].Price*toDel.PassengerCount)+(returnFlights[i].Price*toDel.PassengerCount);
+        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[i].From}) to (${TotalPrice}) has been cancelled upon your request.(${departFlights[i].Price}) will be refunded to your bank account`;
         let mailOptions = {
           from: 'dunesairlines@gmail.com',
           to: user.Email,
@@ -187,13 +188,18 @@ function ProfileBookings(props) {
           <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20 }}> Your Reservations </label>
           {/* grey boxes */}
           {bookings.map((onebooking, i) => {
+            var TPrice = (departFlights[i].Price*onebooking.PassengerCount)+(returnFlights[i].Price*onebooking.PassengerCount);
             return (
-              <div style={{ width: '90%', height: 350, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 150 }}>
+              <div style={{ width: '90%', height: 400, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 150 }}>
                 {/* text inside boxes */}
                 <label style={{ marginLeft: 30, marginTop: 200 }}>
                   <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20 }}>Booking Number: {' ' + onebooking._id} <br /></label>
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> PassengerCount:
                     {' ' + onebooking.PassengerCount}
+                    <br />
+                  </label>
+                  <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> Total Price: $
+                    {(TPrice)}
                     <br />
                   </label>
                   <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20, marginLeft: 30 }}>Departure Flight Details:</label>
@@ -230,7 +236,7 @@ function ProfileBookings(props) {
                 </label>
                 <Button1
                   title={'Cancel Reservation'}
-                  style={{ width: 350, height: 50, marginLeft: 800, marginTop: 10, marginBottom: 70 }}
+                  style={{ width: 350, height: 50, marginLeft: 800, marginTop: 30, marginBottom: 70 }}
                   onClick={() => { setCancelModal(true); setToDelete(onebooking); seti(i)  }}
                 />
                 <label></label>
