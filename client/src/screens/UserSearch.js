@@ -9,6 +9,7 @@ import NormalHeader from "../components/NormalHeader";
 import Footer from "../components/Footer";
 import ReactLoading from 'react-loading';
 import Button2 from "../components/Button2";
+import { durationString } from "../Utils.js";
 
 
 
@@ -138,7 +139,7 @@ function UserSearch(props) {
                     <label style={{fontFamily: 'Archivo'}}>Flight Number:{flight.FlightNumber?flight.FlightNumber:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Depart time: {flight.DepartureTime?flight.DepartureTime:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Arrival time: {flight.ArrivalTime?flight.ArrivalTime:'N/A'}</label>
-                    <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Trip duration:  {flight.Flight_Date === flight.Arrival_Date? (flight.ArrivalTime - flight.DepartureTime) : ((((new Date(flight.Arrival_Date).getTime() - new Date(flight.Flight_Date).getTime()) / (1000 * 3600 * 24)) - 2) * 24) + (24 - new Date(flight.Flight_Date).getHours()) + new Date(flight.Arrival_Date).getHours()}</label>
+                    <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Trip duration:  {durationString(flight.Trip_Duration)}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Baggage Allowance: {flight.Baggage_Allowance?flight.Baggage_Allowance:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Price: ${flight.Price?flight.Price:'N/A'}</label>
                 </div>
@@ -173,7 +174,7 @@ function UserSearch(props) {
                     <label style={{fontFamily: 'Archivo'}}>Flight Number:{flight.FlightNumber?flight.FlightNumber:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Depart time: {flight.DepartureTime?flight.DepartureTime:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Arrival time: {flight.ArrivalTime?flight.ArrivalTime:'N/A'}</label>
-                    <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Trip duration: {flight.Flight_Date === flight.Arrival_Date? (flight.ArrivalTime - flight.DepartureTime) : ((((new Date(flight.Arrival_Date).getTime() - new Date(flight.Flight_Date).getTime()) / (1000 * 3600 * 24)) - 2) * 24) + (24 - new Date(flight.Flight_Date).getHours()) + new Date(flight.Arrival_Date).getHours()}</label>
+                    <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Trip duration:  {durationString(flight.Trip_Duration)}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Baggage Allowance: {flight.Baggage_Allowance?flight.Baggage_Allowance:'N/A'}</label>
                     <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Price: ${flight.Price?flight.Price:'N/A'}</label>
                 </div>
