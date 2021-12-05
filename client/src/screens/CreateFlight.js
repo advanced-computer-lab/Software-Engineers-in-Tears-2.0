@@ -39,8 +39,8 @@ function CreateFlight() {
   function create(event){
    event.preventDefault();
 
-   var isValidDep =  /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(departureTime);
-   var isValidReturn = /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(arrivalTime);
+  // var isValidDep =  /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(departureTime);
+  // var isValidReturn = /^([0-1][0-9]|2[0-3]):([0-5][0-9])$/.test(arrivalTime);
    var d1=new Date(flightDate+"T"+departureTime);
    var d2=new Date(arrivalDate+"T"+arrivalTime);
    var duration= d2.getTime()-d1.getTime();
@@ -57,7 +57,7 @@ function CreateFlight() {
       setTime1FormatError(false);
       setDateError(false);
     }
-    else if(isValidDep===false){
+  /*  else if(isValidDep===false){
      
       setTime2FormatError(false);
       setTime1FormatError(true);
@@ -75,7 +75,7 @@ function CreateFlight() {
      setError(false);
      setTimeError(false);
      setDateError(false);
-    }
+    }*/
     
     else if((new Date(flightDate).getTime()===new Date(arrivalDate).getTime())&&departureTime>arrivalTime){
       console.log("yes");
@@ -144,6 +144,7 @@ function CreateFlight() {
   return (
     
     <Container>
+      
     <ProfileHeader title={'Admin'} path={'/admin'}/>
     <div style={{height: 80, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
       <text style={{fontFamily: 'Archivo Black', color: '#f4f4f4', fontSize: 30, marginLeft: 50}}>Create Flight</text>
@@ -298,7 +299,7 @@ function CreateFlight() {
             
            <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Departure Time: <label style={{color: '#F0A500'}}>*</label></label>
            <Input
-            type='text'
+            type='time'
             value={departureTime}
             style={{
               height: 39,
@@ -315,7 +316,7 @@ function CreateFlight() {
            />
            <label style={{marginTop: 20, fontFamily: 'Archivo Black'}}>Arrival Time: <label style={{color: '#F0A500'}}>*</label></label>
            <Input
-            type='text'
+            type='time'
             value={arrivalTime}
             style={{
               height: 39,
