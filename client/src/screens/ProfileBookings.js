@@ -6,6 +6,7 @@ import ButtonIcon from "../components/ButtonIcon";
 import Button1 from "../components/Button1";
 import Modal from 'react-bootstrap/Modal';
 import Button2 from "../components/Button2";
+import Button4 from "../components/Button4";
 import ReactLoading from 'react-loading';
 
 function ProfileBookings(props) {
@@ -89,7 +90,7 @@ function ProfileBookings(props) {
         }))
 
         var TotalPrice = (departFlights[i].Price*toDel.PassengerCount)+(returnFlights[i].Price*toDel.PassengerCount);
-        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[i].From}) to (${TotalPrice}) has been cancelled upon your request.(${departFlights[i].Price}) will be refunded to your bank account`;
+        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[i].From}) to (${departFlights[i].To}) has been cancelled upon your request.(${TotalPrice}) will be refunded to your bank account`;
         let mailOptions = {
           from: 'dunesairlines@gmail.com',
           to: user.Email,
@@ -234,7 +235,7 @@ function ProfileBookings(props) {
                   </label>
 
                 </label>
-                <Button1
+                <Button4
                   title={'Cancel Reservation'}
                   style={{ width: 350, height: 50, marginLeft: 800, marginTop: 30, marginBottom: 70 }}
                   onClick={() => { setCancelModal(true); setToDelete(onebooking); seti(i)  }}
