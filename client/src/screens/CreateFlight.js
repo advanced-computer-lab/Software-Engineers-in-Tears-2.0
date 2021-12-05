@@ -49,7 +49,7 @@ function CreateFlight() {
    var t = new Date(arrivalDate)
    
 
-    if(from === '' | to === '' | flightDate === ''  | cabin === '' | seats === ''|arrivalTime===''|departureTime===''|seats===''|airportTerminal==='' |arrivalDate===''|baggage===''|price===''){
+    if(from === '' | to === '' | flightDate === ''  | cabin === '' | seats === ''|arrivalTime===''|departureTime===''|flightNumber===''|airportTerminal==='' |arrivalDate===''|baggage===''|price===''){
       setError(true);
       setCreated(false);
       setTime2FormatError(false);
@@ -364,26 +364,27 @@ function CreateFlight() {
             }}
             onChange={(e) =>setPrice(e.target.value)}
            />
-           <div style={{ display: 'flex',flexDirection:'column ', marginRight: '0px' }}>
-           {error ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 40, fontSize: 20,alignItems: 'center'}}>Please fill in all the details!</text> : null}
-          {timeerror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 40, fontSize: 20,alignItems: 'center',marginLeft: '-100px'}}>Your Departure time is after your Arrival time!</text> : null}
-          {time1formaterror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 40, fontSize: 20,alignItems: 'center',marginLeft: '-100px'}}>Please enter correct departure time format : hh:mm:ss!</text> : null}
-          {time2formaterror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 40, fontSize: 20,alignItems: 'center',marginLeft: '-100px'}}>Please enter correct arrival time format : hh:mm:ss!</text> : null}
-          {dateerror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 40, fontSize: 20,alignItems: 'center',marginLeft: '-100px'}}>Your departure date is after your arrival date!</text> : null}
-          {created ? <text style={{fontFamily: 'Archivo', color: '#047305', marginTop: 40, fontSize: 20}}>Flight successfully created!</text> : null}
+           </Div1>
+           </div>
+           <div style={{ display: 'flex',flexDirection:'column ', justifyContent:'center', alignItems:'center' }}>
+           {error ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 10, fontSize: 20,alignItems: 'center'}}>Please fill in all the details!</text> : null}
+          {timeerror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 10, fontSize: 20,alignItems: 'center',marginLeft: '-100px'}}>Your Departure time is after your Arrival time!</text> : null}
+          {time1formaterror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 10, fontSize: 20,alignItems: 'center',marginLeft: '-100px'}}>Please enter correct departure time format : hh:mm:ss!</text> : null}
+          {time2formaterror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 10, fontSize: 20,alignItems: 'center',marginLeft: '-100px'}}>Please enter correct arrival time format : hh:mm:ss!</text> : null}
+          {dateerror ? <text style={{fontFamily: 'Archivo', color: '#DD1111', marginTop: 10, fontSize: 20,alignItems: 'center',marginLeft: '-100px'}}>Your departure date is after your arrival date!</text> : null}
+          {created ? <text style={{fontFamily: 'Archivo', color: '#047305', marginTop: 10, fontSize: 20}}>Flight successfully created!</text> : null}
 
            <Button1 
             style={{
               width: 200,
               height: 50,
-              marginTop: 0,
-              marginRight: 380
+              marginTop: 10,
             }}
             title={'Create'}
             onClick={create}
 />          
-           </div>
-           </Div1>
+           
+           
            
            
            
