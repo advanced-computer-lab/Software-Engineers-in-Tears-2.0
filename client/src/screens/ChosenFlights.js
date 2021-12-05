@@ -34,6 +34,7 @@ function ChosenFlights(props) {
           .catch(err => {
             console.log(err);
           })
+
         }
         axios.post('http://localhost:8000/adminsearchflights/', {_id: id1})
         .then(res => {
@@ -97,7 +98,7 @@ function ChosenFlights(props) {
       : 
         <div style={{display: 'flex', flexDirection: 'column', width: '100%', minHeight: 557, backgroundColor: '#fff'}}>
             <div style={{height: 70, width: '100%', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-              <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>Booking Summary</label>
+              <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>{props.location['booking']?`${user['First_Name']} ${user['Last_Name']}'s Flight Iternary`:'Booking Summary'}</label>
             </div>
             <div style={{height: 70, width: '100%', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
               <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Depart <label style={{fontFamily: 'Archivo Black', color: '#fff'}}>{flight1.Flight_Date!=null?flight1.Flight_Date.substring(0,10):null}</label></label>
@@ -129,10 +130,13 @@ function ChosenFlights(props) {
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Cabin</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{flight1.Cabin}</label>
               </div>
+              {props.location['booking']?
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Seats</label>
-                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>N/A</label>
+                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{props.location['booking'].departFlightSeats.join(', ')}</label>
               </div>
+              :null
+              }
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Price</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>${flight1.Price != null ? flight1.Price*passengerCount : 'N/A'}</label>
@@ -168,10 +172,13 @@ function ChosenFlights(props) {
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Cabin</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{flight2.Cabin}</label>
               </div>
+              {props.location['booking']?
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Seats</label>
-                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>N/A</label>
+                <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{props.location['booking'].returnFlightSeats.join(', ')}</label>
               </div>
+              :null
+              }
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Price</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>${flight2.Price != null ? flight2.Price*passengerCount  : 'N/A'}</label>
@@ -179,8 +186,15 @@ function ChosenFlights(props) {
             </div>
             <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35}}>
               <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Booking Total: <label style={{fontFamily: 'Archivo Black', color: '#F0A500'}}>${passengerCount*flight1.Price + passengerCount*flight2.Price}</label></label>
+              {props.location['booking']?<>
+              <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 200}}>Booking ID: <label style={{fontFamily: 'Archivo Black', color: '#F0A500'}}>{props.location['booking']._id}</label></label>
+              <Button1 title='My Flight Bookings' onClick={()=>history.push('/profile/bookings')} style={{fontSize:20, width:200, height:40, marginLeft:100}} />
+              <Button1 title='Back to Home Page' onClick={()=>history.push('/')} style={{fontSize:20, width:200, height:40, marginLeft:20}} />
+              </>
+              :
               <Button1 onClick={() => handleSubmit()} loading={loading2} title={'Confirm Booking'} style={{fontSize: 20, position: 'absolute', right: 50, width: 180, height: 40}}/>
-            </div>
+              }
+              </div>
         </div> 
       }
       <Footer />  
