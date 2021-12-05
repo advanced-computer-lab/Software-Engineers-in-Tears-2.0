@@ -7,12 +7,6 @@ import Button1 from "../components/Button1";
 import Modal from 'react-bootstrap/Modal';
 import Button2 from "../components/Button2";
 import ReactLoading from 'react-loading';
-//import Bookings from "../../../Models/Bookings";
-//import transporter from "../Routes/auth.js";
-//include <script src="https://smtpjs.com/v3/smtp.js"></script>;
-{/* <head>
-	<script src="https://smtpjs.com/v3/smtp.js"></script>
-</head> */}
 
 function ProfileBookings(props) {
 
@@ -20,22 +14,14 @@ function ProfileBookings(props) {
 
   const [user, setUser] = useState({});
   const userID = localStorage.getItem("userID");
-
-  // const [dummyCounter, setDummyCounter] = useState(0);
   const [cancelModal, setCancelModal] = useState(false);
-
   const [loading, setLoading] = useState(true);
   const bookingID = props.match.params.bookingID;
   const [bookings, setBookings] = useState([]);
-
   const [toDelete, setToDelete] = useState({});
-
-  //const [flight, setFlight] = useState({});
   const id1 = useState(props.match.params.id1)[0];
-
   const [departFlights, setDepartFlights] = useState([]);
   const [returnFlights, setReturnFlights] = useState([]);
-
   const [i,seti]=useState();
 
   useEffect(() => {
@@ -52,10 +38,9 @@ function ProfileBookings(props) {
     axios.post('http://localhost:8000/getBookingByID/', { _id: bookingID })
       .then(res => {
         setBookings(res.data);
-        // setLoading(false);
       })
     getData();
-    //setLoading(false);
+    
 
   }, [userID, bookingID]);
 
@@ -64,8 +49,6 @@ function ProfileBookings(props) {
     axios.post('http://localhost:8000/adminsearchflights/', { _id: id })
       .then(res => {
         return res.data[0];
-        // setDummyCounter(dummyCounter +1);
-        // setLoading(false);
       })
       .catch(err => {
         console.log(err);
@@ -103,8 +86,6 @@ function ProfileBookings(props) {
       .then(() => {
         setBookings(bookings.filter((booking) => {
           return booking._id !== toDel._id;
-
-          //TODO:reduce seatsbooked
         }))
 
         var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[i].From}) to (${departFlights[i].To}) has been cancelled upon your request.(${departFlights[i].Price}) will be refunded to your bank account`;
@@ -193,31 +174,19 @@ function ProfileBookings(props) {
           <ButtonIcon path={"bookings"} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Bookings'} selected={true} />
           <Button1 style={{ width: 100, height: 40, fontSize: 15, position: 'absolute', bottom: 30 }} title={'Logout'} onClick={() => { localStorage.clear(); history.push('/') }} />
         </div>
-
-        {/* //TODO: handle Loading
-         // TODO: display booking id for each booking */}
-        {/* load component */}
+      
+        {/* page loading handling */}
         {loading?
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: 'rgb(244, 244, 244)' }}>
           <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
         </div>
-
         :
-
-
-
         /*screen excluding nav bar */
         <div style={{ display: 'flex', flexDirection: 'column', width: window.innerWidth - 200, height: window.innerHeight, alignItems: 'center' }}>
           {/* page title */}
           <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20 }}> Your Reservations </label>
           {/* grey boxes */}
           {bookings.map((onebooking, i) => {
-
-            // var flight=getFlight(onebooking.departFlightID);
-
-            var flight = departFlights;
-            //var flightret= returnFlights;
-
             return (
               <div style={{ width: '90%', height: 350, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 150 }}>
                 {/* text inside boxes */}

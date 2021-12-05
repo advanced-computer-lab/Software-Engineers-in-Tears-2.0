@@ -12,7 +12,7 @@ exports.sendMail = (req, res) => {
     })
 
 
-    // // email content
+    // email content in the profile booking screen
 
 
     // using transporter to send the email

@@ -2,7 +2,6 @@ const Bookings = require('../Models/Bookings');
 const Flights= require ('../Models/Flights');
 
 
-
 exports.createBooking = (req, res)=>{
     const departFlightID= req.body.departFlightID;
     const returnFlightID= req.body.returnFlightID;
@@ -27,17 +26,9 @@ exports.updateBooking = (req, res)=>{
   .catch(err => {console.log(err); res.status(500);});
 }
 
-// let mailOptions={
-//     from:'dunesairlines@gmail.com',
-//     to:"aya_saleh2@yahoo.com",
-//     subject:'Booking Cancelation',
-//     text:'hello',
-//     html:'<p> Your flight reservation has been cancelled upon ypur request.The amount will be refunded to your bank account</p>',
-//   };
 
 exports.deleteBooking =(req,res)=>{
   Bookings.findByIdAndDelete(req.params.id)
-  //Flights.findById(req.departFlightID)  TODO: decrement the seatsBooked array
   .then(result => {
     res.status(200).send("Reservation Deleted");
     console.log('Booking has been deleted successfully');
