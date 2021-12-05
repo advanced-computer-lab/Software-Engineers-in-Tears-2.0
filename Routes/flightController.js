@@ -8,7 +8,11 @@ exports.createFlight = (req, res)=>{
   const From= req.body.From;
   const To= req.body.To;
   const Flight_Date= req.body.Flight_Date;
+  const Arrival_Date= req.body.Arrival_Date;
   const Cabin= req.body.Cabin;
+  const Baggage_Allowance= req.body.Baggage_Allowance;
+  const Trip_Duration =req.body.Trip_Duration;
+  const Price =req.body.Price;
   const Seats_Available_on_Flight= req.body.Seats_Available_on_Flight;
   const newFlight= new Flights({
     FlightNumber,
@@ -18,8 +22,13 @@ exports.createFlight = (req, res)=>{
     From,
     To,
     Flight_Date,
+    Arrival_Date,
     Cabin,
-    Seats_Available_on_Flight
+    Seats_Available_on_Flight,
+    Baggage_Allowance,
+    Trip_Duration,
+    Price
+
   });
   newFlight.save();
 }
