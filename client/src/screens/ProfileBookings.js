@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
@@ -15,21 +15,21 @@ import ReactLoading from 'react-loading';
 </head> */}
 
 function ProfileBookings(props) {
-  
+
   const history = useHistory();
-  
+
   const [user, setUser] = useState({});
   const userID = localStorage.getItem("userID");
-  
+
   // const [dummyCounter, setDummyCounter] = useState(0);
   const [cancelModal, setCancelModal] = useState(false);
-  
+
   const [loading, setLoading] = useState(true);
   const bookingID = props.match.params.bookingID;
   const [bookings, setBookings] = useState([]);
-  
+
   const [toDelete, setToDelete] = useState('');
-  
+
   //const [flight, setFlight] = useState({});
   const id1 = useState(props.match.params.id1)[0];
 
@@ -37,63 +37,66 @@ function ProfileBookings(props) {
   const [returnFlights, setReturnFlights] = useState([]);
 
   useEffect(() => {
-    if(userID){
-      axios.post('http://localhost:8000/getUserByID/', {_id: userID})
-      .then(res => {
-        setUser(res.data[0]);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+    if (userID) {
+      axios.post('http://localhost:8000/getUserByID/', { _id: userID })
+        .then(res => {
+          setUser(res.data[0]);
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
 
-    axios.post('http://localhost:8000/getBookingByID/', {_id: bookingID})
-    .then(res => {
+    axios.post('http://localhost:8000/getBookingByID/', { _id: bookingID })
+      .then(res => {
         setBookings(res.data);
         // setLoading(false);
       })
     getData();
-      //setLoading(false);
+    //setLoading(false);
 
-  }, [userID,bookingID]);
+  }, [userID, bookingID]);
 
 
-  function getFlight(id){
-    axios.post('http://localhost:8000/adminsearchflights/', {_id: id})
-        .then(res => {
-            return res.data[0];
-           // setDummyCounter(dummyCounter +1);
-           // setLoading(false);
-        })
-        .catch(err => {
-            console.log(err);
-            return null;
-        })
+  function getFlight(id) {
+    axios.post('http://localhost:8000/adminsearchflights/', { _id: id })
+      .then(res => {
+        return res.data[0];
+        // setDummyCounter(dummyCounter +1);
+        // setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        return null;
+      })
 
   }
-  const getData = async() => {
-    const res = await axios.post('http://localhost:8000/getUserByID/', {_id: localStorage.getItem("userID")});
+  const getData = async () => {
+    const res = await axios.post('http://localhost:8000/getUserByID/', { _id: localStorage.getItem("userID") });
     setUser(res.data[0]);
     console.log(res.data[0].Bookings[0]);
     const arr = [];
     const arr2 = [];
     const arr3 = [];
-    for(let i = 0; i < res.data[0].Bookings.length; i++){
-      let res2 = await axios.post('http://localhost:8000/getBookingByID/', {_id: res.data[0].Bookings[i]})
-      let res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res2.data[0].departFlightID})
-      let res4 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res2.data[0].returnFlightID})
+    for (let i = 0; i < res.data[0].Bookings.length; i++) {
+      let res2 = await axios.post('http://localhost:8000/getBookingByID/', { _id: res.data[0].Bookings[i] })
+      let res3 = await axios.post('http://localhost:8000/adminsearchflights/', { _id: res2.data[0].departFlightID })
+      let res4 = await axios.post('http://localhost:8000/adminsearchflights/', { _id: res2.data[0].returnFlightID })
       arr.push(res2.data[0]);
       arr2.push(res3.data[0]);
       arr3.push(res4.data[0]);
     }
+    console.log('Bookings: ', arr)
+    console.log('Dep: ', arr2)
+    console.log('Ret: ', arr3)
     setBookings(arr);
     setDepartFlights(arr2);
     setReturnFlights(arr3);
     setLoading(false);
-}
+  }
 
   function deleteBooking(id) {
-    
+
     axios.delete("http://localhost:8000/deleteBooking/" + id)
       .then(() => {
         setBookings(bookings.filter((booking) => {
@@ -103,145 +106,145 @@ function ProfileBookings(props) {
         }))
 
         var emailText = `Your flight reservation (ID: ${id}) from <placeholder> to <placeholder> has been cancelled upon your request.The <price calculation> will be refunded to your bank account`;
-        let mailOptions={
-          from:'dunesairlines@gmail.com',
-          to:user.Email,
-          subject:'Booking Cancelation',
-          text:emailText,
-          html:`<p> ${emailText}</p>`,
+        let mailOptions = {
+          from: 'dunesairlines@gmail.com',
+          to: user.Email,
+          subject: 'Booking Cancelation',
+          text: emailText,
+          html: `<p> ${emailText}</p>`,
         };
 
         axios.post('http://localhost:8000/sendMail', mailOptions)
-        .then(res =>{
-          console.log(res.data);
-        })
-        .catch(err => console.log(err));
+          .then(res => {
+            console.log(res.data);
+          })
+          .catch(err => console.log(err));
 
       })
-      .catch(err => console.log(err)); 
+      .catch(err => console.log(err));
   }
 
 
 
   return (
     <>
-    <Modal style={{ width: '40%', position: 'fixed', top: '35%', left: '30%', backgroundColor: '#000000', borderRadius: 20, boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)', zIndex: 1000 }} show={cancelModal}>
-      <Modal.Header>
-        <Modal.Title style={{ color: 'rgba(244,244,244,1)', fontFamily: 'Archivo Black', textAlign: 'center', marginTop: 40 }}>Are you sure you want to cancel this reservation?</Modal.Title>
-      </Modal.Header>
-      <Modal.Footer style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 120 }}>
-        <Button2
-          title={'No'}
-          style={{width: 150,height: 50 }}
-          onClick={() => setCancelModal(false)}
-        />
-        <Button1
-          title={'Yes'}
-          style={{width: 150,height: 50,marginLeft: 20 }}
-         onClick={() => { deleteBooking(toDelete); setCancelModal(false)}}
-        />
-      </Modal.Footer>
-    </Modal>
+      <Modal style={{ width: '40%', position: 'fixed', top: '35%', left: '30%', backgroundColor: '#000000', borderRadius: 20, boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5)', zIndex: 1000 }} show={cancelModal}>
+        <Modal.Header>
+          <Modal.Title style={{ color: 'rgba(244,244,244,1)', fontFamily: 'Archivo Black', textAlign: 'center', marginTop: 40 }}>Are you sure you want to cancel this reservation?</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 120 }}>
+          <Button2
+            title={'No'}
+            style={{ width: 150, height: 50 }}
+            onClick={() => setCancelModal(false)}
+          />
+          <Button1
+            title={'Yes'}
+            style={{ width: 150, height: 50, marginLeft: 20 }}
+            onClick={() => { deleteBooking(toDelete); setCancelModal(false) }}
+          />
+        </Modal.Footer>
+      </Modal>
 
 
-    <Container style={{display: "flex", flexDirection: 'row'}}>
-    <head>
-	<script src="https://smtpjs.com/v3/smtp.js"></script>
-   </head>
-        <div style={{minWidth: 200, backgroundColor: '#000', display: 'flex', flexDirection: 'column', height: window.innerHeight, marginBottom: -35, alignItems: 'center', justifyContent: 'center'}}>
-            <div style={{width: 200, backgroundColor: '#000', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 30}}>
-                <Image2
-                    src={require("../assets/images/profile-icon.png").default}
-                />
-                <label style={{color:'#F0A500', fontFamily: 'Archivo Black', fontSize: 20}}>{user.First_Name}</label>
-            </div>
-            <Button1 style={{width: 170, height: 40, fontSize: 15, position: 'absolute', top: 100}} title={'Back To Home Page'} onClick={() => history.push('/')}/>
-            <ButtonIcon path={'home'} style={{width: '100%', height: 70, fontSize: 15}} title={'Home'} onClick={() => history.push('/profile/home')}/>
-            <ButtonIcon path={"profile2"} style={{width: '100%', height: 70, fontSize: 15}} title={'My Profile'} onClick={() => history.push('/profile/account')}/>
-            <ButtonIcon path={"wallet"} style={{width: '100%', height: 70, fontSize: 15}} title={'Wallet'}/>
-            <ButtonIcon path={"bookings"} style={{width: '100%', height: 70, fontSize: 15}} title={'Bookings'} selected={true}/>
-            <Button1 style={{width: 100, height: 40, fontSize: 15, position: 'absolute', bottom: 30}} title={'Logout'} onClick={() => {localStorage.clear(); history.push('/')}}/>
+      <Container style={{ display: "flex", flexDirection: 'row' }}>
+        <head>
+          <script src="https://smtpjs.com/v3/smtp.js"></script>
+        </head>
+        <div style={{ minWidth: 200, backgroundColor: '#000', display: 'flex', flexDirection: 'column', height: window.innerHeight, marginBottom: -35, alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: 200, backgroundColor: '#000', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 30 }}>
+            <Image2
+              src={require("../assets/images/profile-icon.png").default}
+            />
+            <label style={{ color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 20 }}>{user.First_Name}</label>
+          </div>
+          <Button1 style={{ width: 170, height: 40, fontSize: 15, position: 'absolute', top: 100 }} title={'Back To Home Page'} onClick={() => history.push('/')} />
+          <ButtonIcon path={'home'} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Home'} onClick={() => history.push('/profile/home')} />
+          <ButtonIcon path={"profile2"} style={{ width: '100%', height: 70, fontSize: 15 }} title={'My Profile'} onClick={() => history.push('/profile/account')} />
+          <ButtonIcon path={"wallet"} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Wallet'} />
+          <ButtonIcon path={"bookings"} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Bookings'} selected={true} />
+          <Button1 style={{ width: 100, height: 40, fontSize: 15, position: 'absolute', bottom: 30 }} title={'Logout'} onClick={() => { localStorage.clear(); history.push('/') }} />
         </div>
 
-         {/* //TODO: handle Loading
+        {/* //TODO: handle Loading
          // TODO: display booking id for each booking */}
-         {/* load component */}
-         {/* <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: 'rgb(244, 244, 244)' }}>
+        {/* load component */}
+        {/* <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: 'rgb(244, 244, 244)' }}>
                <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
           </div> */}
-      
+
 
 
         {/*screen excluding nav bar */}
-        <div style={{display: 'flex', flexDirection: 'column', width: window.innerWidth-200, height: window.innerHeight, alignItems: 'center'}}>
-            {/* page title */}
-            <label style={{color:'#000000',fontFamily: 'Archivo Black', fontSize: 20}}> Your Reservations </label>
-            {/* grey boxes */}
-            {bookings.map((onebooking) =>{ 
-              
-             // var flight=getFlight(onebooking.departFlightID);
-            
-              var flight= departFlights;
-              //var flightret= returnFlights;
-              
-              return(
-              <div style={{width: '90%', height: 350, backgroundColor:'#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 150}}>
-                 {/* text inside boxes */}
-                <label style={{marginLeft:30,marginTop:200}}>
-                   <label style={{color:'#000000',fontFamily:'Archivo Black', fontSize:20}}>Booking Number: {' '+ onebooking._id} <br/></label>
-                   <label style={{color:'#000000', fontSize:20,marginLeft:30}}> PassengerCount:
-                    {' '+ onebooking.PassengerCount}
-                    <br/>
-                    </label>
-                   <label style={{color:'#000000',fontFamily:'Archivo Black', fontSize:20,marginLeft:30}}>Departure Flight Details:</label>
-                   <br/>
-                   <label style={{color:'#000000', fontSize:20,marginLeft:30}}> From:
-                     {' '+(flight? flight.From: "NA") }
-                    <br/>
-                    </label>
-                    <label style={{color:'#000000', fontSize:20,marginLeft:30}}> To:
-                    {' '+ (flight? flight.To: "NA")}
-                    <br/>
-                    </label>
-                    
-                    <label style={{color:'#000000', fontSize:20,marginLeft:30}}> Departure Flight Seats:  
-                    {' ' +  onebooking.departFlightSeats.join(', ')}
-                    </label> 
-                    <br/>
+        <div style={{ display: 'flex', flexDirection: 'column', width: window.innerWidth - 200, height: window.innerHeight, alignItems: 'center' }}>
+          {/* page title */}
+          <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20 }}> Your Reservations </label>
+          {/* grey boxes */}
+          {bookings.map((onebooking, i) => {
 
-                    <label style={{color:'#000000',fontFamily:'Archivo Black', fontSize:20,marginLeft:30}}>Return Flight Details: </label>
-                    <br/>
-                     
-                    <label style={{color:'#000000', fontSize:20,marginLeft:30}}> From:
-                     {' '+(flight? flight.To: "NA") }
-                    <br/>
-                    </label>
-                    <label style={{color:'#000000', fontSize:20,marginLeft:30}}> To:
-                    {' '+ (flight? flight.To: "NA")}
-                    <br/>
-                    </label>
-                    <label style={{color:'#000000', fontSize:20,marginLeft:30}}> Return Flight Seats:  
-                    {' ' +  onebooking.returnFlightSeats.join(', ')}
-                    </label>
-                
+            // var flight=getFlight(onebooking.departFlightID);
+
+            var flight = departFlights;
+            //var flightret= returnFlights;
+
+            return (
+              <div style={{ width: '90%', height: 350, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 150 }}>
+                {/* text inside boxes */}
+                <label style={{ marginLeft: 30, marginTop: 200 }}>
+                  <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20 }}>Booking Number: {' ' + onebooking._id} <br /></label>
+                  <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> PassengerCount:
+                    {' ' + onebooking.PassengerCount}
+                    <br />
+                  </label>
+                  <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20, marginLeft: 30 }}>Departure Flight Details:</label>
+                  <br />
+                  <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> From:
+                    {' ' + (departFlights[i] ? departFlights[0].From : "NA")}
+                    <br />
+                  </label>
+                  <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> To:
+                    {' ' + (departFlights[i] ? departFlights[0].To : "NA")}
+                    <br />
+                  </label>
+
+                  <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> Departure Flight Seats:
+                    {' ' + onebooking.departFlightSeats.join(', ')}
+                  </label>
+                  <br />
+
+                  <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20, marginLeft: 30 }}>Return Flight Details: </label>
+                  <br />
+
+                  <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> From:
+                    {' ' + (departFlights[i] ? departFlights[0].To : "NA")}
+                    <br />
+                  </label>
+                  <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> To:
+                    {' ' + (departFlights[i] ? departFlights[0].From : "NA")}
+                    <br />
+                  </label>
+                  <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> Return Flight Seats:
+                    {' ' + onebooking.returnFlightSeats.join(', ')}
+                  </label>
+
                 </label>
                 <Button1
-                 title={'Cancel Reservation'}
-                 style={{width: 350,height: 50,marginLeft: 800,marginTop:10,marginBottom:70}}
-                 onClick={() => { setCancelModal(true); setToDelete(onebooking._id); }}
-                 />
+                  title={'Cancel Reservation'}
+                  style={{ width: 350, height: 50, marginLeft: 800, marginTop: 10, marginBottom: 70 }}
+                  onClick={() => { setCancelModal(true); setToDelete(onebooking._id); }}
+                />
                 <label></label>
-            </div>
+              </div>
             );
           }
-            )}
+          )}
         </div>
 
-    </Container>
+      </Container>
 
 
 
-  </>
+    </>
   );
 }
 
