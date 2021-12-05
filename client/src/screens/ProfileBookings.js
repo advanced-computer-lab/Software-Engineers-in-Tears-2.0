@@ -28,13 +28,15 @@ function ProfileBookings(props) {
   const bookingID = props.match.params.bookingID;
   const [bookings, setBookings] = useState([]);
 
-  const [toDelete, setToDelete] = useState('');
+  const [toDelete, setToDelete] = useState({});
 
   //const [flight, setFlight] = useState({});
   const id1 = useState(props.match.params.id1)[0];
 
   const [departFlights, setDepartFlights] = useState([]);
   const [returnFlights, setReturnFlights] = useState([]);
+
+  const [i,seti]=useState();
 
   useEffect(() => {
     if (userID) {
@@ -95,17 +97,17 @@ function ProfileBookings(props) {
     setLoading(false);
   }
 
-  function deleteBooking(id) {
+  function deleteBooking(toDel) {
 
-    axios.delete("http://localhost:8000/deleteBooking/" + id)
+    axios.delete("http://localhost:8000/deleteBooking/" + toDel._id, toDel)
       .then(() => {
         setBookings(bookings.filter((booking) => {
-          return booking._id !== id;
+          return booking._id !== toDel._id;
 
           //TODO:reduce seatsbooked
         }))
 
-        var emailText = `Your flight reservation (ID: ${id}) from <placeholder> to <placeholder> has been cancelled upon your request.The <price calculation> will be refunded to your bank account`;
+        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[i].From}) to (${departFlights[i].To}) has been cancelled upon your request.(${departFlights[i].Price}) will be refunded to your bank account`;
         let mailOptions = {
           from: 'dunesairlines@gmail.com',
           to: user.Email,
@@ -113,6 +115,32 @@ function ProfileBookings(props) {
           text: emailText,
           html: `<p> ${emailText}</p>`,
         };
+
+        const array = user.Bookings.filter((b)=>{
+          return b!==toDel._id;
+        });
+
+
+        axios.put('http://localhost:8000/updateUser/'+user._id, {Bookings:array})
+        .then(res=>{
+          console.log('user updated')
+        })
+
+        const arrF1 = departFlights[i].SeatsBooked.filter((b)=>{
+          return !toDel.departFlightSeats.includes(b);
+        })
+        const arrF2 = returnFlights[i].SeatsBooked.filter((b)=>{
+          return !toDel.returnFlightSeats.includes(b);
+        })
+
+        axios.put('http://localhost:8000/adminUpdateFlight/'+toDel.departFlightID, {SeatsBooked:arrF1})
+        .then(res=>{
+          console.log('dep updated')
+        })
+        axios.put('http://localhost:8000/adminUpdateFlight/'+toDel.returnFlightID, {SeatsBooked:arrF2})
+        .then(res=>{
+          console.log('ret updated')
+        })
 
         axios.post('http://localhost:8000/sendMail', mailOptions)
           .then(res => {
@@ -143,11 +171,11 @@ function ProfileBookings(props) {
             style={{ width: 150, height: 50, marginLeft: 20 }}
             onClick={() => { deleteBooking(toDelete); setCancelModal(false) }}
           />
-        </Modal.Footer>
+        </Modal.Footer> 
       </Modal>
 
 
-      <Container style={{ display: "flex", flexDirection: 'row' }}>
+      <Container style={{ display: "flex", flexDirection: 'row', opacity: cancelModal === true ? 0.5 : 1, pointerEvents: cancelModal === true ? 'none' : 'initial'}}>
         <head>
           <script src="https://smtpjs.com/v3/smtp.js"></script>
         </head>
@@ -169,13 +197,16 @@ function ProfileBookings(props) {
         {/* //TODO: handle Loading
          // TODO: display booking id for each booking */}
         {/* load component */}
-        {/* <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: 'rgb(244, 244, 244)' }}>
-               <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
-          </div> */}
+        {loading?
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: 'rgb(244, 244, 244)' }}>
+          <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
+        </div>
+
+        :
 
 
 
-        {/*screen excluding nav bar */}
+        /*screen excluding nav bar */
         <div style={{ display: 'flex', flexDirection: 'column', width: window.innerWidth - 200, height: window.innerHeight, alignItems: 'center' }}>
           {/* page title */}
           <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20 }}> Your Reservations </label>
@@ -199,11 +230,11 @@ function ProfileBookings(props) {
                   <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20, marginLeft: 30 }}>Departure Flight Details:</label>
                   <br />
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> From:
-                    {' ' + (departFlights[i] ? departFlights[0].From : "NA")}
+                    {' ' + (departFlights[i] ? departFlights[i].From : "NA")}
                     <br />
                   </label>
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> To:
-                    {' ' + (departFlights[i] ? departFlights[0].To : "NA")}
+                    {' ' + (departFlights[i] ? departFlights[i].To : "NA")}
                     <br />
                   </label>
 
@@ -216,11 +247,11 @@ function ProfileBookings(props) {
                   <br />
 
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> From:
-                    {' ' + (departFlights[i] ? departFlights[0].To : "NA")}
+                    {' ' + (departFlights[i] ? departFlights[i].To : "NA")}
                     <br />
                   </label>
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> To:
-                    {' ' + (departFlights[i] ? departFlights[0].From : "NA")}
+                    {' ' + (departFlights[i] ? departFlights[i].From : "NA")}
                     <br />
                   </label>
                   <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> Return Flight Seats:
@@ -231,7 +262,7 @@ function ProfileBookings(props) {
                 <Button1
                   title={'Cancel Reservation'}
                   style={{ width: 350, height: 50, marginLeft: 800, marginTop: 10, marginBottom: 70 }}
-                  onClick={() => { setCancelModal(true); setToDelete(onebooking._id); }}
+                  onClick={() => { setCancelModal(true); setToDelete(onebooking); seti(i)  }}
                 />
                 <label></label>
               </div>
@@ -239,7 +270,7 @@ function ProfileBookings(props) {
           }
           )}
         </div>
-
+          }
       </Container>
 
 
