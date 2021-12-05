@@ -7,6 +7,7 @@ import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
 import Modal from 'react-bootstrap/Modal';
 import ReactLoading from 'react-loading';
+import { durationString } from "../Utils.js";
 
 function isNullorWhiteSpace(string) {
   if (string == null) {
@@ -28,13 +29,16 @@ class FlightUpdateScreen extends Component {
       AirportTerminal: '',
       DepartureTime: '',
       ArrivalTime: '',
-      From: '',
-      To: '',
       Flight_Date: null,
+      Arrival_Date: null,
       Cabin: '',
       Seats_Available_on_Flight: null,
+      Baggage_Allowance: null,
+      Price: null,
+      SeatsBooked: null,
       updateModal: false,
       updated: false,
+      badDate: false,
       loading: true
     };
     this.orig = {};
@@ -48,28 +52,30 @@ class FlightUpdateScreen extends Component {
           AirportTerminal: result.data.AirportTerminal,
           DepartureTime: result.data.DepartureTime,
           ArrivalTime: result.data.ArrivalTime,
-          From: result.data.From,
-          To: result.data.To,
           Flight_Date: result.data.Flight_Date,
+          Arrival_Date: result.data.Arrival_Date,
           Cabin: result.data.Cabin,
-          Seats_Available_on_Flight: result.data.Seats_Available_on_Flight
+          Seats_Available_on_Flight: result.data.Seats_Available_on_Flight,
+          Baggage_Allowance: result.data.Baggage_Allowance,
+          Price: result.data.Price,
+          SeatsBooked: result.data.SeatsBooked
         });
-        this.setState({ Flight_Date: this.displayDate() });
+        this.setState({ Flight_Date: this.displayDate(this.state.Flight_Date), Arrival_Date: this.displayDate(this.state.Arrival_Date) });
         this.setState({ loading: false });
         this.orig = this.state;
       })
       .catch(err => console.error(err));
   };
 
+  calcDuration = () => {
+    var d1 = new Date(this.state.Flight_Date + "T" + this.state.DepartureTime);
+    var d2 = new Date(this.state.Arrival_Date + "T" + this.state.ArrivalTime);
+    return d2 - d1;
+  }
+
   onChange = e => {
-    // console.log(e.target.value); 
     var value = e.target.value
-    // if(value ===''&&(e.target.name==="Flight_Date"||e.target.name==="Seats_Available_on_Flight")){
-    //   value = this.orig[e.target.name];
-    //   console.log('in if');
-    // } 
     this.setState({ [e.target.name]: value });
-    // console.log(this.state.Flight_Date);
   }
 
   onHover = (e) => {
@@ -80,8 +86,8 @@ class FlightUpdateScreen extends Component {
     e.target.style.background = "rgba(0,0,0,0.03)"
   }
 
-  displayDate = () => {
-    const d = new Date(this.state.Flight_Date);
+  displayDate = (date) => {
+    const d = new Date(date);
     const year = d.getFullYear();
     var month = d.getMonth() + 1;
     month = month < 10 ? "0" + month : month;
@@ -91,12 +97,13 @@ class FlightUpdateScreen extends Component {
   }
 
   preSubmit = (e) => {
+    this.setState({ updated: false })
+    this.setState({ badDate: false })
     var array1 = Array.prototype.slice.call(document.getElementById("d1").children, 0);
     var array2 = Array.prototype.slice.call(document.getElementById("d2").children, 0);
-    const list = array1.concat(array2);
-    console.log("before loop");
+    var array3 = document.getElementsByName('Price')[0];
+    const list = array1.concat(array2).concat(array3);
     for (let child of list) {
-      console.log("in loop");
       if (isNullorWhiteSpace(this.state[child.name]) && child.required === true) {
         this.setState({ updateModal: true });
         return;
@@ -110,21 +117,36 @@ class FlightUpdateScreen extends Component {
     e.preventDefault();
 
     const data = {
-      FlightNumber: isNullorWhiteSpace(this.state.FlightNumber) ? null : this.state.FlightNumber,
-      AirportTerminal: isNullorWhiteSpace(this.state.AirportTerminal) ? null : this.state.AirportTerminal,
-      DepartureTime: isNullorWhiteSpace(this.state.DepartureTime) ? null : this.state.DepartureTime,
-      ArrivalTime: isNullorWhiteSpace(this.state.ArrivalTime) ? null : this.state.ArrivalTime,
-      From: isNullorWhiteSpace(this.state.From) ? null : this.state.From,
-      To: isNullorWhiteSpace(this.state.To) ? null : this.state.To,
+      FlightNumber: isNullorWhiteSpace(this.state.FlightNumber) ? this.orig.FlightNumber : this.state.FlightNumber,
+      AirportTerminal: isNullorWhiteSpace(this.state.AirportTerminal) ? this.orig.AirportTerminal : this.state.AirportTerminal,
+      DepartureTime: isNullorWhiteSpace(this.state.DepartureTime) ? this.orig.DepartureTime : this.state.DepartureTime,
+      ArrivalTime: isNullorWhiteSpace(this.state.ArrivalTime) ? this.orig.ArrivalTime : this.state.ArrivalTime,
       Flight_Date: isNullorWhiteSpace(this.state.Flight_Date) ? new Date(this.orig.Flight_Date) : new Date(this.state.Flight_Date),
-      Cabin: isNullorWhiteSpace(this.state.Cabin) ? null : this.state.Cabin,
-      Seats_Available_on_Flight: isNullorWhiteSpace(this.state.Seats_Available_on_Flight) ? this.orig.Seats_Available_on_Flight : this.state.Seats_Available_on_Flight
+      Arrival_Date: isNullorWhiteSpace(this.state.Arrival_Date) ? new Date(this.orig.Arrival_Date) : new Date(this.state.Arrival_Date),
+      Seats_Available_on_Flight: isNullorWhiteSpace(this.state.Seats_Available_on_Flight) ? this.orig.Seats_Available_on_Flight : this.state.Seats_Available_on_Flight,
+      Baggage_Allowance: isNullorWhiteSpace(this.state.Baggage_Allowance) ? this.orig.Baggage_Allowance : this.state.Baggage_Allowance,
+      Price: isNullorWhiteSpace(this.state.Price) ? this.orig.Price : this.state.Price
     };
 
+    console.log(this.displayDate(data.Arrival_Date.getTime()));
+    var dep = new Date(this.displayDate(data.Flight_Date.getTime()) + "T" + data.DepartureTime);
+    var arr = new Date(this.displayDate(data.Arrival_Date.getTime()) + "T" + data.ArrivalTime);
+    console.log(arr);
+    if (dep > arr) {
+      this.setState({ badDate: true });
+      return;
+    }
+    if (this.state.SeatsBooked && data.Seats_Available_on_Flight < this.state.SeatsBooked.length) {
+      alert(`There are ${this.state.SeatsBooked.length} booked seats, so the number of available seats cannot fall below this number.\nThis feature will be added shortly. Sorry for any inconvenience!`);
+      this.setState({ Seats_Available_on_Flight: this.orig.Seats_Available_on_Flight });
+      return;
+    }
+
+    data['Trip_Duration'] = arr-dep;
     axios.put('http://localhost:8000/adminUpdateFlight/' + this.props.match.params.id, data)
       .then(result => {
         this.setState(data);
-        this.setState({ Flight_Date: this.displayDate() });
+        this.setState({ Flight_Date: this.displayDate(this.state.Flight_Date), Arrival_Date: this.displayDate(this.state.Arrival_Date) });
         this.orig = this.state;
         this.setState({ updated: true });
       })
@@ -189,7 +211,7 @@ class FlightUpdateScreen extends Component {
             <form name="updateflight" id="updateflight" style={{ display: 'flex', flexDirection: 'column', marginTop: 20 }} >
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Div1 id="d1">
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Flight Number: </label>
+                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Flight Number: <label style={{ color: '#F0A500' }}>*</label></label>
                   <Input
                     onMouseEnter={this.onHover}
                     onMouseLeave={this.onHoverLeave}
@@ -197,28 +219,9 @@ class FlightUpdateScreen extends Component {
                     name="FlightNumber"
                     value={this.state.FlightNumber}
                     onChange={this.onChange}
+                    required='true'
                   />
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Departure Time:</label>
-                  <Input
-                    onMouseEnter={this.onHover}
-                    onMouseLeave={this.onHoverLeave}
-                    type="text"
-                    name="DepartureTime"
-                    value={this.state.DepartureTime}
-                    onChange={this.onChange}
-                  />
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Airport Terminal:</label>
-                  <Input
-                    onMouseEnter={this.onHover}
-                    onMouseLeave={this.onHoverLeave}
-                    type="text"
-                    name="AirportTerminal"
-                    value={this.state.AirportTerminal}
-                    onChange={this.onChange}
-                  />
-                </Div1>
-                <Div1 id="d2">
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Flight Date: <label style={{ color: '#F0A500' }}>*</label></label>
+                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Departure Date: <label style={{ color: '#F0A500' }}>*</label></label>
                   <Input
                     onMouseEnter={this.onHover}
                     onMouseLeave={this.onHoverLeave}
@@ -228,16 +231,29 @@ class FlightUpdateScreen extends Component {
                     onChange={this.onChange}
                     required='true'
                   />
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Arrival Time:</label>
+                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Departure Time: <label style={{ color: '#F0A500' }}>*</label></label>
+                  <Input
+                    onMouseEnter={this.onHover}
+                    onMouseLeave={this.onHoverLeave}
+                    placeholder='hh:mm'
+                    type="time"
+                    name="DepartureTime"
+                    value={this.state.DepartureTime}
+                    onChange={this.onChange}
+                    required='true'
+                  />
+                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Airport Terminal: <label style={{ color: '#F0A500' }}>*</label></label>
                   <Input
                     onMouseEnter={this.onHover}
                     onMouseLeave={this.onHoverLeave}
                     type="text"
-                    name="ArrivalTime"
-                    value={this.state.ArrivalTime}
+                    name="AirportTerminal"
+                    value={this.state.AirportTerminal}
                     onChange={this.onChange}
+                    required='true'
                   />
-
+                </Div1>
+                <Div1 id="d2">
                   <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Number of {this.state.Cabin} class seats: <label style={{ color: '#F0A500' }}>*</label></label>
                   <Input
                     onMouseEnter={this.onHover}
@@ -248,16 +264,65 @@ class FlightUpdateScreen extends Component {
                     onChange={this.onChange}
                     required='true'
                   />
+                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Arrival Date: <label style={{ color: '#F0A500' }}>*</label></label>
+                  <Input
+                    onMouseEnter={this.onHover}
+                    onMouseLeave={this.onHoverLeave}
+                    type="date"
+                    name="Arrival_Date"
+                    value={this.state.Arrival_Date}
+                    onChange={this.onChange}
+                    required='true'
+                  />
+                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Arrival Time: <label style={{ color: '#F0A500' }}>*</label></label>
+                  <Input
+                    onMouseEnter={this.onHover}
+                    onMouseLeave={this.onHoverLeave}
+                    placeholder='hh:mm'
+                    type="time"
+                    name="ArrivalTime"
+                    value={this.state.ArrivalTime}
+                    onChange={this.onChange}
+                    required='true'
+                  />
+
+                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Baggage Allowance(kg): <label style={{ color: '#F0A500' }}>*</label></label>
+                  <Input
+                    onMouseEnter={this.onHover}
+                    onMouseLeave={this.onHoverLeave}
+                    type="number"
+                    name="Baggage_Allowance"
+                    value={this.state.Baggage_Allowance}
+                    onChange={this.onChange}
+                    required='true'
+                  />
+
                 </Div1>
               </div>
-              <div style={{ display: 'flex',flexDirection:'column ', justifyContent: 'center', alignItems:'center', marginRight: '0px' }}>
-                <Button1 title="Save" style={{ width: 200, height: 50, marginTop: 30 }} onClick={this.preSubmit}></Button1>
-
+              <div style={{ display: 'flex', flexDirection: 'column ', justifyContent: 'center', alignItems: 'center', marginRight: '0px' }}>
+                <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Price($): <label style={{ color: '#F0A500' }}>*</label></label>
+                <Input
+                  onMouseEnter={this.onHover}
+                  onMouseLeave={this.onHoverLeave}
+                  type="number"
+                  name="Price"
+                  value={this.state.Price}
+                  onChange={this.onChange}
+                  required='true'
+                />
                 {this.state.updated ?
                   <span
-                    style={{ fontFamily: 'Archivo', color: '#047305', marginTop: 30, fontSize: 20 }}
+                    style={{ fontFamily: 'Archivo', color: '#047305', marginTop: -20, marginBottom: 0, fontSize: 20 }}
                   >Flight Updated Successfully!</span>
-                  : null}
+                  :
+                  (this.state.badDate ?
+                    <span
+                      style={{ fontFamily: 'Archivo', color: '#b33435', marginTop: -20, marginBottom: 0, fontSize: 20 }}
+                    >Departure is after arrival! Please fix this and try again</span>
+                    :
+                    null
+                  )}
+                <Button1 title="Save" style={{ width: 200, height: 50, marginTop: 30 }} onClick={this.preSubmit}></Button1>
               </div>
             </form>
           }

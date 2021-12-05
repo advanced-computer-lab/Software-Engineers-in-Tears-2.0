@@ -7,7 +7,7 @@ import axios from 'axios';
 import Footer from "../components/Footer";
 import Button1 from "../components/Button1";
 import ProfileHeader from "../components/ProfileHeader";
-
+import {durationString} from "../Utils";
 function ChosenFlights(props) {
 
     const history = useHistory();
@@ -78,6 +78,14 @@ function ChosenFlights(props) {
         })
       }
     }
+    const formatDate = (date) =>{
+      const d = new Date(date);
+      const options = {
+        month:'short',
+        day:'numeric',
+      }
+      return new Intl.DateTimeFormat('default',options).format(d);
+    }
 
   return ( 
     <Container>
@@ -97,18 +105,21 @@ function ChosenFlights(props) {
             </div>
             <div style={{display: "flex", flexDirection: 'row', alignItems: 'center', height: 300}}>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>From</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center', marginTop:43}}>From</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{flight1.From}</label>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>3:10 PM</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.DepartureTime?flight1.DepartureTime:"N/A"}</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.Flight_Date?formatDate(flight1.Flight_Date):"N/A"}</label>
               </div>
               <div style={{display: 'flex', flexDirection: 'column'}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>2h 10m</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.Trip_Duration?durationString(flight1.Trip_Duration):"N/A"}</label>
                 <Image2 src={require("../assets/images/arrow.png").default} style={{width: 200}}></Image2>
               </div>
               <div style={{display: 'flex', flexDirection: 'column'}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>To</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center', marginTop:43}}>To</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{flight1.To}</label>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>5:20 PM</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.ArrivalTime?flight1.ArrivalTime:"N/A"}</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.Arrival_Date?formatDate(flight1.Arrival_Date):"N/A"}</label>
+                
               </div>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Flight Number</label>
@@ -134,18 +145,20 @@ function ChosenFlights(props) {
             </div>
             <div style={{display: "flex", flexDirection: 'row', alignItems: 'center', height: 300}}>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>From</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center', marginTop:43}}>From</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{flight2.From}</label>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>3:10 PM</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight2.DepartureTime?flight2.DepartureTime:"N/A"}</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight2.Flight_Date?formatDate(flight2.Flight_Date):"N/A"}</label>
               </div>
               <div style={{display: 'flex', flexDirection: 'column'}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>2h 10m</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight2.Trip_Duration?durationString(flight2.Trip_Duration):"N/A"}</label>
                 <Image2 src={require("../assets/images/arrow.png").default} style={{width: 200}}></Image2>
               </div>
               <div style={{display: 'flex', flexDirection: 'column'}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>To</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center', marginTop:43}}>To</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{flight2.To}</label>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>5:20 PM</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight2.ArrivalTime?flight2.ArrivalTime:"N/A"}</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight2.Arrival_Date?formatDate(flight2.Arrival_Date):"N/A"}</label>
               </div>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Flight Number</label>
