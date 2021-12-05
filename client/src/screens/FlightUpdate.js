@@ -7,7 +7,6 @@ import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
 import Modal from 'react-bootstrap/Modal';
 import ReactLoading from 'react-loading';
-import { durationString } from "../Utils.js";
 
 function isNullorWhiteSpace(string) {
   if (string == null) {

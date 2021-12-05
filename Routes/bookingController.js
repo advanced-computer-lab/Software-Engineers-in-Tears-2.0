@@ -1,4 +1,6 @@
 const Bookings = require('../Models/Bookings');
+const Flights= require ('../Models/Flights');
+
 
 exports.createBooking = (req, res)=>{
     const departFlightID= req.body.departFlightID;
@@ -24,6 +26,17 @@ exports.updateBooking = (req, res)=>{
   .catch(err => {console.log(err); res.status(500);});
 }
 
+
+exports.deleteBooking =(req,res)=>{
+  Bookings.findByIdAndDelete(req.params.id)
+  .then(result => {
+    res.status(200).send("Reservation Deleted");
+    console.log('Booking has been deleted successfully');
+    
+  })
+    .catch(err => console.log(err));
+}
+
 exports.getBookingByID = (req, res) => {
   var terms = {};
   for(elem in req.body){
@@ -34,11 +47,13 @@ exports.getBookingByID = (req, res) => {
   Bookings.find(terms)
   .then(result => {
       res.send(result);
+      console.log(result);
     })
     .catch(err => {
       console.log(err);
     });
 }
+
 
 function isNullorWhiteSpace(string) {
   if (string == null) {

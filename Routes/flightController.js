@@ -87,6 +87,16 @@ exports.deleteFlight= (req,res) =>{
     });
   }
 
+  // exports.getFlightName = (req,res)=> {
+  //   Flights.findById(req.params.id)
+  //   .then (result =>{
+  //     res.send(result.To);
+  //     console.log(result);
+  //   })
+  //   .catch(err=>{
+  //     console.log(err);
+  //   })
+  // }
   function isNullorWhiteSpace(string) {
     if (string == null) {
       return true;

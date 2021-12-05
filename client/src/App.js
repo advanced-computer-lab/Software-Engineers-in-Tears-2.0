@@ -10,6 +10,7 @@ import FlightUpdate from './screens/FlightUpdate';
 import AdminFlights from './screens/AdminFlights';
 import ChosenFlights from './screens/ChosenFlights';
 import ChooseSeatDepart from './screens/ChooseSeatDepart';
+import ReservedFlights from './screens/ReservedFlights';
 import UserSearch from './screens/UserSearch';
 import ChooseSeatReturn from './screens/ChooseSeatReturn';
 import ProfileHome from './screens/ProfileHome';
@@ -27,7 +28,7 @@ class App extends Component {
           <Route exact path='/login' component={LoginScreen} />
           <Route exact path='/admin/update/:id' component = {FlightUpdate} />
           <Route exact path='/summary/:id1/:id2/:passengerCount' component={ChosenFlights} />
-          <Route exact path='/flights' component={UserSearch} />
+          <Route exact path='/search/from=:from#to=:to#cabin=:cabin#p=:pcount#fromDate=:fromDate#toDate=:toDate' component={UserSearch} />
           <Route exact path='/profile/home' component={ProfileHome} />
           <Route exact path='/profile/bookings' component={ProfileBookings} />
           <Route exact path='/profile/account' component={UserUpdate} />
@@ -37,7 +38,8 @@ class App extends Component {
           <Route exact path='/booking/iternary'  />
           <Route exact path='/admin/create' component={CreateFlight} />
           <Route exact path='/admin' component={AdminHome} />
-          <Route eaxct path='/admin/flights' component={AdminFlights} />
+          <Route exact path='/admin/flights' component={AdminFlights} />
+          <Route exact path='/reservations/:bookingID' component={ReservedFlights}/>
         </Switch>
       </Router>
     );

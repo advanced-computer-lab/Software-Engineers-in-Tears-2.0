@@ -4,6 +4,7 @@ var cors = require('cors');
 const flightController = require('./Routes/flightController.js');
 const userController = require('./Routes/userController.js');
 const bookingController = require('./Routes/bookingController.js');
+const auth = require('./Routes/auth.js');
 require("dotenv").config({ path: "./config.env" });
 const MongoURI = process.env.ATLAS_URI
 
@@ -33,11 +34,14 @@ app.post("/adminsearchflights", flightController.searchFlights);
 app.post("/createbooking", bookingController.createBooking);
 app.post("/getBookingByID", bookingController.getBookingByID);
 app.post("/admincreateflights", flightController.createFlight);
-app.post("/viewFlightDetails", flightController.viewFlightDetails)
+app.post("/viewFlightDetails", flightController.viewFlightDetails);
+app.post("/sendMail", auth.sendMail);
 app.put("/updateBooking/:id", bookingController.updateBooking);
 app.put("/updateUser/:userID", userController.updateUser)
 app.put('/adminUpdateFlight/:id', flightController.updateFlight);
 app.delete("/adminflights/delete/:id",flightController.deleteFlight);
+app.delete("/deleteBooking/:id", bookingController.deleteBooking);
+//app.post("/displayFlightFrom/:id",flightController.getFlightName);
 
 // Starting server
 app.listen(port, () => {

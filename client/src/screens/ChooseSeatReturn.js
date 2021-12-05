@@ -31,10 +31,17 @@ function ChooseSeatReturn(props) {
         const res2 = await axios.post('http://localhost:8000/getUserByID/', {_id: localStorage.getItem("userID")})
         setUser(res2.data[0])
         const res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res.data[0].returnFlightID})
-        console.log(res.data[0].returnFlightID)
-        console.log(res3.data[0])
         setFlight(res3.data[0])
-        setSeatsBooked(res3.data[0].SeatsBooked)
+        const arr = res.data[0].returnFlightSeats;
+        console.log(res.data[0].returnFlightSeats)
+        setCurrentSelection(arr)
+        const arr4 = res3.data[0].SeatsBooked;
+        for(let i = 0; i < res.data[0].returnFlightSeats.length; i++){
+            if(res3.data[0].SeatsBooked.includes(res.data[0].returnFlightSeats[i])){
+                arr4.splice(arr4.indexOf(arr[i]), 1)
+            }
+        }
+        setSeatsBooked(arr4)
         setLoading(false) 
     }
     
@@ -57,7 +64,9 @@ function ChooseSeatReturn(props) {
         .then(result=> {
             history.push({
                 pathname:'/booking/payment',
-                bookingID:bookingID
+                state:{
+                    bookingID:bookingID
+                }
             });
             setLoading2(false);
         })
