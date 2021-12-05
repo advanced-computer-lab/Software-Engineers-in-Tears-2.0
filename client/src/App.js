@@ -15,7 +15,7 @@ import UserSearch from './screens/UserSearch';
 import ChooseSeatReturn from './screens/ChooseSeatReturn';
 import ProfileHome from './screens/ProfileHome';
 import ProfileBookings from './screens/ProfileBookings';
-import UserUpdate from './screens/UserUpdate'
+import UserUpdate from './screens/UserUpdate';
 
 
 class App extends Component {

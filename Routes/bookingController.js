@@ -1,4 +1,15 @@
 const Bookings = require('../Models/Bookings');
+const Flights= require ('../Models/Flights');
+
+// const nodemailer = require ('nodemailer');
+//   let transporter= nodemailer.createTransport({
+//     service: 'gmail',
+    
+//     auth: {
+//         user: 'dunesairlines@gmail.com',
+//         pass: 'SEIT2.0!',
+//       },
+// })
 
 exports.createBooking = (req, res)=>{
     const departFlightID= req.body.departFlightID;
@@ -23,11 +34,30 @@ exports.updateBooking = (req, res)=>{
   })
   .catch(err => {console.log(err); res.status(500);});
 }
+
+// let mailOptions={
+//     from:'dunesairlines@gmail.com',
+//     to:"aya_saleh2@yahoo.com",
+//     subject:'Booking Cancelation',
+//     text:'hello',
+//     html:'<p> Your flight reservation has been cancelled upon ypur request.The amount will be refunded to your bank account</p>',
+//   };
+
 exports.deleteBooking =(req,res)=>{
   Bookings.findByIdAndDelete(req.params.id)
+  //Flights.findById(req.departFlightID)  TODO: decrement the seatsBooked array
   .then(result => {
     res.status(200).send("Reservation Deleted");
-    console.log('Booking has been deleted successfully')})
+    console.log('Booking has been deleted successfully');
+    // transporter.sendMail(mailOptions,function(err,data){
+    //     if(err){
+    //         console.log('Error Occurs',err);
+    //     }
+    //     else{
+    //         console.log('Email sent');
+    //     }
+    //   })
+  })
     .catch(err => console.log(err));
 }
 
