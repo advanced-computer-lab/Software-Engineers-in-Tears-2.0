@@ -70,20 +70,9 @@ function HomeScreen(props) {
     }
     else{
     history.push({
-      pathname: '/flights',
-      showAll: false,
-      flightData: {
-        From: from, 
-        To: to,
-        Cabin:cabin,
-        PassengerCount: parseInt((adults === '' ? 0 : adults), 10)+parseInt((children === '' ? 0 : children),10),
-        FromDate:fromDate,
-        ToDate: toDate
-      }
-     
+      pathname: `/search/from=${from}#to=${to}#cabin=${cabin === '' ? null : cabin}#p=${pcount}#fromDate=${fromDate === '' ? null : fromDate}#toDate=${toDate === '' ? null : toDate}`
     }
     );}
-    console.log(parseInt((adults === '' ? 0 : adults), 10)+parseInt((children === '' ? 0 : children),10));
    }
 
   return (

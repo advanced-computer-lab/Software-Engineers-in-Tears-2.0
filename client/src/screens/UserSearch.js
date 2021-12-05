@@ -11,14 +11,11 @@ import ReactLoading from 'react-loading';
 import Button2 from "../components/Button2";
 import { durationString } from "../Utils.js";
 
-
-
 function UserSearch(props) {
 
   const history = useHistory();
   const [selectedDepDate, setselectedDepDate] = useState('');
   const [selectedReturnDate, setselectedReturnDate] = useState('');
-
 
   const [loading, setLoading] = useState(true);
 
@@ -28,74 +25,70 @@ function UserSearch(props) {
   const [selectedReturn, setSelectedReturn] = useState('');
   const [viewDepartDetailsID, setViewDepartDetailsID] = useState();
   const [viewReturnDetailsID, setViewReturnDetailsID] = useState();
-  const [logged, setLogged] = useState(false);
   const [user, setUser] = useState({});
   const userID = localStorage.getItem("userID");
 
+  const from = useState(props.match.params.from)[0];
+  const to = useState(props.match.params.to)[0];
+  const cabin = useState(props.match.params.cabin === 'null' ? null : props.match.params.cabin)[0];
+  const fromDate = useState(props.match.params.fromDate === 'null' ? null : props.match.params.fromDate)[0];
+  const toDate = useState(props.match.params.toDate === 'null' ? null : props.match.params.toDate)[0];
+
   useEffect(() => {
     setLoading(true)
-    const departFlightData = {
-      From: props.location.flightData.From,
-      To: props.location.flightData.To,
-      Cabin: props.location.flightData.Cabin,
-      Flight_Date: props.location.flightData.FromDate,
-      Arrival_Date: props.location.flightData.ToDate,
-    }
-    const returnFlightData = {
-      From: props.location.flightData.To,
-      To: props.location.flightData.From,
-      Cabin: props.location.flightData.Cabin,
-      Flight_Date: props.location.flightData.FromDate,
-      Arrival_Date: props.location.flightData.ToDate,    }
     if (userID) {
       axios.post('http://localhost:8000/getUserByID/', { _id: userID })
         .then(res => {
-          setLogged(true)
           setUser(res.data[0]);
         })
         .catch(err => {
           console.log(err);
         })
     }
-    axios.post('http://localhost:8000/adminsearchflights', departFlightData)
+    axios.post('http://localhost:8000/adminsearchflights', {
+      From: from,
+      To: to,
+      Cabin: cabin,
+      Flight_Date: fromDate
+    })
       .then(res => {
         const arr = res.data;
         for (let i = 0; i < arr.length; i++) {
-          if (props.location.flightData.PassengerCount > (arr[i].Seats_Available_on_Flight - arr[i].SeatsBooked.length)) {
-            //console.log(props.location.flightData.PassengerCount+"pcount");
-            // console.log(arr[i].Seats_Available_on_Flight-arr[i].SeatsBooked.length);
+          if (props.match.params.pcount > (arr[i].Seats_Available_on_Flight - arr[i].SeatsBooked.length)) {
             arr.splice(i, 1);
             i--;
           }
         }
         setDepartFlights(arr);
-        console.log(departFlights.length + "depart");
       })
       .catch(err => {
         console.log(err);
       })
-    axios.post('http://localhost:8000/adminsearchflights', returnFlightData)
+    axios.post('http://localhost:8000/adminsearchflights', {
+      From: to,
+      To: from,
+      Cabin: cabin,
+      Flight_Date: toDate
+    })
       .then(res => {
         const arr = res.data;
         for (let i = 0; i < arr.length; i++) {
-          if (props.location.flightData.PassengerCount > (arr[i].Seats_Available_on_Flight - arr[i].SeatsBooked.length)) {
+          if (props.match.params.pcount > (arr[i].Seats_Available_on_Flight - arr[i].SeatsBooked.length)) {
             arr.splice(i, 1);
             i--;
           }
         }
-        
-
         setReturnFlights(arr);
         setLoading(false)
       })
       .catch(err => {
         console.log(err);
       })
-  }, [departFlights.length, props.location.flightData.Cabin, props.location.flightData.From, props.location.flightData.FromDate, props.location.flightData.PassengerCount, props.location.flightData.To, props.location.flightData.ToDate, userID]);
+  }, [cabin, from, fromDate, props.match.params.pcount, to, toDate, userID]);
 
   return (
     <Container >
-      {logged ? <ProfileHeader title={user.First_Name} path={'/'} /> : <NormalHeader />}
+      {userID ? <ProfileHeader title={user.First_Name} path={'/'} /> : <NormalHeader />}
       {
         loading ?
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#fff' }}>
@@ -182,8 +175,8 @@ function UserSearch(props) {
           </div>
         );})}
         <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35}}>
-          <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Round Trip Flight: <label style={{fontFamily: 'Archivo Black', color: '#F0A500'}}>{props.location.flightData.From} - {props.location.flightData.To}</label></label>
-          <Button1 disabled={selectedDepart === '' || selectedReturn === ''} onClick={() => history.push(`/summary/${selectedDepart}/${selectedReturn}/${props.location.flightData.PassengerCount}`)} title={'Confirm Selection'} style={{fontSize: 20, position: 'absolute', right: 50, width: 180, height: 40}}/>
+          <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Round Trip Flight: <label style={{fontFamily: 'Archivo Black', color: '#F0A500'}}>{ props.match.params.from} - {props.match.params.to}</label></label>
+          <Button1 disabled={selectedDepart === '' || selectedReturn === ''} onClick={() => history.push(`/summary/${selectedDepart}/${selectedReturn}/${props.match.params.pcount}`)} title={'Confirm Selection'} style={{fontSize: 20, position: 'absolute', right: 50, width: 180, height: 40}}/>
         </div>
         </div>
         )
