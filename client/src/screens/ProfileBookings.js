@@ -50,9 +50,9 @@ function ProfileBookings(props) {
     axios.post('http://localhost:8000/getBookingByID/', {_id: bookingID})
     .then(res => {
         setBookings(res.data);
-        setLoading(false);
+        // setLoading(false);
       })
-     // getData();
+    getData();
       //setLoading(false);
 
   }, [userID,bookingID]);
@@ -72,24 +72,24 @@ function ProfileBookings(props) {
 
   }
   const getData = async() => {
-    const res = await axios.post('http://localhost:8000/getUserByID/', {_id: localStorage.getItem("userID")})
-    setUser(res.data[0])
-    console.log(res.data[0].Bookings[0])
+    const res = await axios.post('http://localhost:8000/getUserByID/', {_id: localStorage.getItem("userID")});
+    setUser(res.data[0]);
+    console.log(res.data[0].Bookings[0]);
     const arr = [];
-    const arr2 = []
-    const arr3 = []
+    const arr2 = [];
+    const arr3 = [];
     for(let i = 0; i < res.data[0].Bookings.length; i++){
-      const res2 = await axios.post('http://localhost:8000/getBookingByID/', {_id: res.data[0].Bookings[i]})
-      const res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res2.data[0].departFlightID})
-      const res4 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res2.data[0].returnFlightID})
-      arr.push(res2.data[0])
-      arr2.push(res3.data[0])
-      arr3.push(res4.data[0])
+      let res2 = await axios.post('http://localhost:8000/getBookingByID/', {_id: res.data[0].Bookings[i]})
+      let res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res2.data[0].departFlightID})
+      let res4 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res2.data[0].returnFlightID})
+      arr.push(res2.data[0]);
+      arr2.push(res3.data[0]);
+      arr3.push(res4.data[0]);
     }
-    setBookings(arr)
-    setDepartFlights(arr2)
-    setReturnFlights(arr3)
-    setLoading(false) 
+    setBookings(arr);
+    setDepartFlights(arr2);
+    setReturnFlights(arr3);
+    setLoading(false);
 }
 
   function deleteBooking(id) {
@@ -101,23 +101,27 @@ function ProfileBookings(props) {
 
           //TODO:reduce seatsbooked
         }))
-      }); 
+
+        var emailText = `Your flight reservation (ID: ${id}) from <placeholder> to <placeholder> has been cancelled upon your request.The <price calculation> will be refunded to your bank account`;
+        let mailOptions={
+          from:'dunesairlines@gmail.com',
+          to:user.Email,
+          subject:'Booking Cancelation',
+          text:emailText,
+          html:`<p> ${emailText}</p>`,
+        };
+
+        axios.post('http://localhost:8000/sendMail', mailOptions)
+        .then(res =>{
+          console.log(res.data);
+        })
+        .catch(err => console.log(err));
+
+      })
+      .catch(err => console.log(err)); 
   }
 
 
-  // function sendEmail() {
-  //   Email.send({
-  //   Host: "smtp.gmail.com",
-  //   Username :"dunesairlines@gmail.com" ,
-  //   Password : "SEIT2.0!",
-  //   To : 'aya_saleh2@yahoo.com',
-  //   From : "dunesairlines@gmail.com",
-  //   Subject : "booking cancellation",
-  //   Body : "ur booking is zft",
-  //   }).then(
-  //     message => alert("mail sent successfully")
-  //   );
-  // }
 
   return (
     <>
@@ -175,9 +179,9 @@ function ProfileBookings(props) {
             {/* grey boxes */}
             {bookings.map((onebooking) =>{ 
               
-              var flight=getFlight(onebooking.departFlightID);
+             // var flight=getFlight(onebooking.departFlightID);
             
-              //var flightdep= departFlights;
+              var flight= departFlights;
               //var flightret= returnFlights;
               
               return(
