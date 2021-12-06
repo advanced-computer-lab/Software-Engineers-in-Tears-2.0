@@ -63,7 +63,8 @@ function ProfileBookings(props) {
     const arr = [];
     const arr2 = {};
     const arr3 = {};
-    for (let i = 0; i < res.data[0].Bookings.length; i++) {
+    for (let i = res.data[0].Bookings.length-1; i >=0 ; i--) {
+      
       let res2 = await axios.post('http://localhost:8000/getBookingByID/', { _id: res.data[0].Bookings[i] })
       console.log(res2);
       if (!res2) {
@@ -91,6 +92,7 @@ function ProfileBookings(props) {
 
   function deleteBooking(toDel) {
 
+    setLoading(true);
     axios.delete("http://localhost:8000/deleteBooking/" + toDel._id, toDel)
       .then(() => {
         setBookings(bookings.filter((booking) => {
@@ -106,15 +108,22 @@ function ProfileBookings(props) {
           text: emailText,
           html: `<p> ${emailText}</p>`,
         };
-
+        
+        
         const array = user.Bookings.filter((b) => {
           return b !== toDel._id;
         });
-
+        
 
         axios.put('http://localhost:8000/updateUser/' + user._id, { Bookings: array })
           .then(res => {
-            console.log('user updated')
+            console.log('User updated')
+
+            const newUser = {...user}
+            newUser['Bookings'] = array;
+            setUser(newUser);
+
+            setLoading(false);
           })
 
         const arrF1 = departFlights[toDel.departFlightID].SeatsBooked.filter((b) => {
@@ -127,10 +136,19 @@ function ProfileBookings(props) {
         axios.put('http://localhost:8000/adminUpdateFlight/' + toDel.departFlightID, { SeatsBooked: arrF1 })
           .then(res => {
             console.log('dep updated')
+
+            const newDep = {...departFlights}
+            newDep[toDel.departFlightID].SeatsBooked = arrF1;
+            setDepartFlights(newDep);
+            
           })
         axios.put('http://localhost:8000/adminUpdateFlight/' + toDel.returnFlightID, { SeatsBooked: arrF2 })
           .then(res => {
             console.log('ret updated')
+
+            const newRet = {...returnFlights}
+            newRet[toDel.returnFlightID].SeatsBooked = arrF2;
+            setReturnFlights(newRet);
           })
 
         axios.post('http://localhost:8000/sendMail', mailOptions)
@@ -251,7 +269,11 @@ function ProfileBookings(props) {
                         <Button1
                           title={'View Iternary'}
                           style={{ width: 200, height: 50, marginTop: 30, marginBottom: 70 }}
-                          onClick={() => { history.push('/') }}
+                          onClick={() => { history.push({
+                            pathname:`/iternary/${onebooking.departFlightID}/${onebooking.returnFlightID}/${onebooking.departFlightSeats.length}`,
+                            booking:onebooking
+                          }) 
+                        }}
                         />
                         <Button1
                           title={'Cancel Reservation'}
