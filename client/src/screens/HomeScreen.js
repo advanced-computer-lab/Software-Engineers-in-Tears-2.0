@@ -70,7 +70,7 @@ function HomeScreen(props) {
     }
     else{
     history.push({
-      pathname: `/search/from=${from}#to=${to}#cabin=${cabin === '' ? null : cabin}#p=${pcount}#fromDate=${fromDate === '' ? null : fromDate}#toDate=${toDate === '' ? null : toDate}`
+      pathname: `/search/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? null : fromDate}/toDate=${toDate === '' ? null : toDate}`
     }
     );}
    }
@@ -185,7 +185,7 @@ function HomeScreen(props) {
         />
         </div>
         <div style={{display: "flex", flexDirection: 'column', alignItems: 'center', width: '10%', marginLeft: 25}}>
-          <label style={{color: '#F0A500', fontFamily: 'Archivo Black'}}>Arrival Date</label>
+          <label style={{color: '#F0A500', fontFamily: 'Archivo Black'}}>Return Date</label>
         <input
           type='date'
           value={toDate}
