@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import Footer from "../components/Footer";
 import Button1 from "../components/Button1";
+import Button2 from "../components/Button2";
 import ProfileHeader from "../components/ProfileHeader";
 import {durationString} from "../Utils";
 function ChosenFlights(props) {
@@ -86,6 +87,20 @@ function ChosenFlights(props) {
         day:'numeric',
       }
       return new Intl.DateTimeFormat('default',options).format(d);
+    }
+
+    if(props.location['pathname'].includes('iternary') && !props.location['booking']){
+      return(
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: '#fff'}}>
+              <img src={require("../assets/images/error-icon.png").default} style={{width: 100, height: 100}}/>
+              <label style={{fontFamily: 'Archivo Black', fontSize: 30, color:'#F0A500'}}>No Access</label>
+              <label style={{fontFamily: 'Archivo', fontSize: 20, color:'#000', marginTop: 20}}>This iternary can be accessed from your bookings page.</label>
+              <div style={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+              <Button2 style={{width: 200, height: 50, marginTop: 20}} title={'My Flight Bookings'} onClick={()=>history.push('/profile/bookings')}/>
+              <Button2 style={{width: 200, height: 50, marginTop: 20, marginLeft:50}} title={'Back to Home Screen'} onClick={() => history.push('/')}/>
+              </div>
+          </div>
+      );
     }
 
   return ( 
