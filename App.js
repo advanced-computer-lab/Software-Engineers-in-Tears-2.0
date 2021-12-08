@@ -39,8 +39,26 @@ app.post("/sendMail", auth.sendMail);
 app.put("/updateBooking/:id", bookingController.updateBooking);
 app.put("/updateUser/:userID", userController.updateUser)
 app.put('/adminUpdateFlight/:id', flightController.updateFlight);
-app.delete("/adminflights/delete/:id",flightController.deleteFlight);
 app.delete("/deleteBooking/:id", bookingController.deleteBooking);
+app.delete("/adminflights/delete/:id", (req, res)=>{
+  flightController.deleteFlight(req, res);
+  bookingController.getBookingsForFlight(req, res)
+  .then(bookings =>{
+    bookings.map(booking =>{
+      var fake = {
+        params:{
+          id:booking.id
+        }
+      }
+      // console.log(fake.params.id)
+      bookingController.deleteBooking(fake, res);
+    })
+
+    userController.updateAllUsersWithBooking(bookings, res);
+
+  })
+  
+});
 //app.post("/displayFlightFrom/:id",flightController.getFlightName);
 
 // Starting server
