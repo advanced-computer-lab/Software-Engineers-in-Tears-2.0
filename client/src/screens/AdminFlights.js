@@ -20,10 +20,12 @@ function AdminFlights(props) {
   function deleteflight(id) {
     axios.delete("http://localhost:8000/adminflights/delete/" + id)
       .then(() => {
+        console.log('wtf')
         setFlights(flights.filter((flight) => {
           return flight._id !== id;
         }))
-      });
+      })
+      .catch(err => console.log('catching wtf'));
   }
 
   useEffect(() => {

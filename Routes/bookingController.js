@@ -28,13 +28,16 @@ exports.updateBooking = (req, res)=>{
 
 
 exports.deleteBooking =(req,res)=>{
+  
   Bookings.findByIdAndDelete(req.params.id)
   .then(result => {
-    res.status(200).send("Reservation Deleted");
     console.log('Booking has been deleted successfully');
     
   })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).send(`Booking (id:${req.params.id}) deletion failed.`);
+    });
 }
 
 exports.getBookingByID = (req, res) => {
@@ -52,6 +55,16 @@ exports.getBookingByID = (req, res) => {
     .catch(err => {
       console.log(err);
     });
+}
+
+exports.getBookingsForFlight =  (req,res)=>{
+  const flightID = req.params.id;
+  var bookingsPromise =  Bookings.find({
+    $or:[{departFlightID:flightID}, {returnFlightID:flightID}],
+    
+  }, '_id userID');
+
+  return bookingsPromise;
 }
 
 
