@@ -236,10 +236,18 @@ function ProfileBookings(props) {
                 </label>
                 <Button1
                   title={'Cancel Reservation'}
-                  style={{ width: 350, height: 50, marginLeft: 800, marginTop: 30, marginBottom: 70 }}
+                  style={{ width: 350, height: 50, marginLeft: 800, marginTop: 30, marginBottom: 80 }}
                   onClick={() => { setCancelModal(true); setToDelete(onebooking); seti(i)  }}
                 />
-                <label></label>
+
+                <Button1
+                title={'View Reservation'}
+                style={{ width: 350, height: 50, marginLeft: 400,marginTop:-130 }}
+               // onClick={}
+                />
+                <label>
+
+                </label>
               </div>
             );
           }
