@@ -36,6 +36,7 @@ app.post("/getBookingByID", bookingController.getBookingByID);
 app.post("/admincreateflights", flightController.createFlight);
 app.post("/viewFlightDetails", flightController.viewFlightDetails);
 app.post("/sendMail", auth.sendMail);
+app.post("/createuser", userController.createUser);
 app.put("/updateBooking/:id", bookingController.updateBooking);
 app.put("/updateUser/:userID", userController.updateUser)
 app.put('/adminUpdateFlight/:id', flightController.updateFlight);

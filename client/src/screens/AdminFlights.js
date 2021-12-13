@@ -6,7 +6,7 @@ import Button4 from "../components/Button4";
 import Modal from 'react-bootstrap/Modal';
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
-import ProfileHeader from "../components/ProfileHeader";
+import AdminHeader from "../components/AdminHeader";
 
 
 function AdminFlights(props) {
@@ -78,7 +78,7 @@ function AdminFlights(props) {
         </Modal.Footer>
       </Modal>
       <Container style={{ opacity: deleteModal === true ? 0.5 : 1, pointerEvents: deleteModal === true ? 'none' : 'initial' }}>
-      <ProfileHeader title={'Admin'} path={'/admin'}/>
+      <AdminHeader />
         <table>
           <thead>
             <tr>

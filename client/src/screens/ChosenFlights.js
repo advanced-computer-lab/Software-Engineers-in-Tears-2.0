@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
-import NormalHeader from "../components/NormalHeader";
+import Header from "../components/Header";
 import ReactLoading from 'react-loading';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import Footer from "../components/Footer";
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
-import ProfileHeader from "../components/ProfileHeader";
 import {durationString} from "../Utils";
 function ChosenFlights(props) {
 
@@ -23,6 +22,8 @@ function ChosenFlights(props) {
     const id2 = useState(props.match.params.id2)[0];
     const userID = localStorage.getItem("userID");
     const passengerCount = useState(props.match.params.passengerCount)[0];
+
+    const firstName = localStorage.getItem("firstName");
 
     useEffect(() => {
         setLoading(true)
@@ -105,7 +106,7 @@ function ChosenFlights(props) {
 
   return ( 
     <Container>
-      {userID ? <ProfileHeader title={user.First_Name} path={'/'}/> : <NormalHeader />}
+      <Header title={firstName}/>
       {loading ? 
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#fff'}}>
             <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />

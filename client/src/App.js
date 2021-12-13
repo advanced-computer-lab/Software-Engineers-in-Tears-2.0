@@ -17,6 +17,7 @@ import ProfileHome from './screens/ProfileHome';
 import ProfileBookings from './screens/ProfileBookings';
 import UserUpdate from './screens/UserUpdate';
 import PaymentScreen from './screens/PaymentScreen';
+import Signup from './screens/Signup';
 
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={HomeScreen} />
           <Route exact path='/login' component={LoginScreen} />
+          <Route exact path='/signup' component={Signup} />
           <Route exact path='/admin/update/:id' component = {FlightUpdate} />
           <Route exact path='/summary/:id1/:id2/:passengerCount' component={ChosenFlights} />
           <Route exact path='/iternary/:id1/:id2/:passengerCount' component={ChosenFlights} />

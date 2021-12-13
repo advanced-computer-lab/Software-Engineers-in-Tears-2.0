@@ -23,6 +23,32 @@ exports.updateUser = (req, res)=>{
   .catch(err => {console.log(err); res.status(500);});
 }
 
+exports.createUser = (req, res)=>{
+  const First_Name= req.body.First_Name;
+  const Last_Name= req.body.Last_Name;
+  const Email= req.body.Email;
+  const Home_Address= req.body.Home_Address;
+  const Telephone_Number= req.body.Telephone_Number;
+  const Passport_Number= req.body.Passport_Number;
+  const Password= req.body.Password;
+  const Username= req.body.Username;
+  const Type= req.body.Type;
+  const newUser= new Users({
+    First_Name,
+    Last_Name,
+    Email,
+    Home_Address,
+    Telephone_Number,
+    Passport_Number,
+    Password,
+    Username,
+    Type,
+  });
+  newUser.save(function(err){
+    res.send(newUser);
+  });
+}
+
 exports.updateAllUsersWithBooking = (bookings, res) =>{
   // const promArr = []
   const fetchedUserProms = {}

@@ -164,7 +164,7 @@ class UserUpdateScreen extends Component {
               <Image2
                 src={require("../assets/images/profile-icon.png").default}
               />
-              <label style={{ color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 20 }}>{this.state.First_Name}</label>
+              <label style={{ color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 20 }}>{localStorage.getItem("firstName")}</label>
             </div>
             <Button1 style={{ width: 170, height: 40, fontSize: 15, position: 'absolute', top: 100 }} title={'Back To Home Page'} onClick={() => this.props.history.push('/')} />
             <ButtonIcon path={'home'} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Home'} onClick={() => this.props.history.push('/profile/home')} />

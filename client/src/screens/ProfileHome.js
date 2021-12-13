@@ -1,28 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import axios from 'axios';
 import ButtonIcon from "../components/ButtonIcon";
 import Button1 from "../components/Button1";
 
 function ProfileHome(props) {
 
   const history = useHistory();
-
-  const [user, setUser] = useState({});
-  const userID = localStorage.getItem("userID");
-
-  useEffect(() => {
-    if(userID){
-      axios.post('http://localhost:8000/getUserByID/', {_id: userID})
-      .then(res => {
-        setUser(res.data[0]);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-    }
-  }, [userID]);
 
   return (
     <Container style={{display: "flex", flexDirection: 'row'}}>
@@ -31,7 +15,7 @@ function ProfileHome(props) {
                 <Image2
                     src={require("../assets/images/profile-icon.png").default}
                 />
-                <label style={{color:'#F0A500', fontFamily: 'Archivo Black', fontSize: 20}}>{user.First_Name}</label>
+                <label style={{color:'#F0A500', fontFamily: 'Archivo Black', fontSize: 20}}>{localStorage.getItem("firstName")}</label>
             </div>
             <Button1 style={{width: 170, height: 40, fontSize: 15, position: 'absolute', top: 100}} title={'Back To Home Page'} onClick={() => history.push('/')}/>
             <ButtonIcon path={'home'} style={{width: '100%', height: 70, fontSize: 15}} title={'Home'} selected={true}/>
