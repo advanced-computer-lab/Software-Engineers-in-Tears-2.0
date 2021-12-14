@@ -1,4 +1,7 @@
 const Users = require('../Models/Users');
+require("dotenv").config({ path: "../config.env" });
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 exports.getUserByID = (req, res) => {
     var terms = {};
@@ -16,6 +19,44 @@ exports.getUserByID = (req, res) => {
       });
 }
 
+exports.login = (req, res) => {
+  const userLoggingIn = req.body;
+  Users.findOne({Username: userLoggingIn.Username})
+    .then(dbUser => {
+      if(!dbUser){
+        return res.json({
+          message: 'Invalid Username or Password'
+        })
+      }
+      bcrypt.compare(userLoggingIn.Password, dbUser.Password)
+        .then(isCorrect => {
+          if(isCorrect){
+            const payload = {
+              id : dbUser._id,
+              First_Name : dbUser.First_Name
+            }
+            jwt.sign(
+              payload,
+              process.env.JWT_SECRET,
+              {expiresIn: 86400},
+              (err, token) => {
+                if(err) return console.log(err)
+                  res.send({
+                    message: 'Success',
+                    token: token
+                })
+              }
+            )
+          }
+          else{
+            return res.json({
+              message: 'Invalid Username or Password'
+            })
+          }
+        })
+    })
+}
+
 exports.updateUser = (req, res)=>{
   Users.findByIdAndUpdate(req.params.userID, req.body)
   .then(result => {
@@ -23,15 +64,15 @@ exports.updateUser = (req, res)=>{
   .catch(err => {console.log(err); res.status(500);});
 }
 
-exports.createUser = (req, res)=>{
+exports.createUser = async (req, res)=>{
   const First_Name= req.body.First_Name;
   const Last_Name= req.body.Last_Name;
-  const Email= req.body.Email;
+  const Email= req.body.Email.toLowerCase();
   const Home_Address= req.body.Home_Address;
   const Telephone_Number= req.body.Telephone_Number;
   const Passport_Number= req.body.Passport_Number;
-  const Password= req.body.Password;
-  const Username= req.body.Username;
+  const Password= await bcrypt.hash(req.body.Password, 10);
+  const Username= req.body.Username.toLowerCase();
   const Type= req.body.Type;
   const newUser= new Users({
     First_Name,

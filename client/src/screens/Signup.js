@@ -92,7 +92,7 @@ function Signup(props) {
       setPhoneNumberError(true)
     }
     if(email.length === 0){
-      arr.push('Please enter your email gender')
+      arr.push('Please enter your email address')
       setEmailError(true)
     }
     else if(!re.test(email)){
@@ -148,9 +148,10 @@ function Signup(props) {
         Type: 'Customer',
       })
       .then(res => {
-        localStorage.setItem('firstName', res.data.First_Name)
-        localStorage.setItem('userID', res.data._id)
-        history.push('/')
+        history.push({
+          pathname: '/login',
+          register: true
+        })
         setLoading(false)
       })
       .catch(err => {
@@ -311,7 +312,7 @@ function Signup(props) {
             <input style={{height: 50, width: '85%', fontSize: 20, marginTop: 20, border: passportNumberError ? '2px solid red' : null}} placeholder="Passport Number" value={passportNumber} onChange={(e) => setPassportNumber(e.target.value)}/>
             <PhoneInput
               country={'eg'}
-              style={{marginTop: 20, width: 300}}
+              style={{marginTop: 20, width: 300, border: phoneNumberError ? '2px solid red' : null}}
               enableSearch={true}
               countryCodeEditable={false}
               value={phoneNumber} 

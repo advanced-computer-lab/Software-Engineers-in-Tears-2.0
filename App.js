@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 var cors = require('cors');
 const flightController = require('./Routes/flightController.js');
 const userController = require('./Routes/userController.js');
@@ -23,11 +24,35 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(result =>console.log("MongoDB is now connected") )
 .catch(err => console.log(err));
 
+function verifyJWT(req,res,next) {
+  const token = req.headers["x-access-token"]?.split(' ')[1];
+
+  if (token) {
+    jwt.verify(token, process.env.PASSPORTSECRET, (err, decoded) => {
+      if (err) return res .json({
+        isLoggedIn: false,
+        message: "Failed To Authenticate"
+      })
+      req.user= {};
+      req.user.id = decoded.id;
+      req.user.username = decoded.username;
+      next()
+    })
+  } else{
+    res.json({message: "Incorrect Token Given ", isLoggedIn : false})
+  }
+}
+
+app.get("/getname", verifyJWT, (req, res) => {
+  res.send({isLoggedIn: true, First_Name: req.user.First_Name});
+});
+
 app.get("/Home", (req, res) => {
   res.status(200).send("You have everything installed !");
 });
 
 app.get("/adminflights", flightController.listAllFlights);
+app.post("/login", userController.login);
 app.get('/adminUpdateFlight/:id', flightController.viewFlightDetails);
 app.post("/getUserByID", userController.getUserByID);
 app.post("/adminsearchflights", flightController.searchFlights);

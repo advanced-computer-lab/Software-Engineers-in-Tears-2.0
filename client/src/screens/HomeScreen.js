@@ -9,6 +9,7 @@ import {Motion, spring} from 'react-motion';
 import "./styles.css";
 import { useHistory } from "react-router-dom";
 import Header from "../components/Header";
+import axios from 'axios';
 
 function HomeScreen(props) {
 
@@ -28,6 +29,8 @@ function HomeScreen(props) {
   //localStorage.setItem('firstName', 'Adham')
   //localStorage.clear()
 
+  console.log(localStorage.getItem('token'));
+
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [adults, setAdults] = useState('');
@@ -38,10 +41,15 @@ function HomeScreen(props) {
 
   const [selected, setSelected] = useState('Search');
 
-  const userID = localStorage.getItem("userID");
   const firstName = localStorage.getItem("firstName");
 
   useEffect(() => {
+    axios.get('http://localhost:8000/getname', {})
+      .then(res => {
+      })
+      .catch(err => {
+        console.log(err);
+      })
     const listener = event => {
       if (event.code === "Enter" || event.code === "NumpadEnter") {
         console.log("Enter key was pressed. Run your function.");
@@ -52,7 +60,7 @@ function HomeScreen(props) {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [handle, userID]);
+  }, [handle]);
   
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -268,7 +276,7 @@ function HomeScreen(props) {
               marginLeft: 30
             }}
             title={'MODIFY FLIGHT'}
-            onClick={() => (userID ? history.push('/profile/bookings') : null)}
+            onClick={() => (firstName ? history.push('/profile/bookings') : null)}
           />
         </Rect3>
         <Rect4>
