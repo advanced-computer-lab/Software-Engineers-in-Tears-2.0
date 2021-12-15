@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import Footer from "../components/Footer";
 import Button1 from "../components/Button1";
-import ProfileHeader from "../components/ProfileHeader";
+import Header from "../components/Header";
 
 function ChooseSeatDepart(props) {
 
@@ -13,12 +13,13 @@ function ChooseSeatDepart(props) {
 
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(false);
-    const [user, setUser] = useState({});
     const [flight, setFlight] = useState({});
     const [seatsBooked, setSeatsBooked] = useState();
     const [currentSelection, setCurrentSelection] = useState([]);
     const bookingID = useState(props.match.params.bookingID)[0];
     const [booking, setBooking] = useState({});
+
+    const firstName = localStorage.getItem("firstName");
 
     useEffect(() => {
         setLoading(true)
@@ -28,8 +29,6 @@ function ChooseSeatDepart(props) {
     const getData = async() => {
         const res = await axios.post('http://localhost:8000/getBookingByID/', {_id: bookingID})
         setBooking(res.data[0])
-        const res2 = await axios.post('http://localhost:8000/getUserByID/', {_id: localStorage.getItem("userID")})
-        setUser(res2.data[0])
         const res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res.data[0].departFlightID})
         setFlight(res3.data[0])
         const arr = res.data[0].departFlightSeats;
@@ -158,7 +157,7 @@ function ChooseSeatDepart(props) {
 
   return ( 
     <Container>
-      <ProfileHeader title={user.First_Name} path={'/'}/>
+      <Header title={firstName}/>
       {
           loading ?
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#fff'}}>

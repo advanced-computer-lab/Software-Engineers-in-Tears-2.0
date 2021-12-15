@@ -60,7 +60,7 @@ class PaymentScreen extends Component{
                 
                 <Button1 loading={this.state.payLoading} disabled={this.state.payLoading} title='Pay' style={{height:50, width:200}} 
                 onClick={() => this.props.history.push({
-                    pathname:`/summary/${this.state.booking.departFlightID}/${this.state.booking.returnFlightID}/${this.state.booking.departFlightSeats.length}`,
+                    pathname:`/iternary/${this.state.booking.departFlightID}/${this.state.booking.returnFlightID}/${this.state.booking.departFlightSeats.length}`,
                     booking:this.state.booking
                 }
                     )}/>

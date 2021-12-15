@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 import axios from 'axios';
 import Footer from "../components/Footer";
-import ProfileHeader from "../components/ProfileHeader";
+import Header from "../components/Header";
+import AdminHeader from "../components/AdminHeader";
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
 import Modal from 'react-bootstrap/Modal';
@@ -184,7 +185,7 @@ class FlightUpdateScreen extends Component {
           </Modal.Footer>
         </Modal>
         <Container style={{ minHeight: "100%", opacity: this.state.updateModal === true ? 0.5 : 1, pointerEvents: this.state.updateModal === true ? 'none' : 'initial' }}>
-          <ProfileHeader title={'Admin'} path={'/admin'} />
+        <AdminHeader />
           <div style={{ height: 80, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <text style={{ fontFamily: 'Archivo Black', color: '#f4f4f4', fontSize: 30, marginLeft: 50 }}>Update Flight</text>
             <Button1

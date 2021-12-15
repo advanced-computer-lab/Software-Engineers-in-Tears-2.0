@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import ProfileHeader from "../components/ProfileHeader";
+import Header from "../components/Header";
 import Button1 from "../components/Button1";
 import Footer from "../components/Footer";
+import AdminHeader from "../components/AdminHeader";
 
 function AdminHome(props) {
 
@@ -33,7 +34,7 @@ function AdminHome(props) {
 
   return (
     <Container>
-    <ProfileHeader title={'Admin'} path={'/admin'}/>
+    <AdminHeader />
     <Rect2>
         <SearchFlight>SEARCH FLIGHT</SearchFlight>
         <MaterialFixedLabelTextboxRow>  

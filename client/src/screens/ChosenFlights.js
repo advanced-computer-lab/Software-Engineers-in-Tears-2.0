@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
-import NormalHeader from "../components/NormalHeader";
+import Header from "../components/Header";
 import ReactLoading from 'react-loading';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import Footer from "../components/Footer";
 import Button1 from "../components/Button1";
-import ProfileHeader from "../components/ProfileHeader";
+import Button2 from "../components/Button2";
 import {durationString} from "../Utils";
 function ChosenFlights(props) {
 
@@ -22,6 +22,8 @@ function ChosenFlights(props) {
     const id2 = useState(props.match.params.id2)[0];
     const userID = localStorage.getItem("userID");
     const passengerCount = useState(props.match.params.passengerCount)[0];
+
+    const firstName = localStorage.getItem("firstName");
 
     useEffect(() => {
         setLoading(true)
@@ -88,9 +90,23 @@ function ChosenFlights(props) {
       return new Intl.DateTimeFormat('default',options).format(d);
     }
 
+    if(props.location['pathname'].includes('iternary') && !props.location['booking']){
+      return(
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: '#fff'}}>
+              <img src={require("../assets/images/error-icon.png").default} style={{width: 100, height: 100}}/>
+              <label style={{fontFamily: 'Archivo Black', fontSize: 30, color:'#F0A500'}}>No Access</label>
+              <label style={{fontFamily: 'Archivo', fontSize: 20, color:'#000', marginTop: 20}}>This iternary can be accessed from your bookings page.</label>
+              <div style={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
+              <Button2 style={{width: 200, height: 50, marginTop: 20}} title={'My Flight Bookings'} onClick={()=>history.push('/profile/bookings')}/>
+              <Button2 style={{width: 200, height: 50, marginTop: 20, marginLeft:50}} title={'Back to Home Screen'} onClick={() => history.push('/')}/>
+              </div>
+          </div>
+      );
+    }
+
   return ( 
     <Container>
-      {userID ? <ProfileHeader title={user.First_Name} path={'/'}/> : <NormalHeader />}
+      <Header title={firstName}/>
       {loading ? 
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#fff'}}>
             <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
