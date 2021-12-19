@@ -24,31 +24,23 @@ mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(result =>console.log("MongoDB is now connected") )
 .catch(err => console.log(err));
 
-function verifyJWT(req,res,next) {
-  const token = req.headers["x-access-token"]?.split(' ')[1];
+app.get("/Home", (req, res) => {
+  res.status(200).send("You have everything installed !");
+});
 
+app.post("/auth", (req, res) => {
+  const token = req.body.token;
   if (token) {
     jwt.verify(token, process.env.PASSPORTSECRET, (err, decoded) => {
       if (err) return res .json({
         isLoggedIn: false,
         message: "Failed To Authenticate"
       })
-      req.user= {};
-      req.user.id = decoded.id;
-      req.user.username = decoded.username;
-      next()
+      res.send({isLoggedIn: true, Type: decoded.Type});
     })
   } else{
-    res.json({message: "Incorrect Token Given ", isLoggedIn : false})
+    res.send({message: "Incorrect Token Given ", isLoggedIn : false})
   }
-}
-
-app.get("/getname", verifyJWT, (req, res) => {
-  res.send({isLoggedIn: true, First_Name: req.user.First_Name});
-});
-
-app.get("/Home", (req, res) => {
-  res.status(200).send("You have everything installed !");
 });
 
 app.get("/adminflights", flightController.listAllFlights);

@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import Header from "../components/Header";
 import Button1 from "../components/Button1";
+import axios from 'axios';
 import Footer from "../components/Footer";
 import AdminHeader from "../components/AdminHeader";
 
@@ -16,6 +16,32 @@ function AdminHome(props) {
   const [departureTime, setDepartureTime] = useState('');
   const [arrivalTime, setArrivalTime] = useState('');
   const [flightDate, setFlightDate] = useState('');
+
+  useEffect(() => {
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      .then(res => {
+        if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
+          history.push('/')
+        }
+        else{
+          localStorage.clear()
+          history.push('/')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    const listener = event => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        console.log("Enter key was pressed. Run your function.");
+        handle(event)
+      }
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, [handle]);
 
    function handle(event){
     event.preventDefault();

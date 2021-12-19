@@ -29,6 +29,19 @@ function AdminFlights(props) {
   }
 
   useEffect(() => {
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      .then(res => {
+        if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
+          history.push('/')
+        }
+        else{
+          localStorage.clear()
+          history.push('/')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
     if (props.location.showAll) {
       axios
         .get('http://localhost:8000/adminflights')

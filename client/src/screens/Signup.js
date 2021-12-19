@@ -43,6 +43,15 @@ function Signup(props) {
   const [color, setColor] = useState('red');
 
   useEffect(() => {
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      .then(res => {
+        if(res.data.isLoggedIn){
+          history.push('/')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
     const listener = event => {
       if (event.code === "Enter" || event.code === "NumpadEnter") {
         handle(event)
@@ -52,7 +61,8 @@ function Signup(props) {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [handle]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -298,7 +308,7 @@ function Signup(props) {
     <Container>
       <Header title={null}/>
       <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <label style={{fontFamily: 'Archivo', fontSize: 14, marginTop: 70}}>L O Y A L T Y</label>
+        <label style={{fontFamily: 'Archivo', fontSize: 14, marginTop: 50}}>L O Y A L T Y</label>
         <label style={{fontFamily: 'Archivo', fontSize: 37, marginTop: 10}}>Join Dune Airlines</label>
         <label style={{textAlign: 'center', fontFamily: 'Archivo', fontSize: 14, marginTop: 10}}>Open up a world of rewards every time you travel. Enjoy reward flights, upgrades, <br/>exclusive benefits and more.</label>
         <div style={{boxShadow: '0px 1px 5px  0.35px #000', width: '80%', marginTop: 30, display: 'flex', flexDirection: 'row'}}>
@@ -319,7 +329,7 @@ function Signup(props) {
               onChange={phone => setPhoneNumber(phone)}
             />
             <input style={{height: 50, width: '85%', fontSize: 20, marginTop: 20, border: emailError ? '2px solid red' : null}} placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} type={'email'}/>
-            <input style={{height: 50, width: '85%', fontSize: 20, marginTop: 20, border: usernameError ? '2px solid red' : null}} placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+            <input style={{height: 50, width: '85%', fontSize: 20, marginTop: 20, border: usernameError ? '2px solid red' : null}} placeholder="Username" autoComplete="new-password" value={username} onChange={(e) => setUsername(e.target.value)}/>
             <div style={{width: '100%', flexDirection: 'row', display: 'flex', justifyContent: 'center', marginTop: 20}}>
               <input style={{height: 50, width: '40%', fontSize: 20, border: passwordError ? '2px solid red' : null}} autoComplete="new-password" placeholder="Password" type={'password'} value={password} onChange={(e) => checkPassword(e.target.value)}/>
               <input style={{height: 50, width: '40%', fontSize: 20, marginLeft: '4%', border: confirmPasswordError ? '2px solid red' : null}} placeholder="Confirm Password" type={'password'} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>

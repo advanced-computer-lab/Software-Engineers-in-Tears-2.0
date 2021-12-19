@@ -23,40 +23,36 @@ function ChosenFlights(props) {
     const userID = localStorage.getItem("userID");
     const passengerCount = useState(props.match.params.passengerCount)[0];
 
+    const [loggedIn, setLoggedIn] = useState(false);
+
     const firstName = localStorage.getItem("firstName");
 
     useEffect(() => {
-        setLoading(true)
-        if(userID){
-          axios.post('http://localhost:8000/getUserByID/', {_id: userID})
-          .then(res => {
-            setUser(res.data[0]);
-            setBookings(res.data[0].Bookings)
-          })
-          .catch(err => {
-            console.log(err);
-          })
+      setLoading(true)
+      getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-        }
-        axios.post('http://localhost:8000/adminsearchflights/', {_id: id1})
-        .then(res => {
-            setFlight1(res.data[0]);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-        axios.post('http://localhost:8000/adminsearchflights/', {_id: id2})
-        .then(res => {
-            setFlight2(res.data[0]);
-            setLoading(false)
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }, [id1, id2, userID]);
+    const getData = async() => {
+      const res = await axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      setLoggedIn(res.data.isLoggedIn)
+      if(res.data.isLoggedIn){
+        const res2 = await axios.post('http://localhost:8000/getUserByID/', {_id: userID})
+        setUser(res2.data[0]);
+        setBookings(res2.data[0].Bookings)
+      }
+      else{
+        localStorage.clear()
+      }
+      const res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: id1})
+      setFlight1(res3.data[0]);
+      const res4 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: id2})
+      setFlight2(res4.data[0]);
+      setLoading(false)
+  }
     
     function handleSubmit() {
-      if(userID){
+      if(loggedIn){
         setLoading2(true)
         const newBooking={
           departFlightID: id1,
@@ -80,6 +76,9 @@ function ChosenFlights(props) {
           console.log(err);
         })
       }
+      else{
+        history.push('/login')
+      }
     }
     const formatDate = (date) =>{
       const d = new Date(date);
@@ -93,7 +92,7 @@ function ChosenFlights(props) {
     if(props.location['pathname'].includes('iternary') && !props.location['booking']){
       return(
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: '#fff'}}>
-              <img src={require("../assets/images/error-icon.png").default} style={{width: 100, height: 100}}/>
+              <Image1 src={require("../assets/images/error-icon.png").default} style={{width: 100, height: 100}}/>
               <label style={{fontFamily: 'Archivo Black', fontSize: 30, color:'#F0A500'}}>No Access</label>
               <label style={{fontFamily: 'Archivo', fontSize: 20, color:'#000', marginTop: 20}}>This iternary can be accessed from your bookings page.</label>
               <div style={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
@@ -122,21 +121,18 @@ function ChosenFlights(props) {
             </div>
             <div style={{display: "flex", flexDirection: 'row', alignItems: 'center', height: 300}}>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center', marginTop:43}}>From</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>From</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{flight1.From}</label>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.DepartureTime?flight1.DepartureTime:"N/A"}</label>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.Flight_Date?formatDate(flight1.Flight_Date):"N/A"}</label>
               </div>
               <div style={{display: 'flex', flexDirection: 'column'}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.Trip_Duration?durationString(flight1.Trip_Duration):"N/A"}</label>
                 <Image2 src={require("../assets/images/arrow.png").default} style={{width: 200}}></Image2>
               </div>
               <div style={{display: 'flex', flexDirection: 'column'}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center', marginTop:43}}>To</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>To</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{flight1.To}</label>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.ArrivalTime?flight1.ArrivalTime:"N/A"}</label>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.Arrival_Date?formatDate(flight1.Arrival_Date):"N/A"}</label>
-                
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight1.ArrivalTime?flight1.ArrivalTime:"N/A"}</label>                
               </div>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Flight Number</label>
@@ -165,20 +161,18 @@ function ChosenFlights(props) {
             </div>
             <div style={{display: "flex", flexDirection: 'row', alignItems: 'center', height: 300}}>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center', marginTop:43}}>From</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>From</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{flight2.From}</label>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight2.DepartureTime?flight2.DepartureTime:"N/A"}</label>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight2.Flight_Date?formatDate(flight2.Flight_Date):"N/A"}</label>
               </div>
               <div style={{display: 'flex', flexDirection: 'column'}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight2.Trip_Duration?durationString(flight2.Trip_Duration):"N/A"}</label>
                 <Image2 src={require("../assets/images/arrow.png").default} style={{width: 200}}></Image2>
               </div>
               <div style={{display: 'flex', flexDirection: 'column'}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center', marginTop:43}}>To</label>
+                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>To</label>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 40, textAlign: 'center'}}>{flight2.To}</label>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight2.ArrivalTime?flight2.ArrivalTime:"N/A"}</label>
-                <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>{flight2.Arrival_Date?formatDate(flight2.Arrival_Date):"N/A"}</label>
               </div>
               <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, textAlign: 'center'}}>Flight Number</label>

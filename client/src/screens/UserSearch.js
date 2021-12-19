@@ -24,7 +24,6 @@ function UserSearch(props) {
   const [selectedReturn, setSelectedReturn] = useState('');
   const [viewDepartDetailsID, setViewDepartDetailsID] = useState();
   const [viewReturnDetailsID, setViewReturnDetailsID] = useState();
-  const userID = localStorage.getItem("userID");
   const firstName = localStorage.getItem("firstName");
 
   const from = useState(props.match.params.from)[0];
@@ -35,6 +34,18 @@ function UserSearch(props) {
 
   useEffect(() => {
     setLoading(true)
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      .then(res => {
+        if(res.data.isLoggedIn){
+          
+        }
+        else{
+          localStorage.clear()
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
     axios.post('http://localhost:8000/adminsearchflights', {
       From: from,
       To: to,
@@ -74,7 +85,7 @@ function UserSearch(props) {
       .catch(err => {
         console.log(err);
       })
-  }, [cabin, from, fromDate, props.match.params.pcount, to, toDate, userID]);
+  }, [cabin, from, fromDate, props.match.params.pcount, to, toDate]);
 
   return (
     <Container >
