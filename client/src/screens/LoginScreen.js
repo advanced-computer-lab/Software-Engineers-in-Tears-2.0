@@ -24,6 +24,15 @@ function LoginScreen(props) {
   const [register, setRegister] = useState(props.location.register);
 
   useEffect(() => {
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      .then(res => {
+        if(res.data.isLoggedIn){
+          history.push('/')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
     const listener = event => {
       if (event.code === "Enter" || event.code === "NumpadEnter") {
         handle(event)
@@ -33,8 +42,8 @@ function LoginScreen(props) {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [handle]);
-  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function handle(event){
@@ -52,7 +61,14 @@ function LoginScreen(props) {
       .then(res => {
         if(res.data.message === 'Success'){
           localStorage.setItem('token', res.data.token)
-          history.push('/')
+          localStorage.setItem('firstName', res.data.First_Name)
+          localStorage.setItem('userID', res.data.id)
+          if(res.data.Type === 'administrator'){
+            history.push('/admin')
+          }
+          else{
+            history.push('/')
+          }
           setLoading(false)
         }
         else{

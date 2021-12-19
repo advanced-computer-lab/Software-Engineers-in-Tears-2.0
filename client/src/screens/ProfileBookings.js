@@ -14,49 +14,41 @@ function ProfileBookings(props) {
   const history = useHistory();
 
   const [user, setUser] = useState({});
-  const userID = localStorage.getItem("userID");
   const [cancelModal, setCancelModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const bookingID = props.match.params.bookingID;
   const [bookings, setBookings] = useState([]);
   const [toDelete, setToDelete] = useState({});
-  const id1 = useState(props.match.params.id1)[0];
   const [departFlights, setDepartFlights] = useState({});
   const [returnFlights, setReturnFlights] = useState({});
   const [i, seti] = useState();
 
   useEffect(() => {
-    if (userID) {
-      axios.post('http://localhost:8000/getUserByID/', { _id: userID })
-        .then(res => {
-          setUser(res.data[0]);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
-
-    // axios.post('http://localhost:8000/getBookingByID/', { _id: bookingID })
-    //   .then(res => {
-    //     setBookings(res.data);
-    //   })
-    getData();
-
-
-  }, [userID, bookingID]);
-
-
-  function getFlight(id) {
-    axios.post('http://localhost:8000/adminsearchflights/', { _id: id })
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
       .then(res => {
-        return res.data[0];
+        if(!res.data.isLoggedIn){
+          localStorage.clear()
+          history.push('/')
+        }
       })
       .catch(err => {
         console.log(err);
-        return null;
       })
+    getData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  }
+
+  // function getFlight(id) {
+  //   axios.post('http://localhost:8000/adminsearchflights/', { _id: id })
+  //     .then(res => {
+  //       return res.data[0];
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //       return null;
+  //     })
+  // }
+
   const getData = async () => {
     const res = await axios.post('http://localhost:8000/getUserByID/', { _id: localStorage.getItem("userID") });
     setUser(res.data[0]);

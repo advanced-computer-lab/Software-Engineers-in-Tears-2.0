@@ -24,6 +24,7 @@ function ChooseSeatDepart(props) {
     useEffect(() => {
         setLoading(true)
         getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getData = async() => {

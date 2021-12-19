@@ -38,6 +38,16 @@ class UserUpdateScreen extends Component {
     this.userID = localStorage.getItem('userID');
   };
   componentDidMount() {
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      .then(res => {
+        if(!res.data.isLoggedIn){
+          localStorage.clear()
+          this.props.history.push('/')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
     axios.post('http://localhost:8000/getUserByID/', { _id: this.userID })
       .then(result => {
         console.log(result);

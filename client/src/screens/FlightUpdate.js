@@ -45,6 +45,19 @@ class FlightUpdateScreen extends Component {
   };
 
   componentDidMount() {
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      .then(res => {
+        if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
+          this.history.push('/')
+        }
+        else{
+          localStorage.clear()
+          this.history.push('/')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
     axios.get('http://localhost:8000/adminUpdateFlight/' + this.props.match.params.id)
       .then(result => {
         this.setState({
