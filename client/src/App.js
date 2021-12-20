@@ -17,6 +17,7 @@ import ProfileBookings from './screens/ProfileBookings';
 import UserUpdate from './screens/UserUpdate';
 import PaymentScreen from './screens/PaymentScreen';
 import Signup from './screens/Signup';
+import ChangePassword from './screens/ChangePassword';
 
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
           <Route exact path='/search/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/toDate=:toDate' component={UserSearch} />
           <Route exact path='/profile/home' component={ProfileHome} />
           <Route exact path='/profile/bookings' component={ProfileBookings} />
+          <Route exact path='/profile/changepassword' component={ChangePassword} />
           <Route exact path='/profile/account' component={UserUpdate} />
           <Route exact path='/booking/:bookingID/seats/depart' component={ChooseSeatDepart} />
           <Route exact path='/booking/:bookingID/seats/return' component={ChooseSeatReturn} />
