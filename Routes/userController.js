@@ -64,28 +64,26 @@ exports.login = (req, res) => {
 exports.changePassword= (req, res)=>{
   const old_password=req.body.oldPassword;
   const new_password=req.body.newPassword;
-  const confirm_password=req.body.confirmPassword;
-  Users.findById(req.params.userID)
+  Users.findById(req.body.userID)
     .then(dbUser => {
-      if(dbUser!=null){
         const hash= dbUser.Password;
-        bycrpt.compare(old_password,hash)
+        bcrypt.compare(old_password,hash)
         .then(isCorrect=>{
           if(isCorrect){
             //now check new password and confirm if match
-            if(new_password==confirm_password){
-              bycrpt.hash(new_password,10)
+              bcrypt.hash(new_password,10)
               .then(hashedPass=>{
-                dbUser.Password=hashedPass;
-                dbUser.save(function(err){
-                    res.status(200).send("Password has been Changed Successfully")
-                })
-
+                dbUser.Password = hashedPass;
+                dbUser.save()
+                res.send({message: 'Success'})
               })
-            }
+          }
+          else{
+            return res.send({
+              message: 'Incorrect Password'
+            })
           }
         })
-      }
     })
 }
 
