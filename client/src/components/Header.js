@@ -48,7 +48,7 @@ function Header(props) {
       <div onMouseEnter={() => setHover9('rgba(50,50,50,1)')} onMouseLeave={() => setHover9('#000')} style={{height: 58, width: 40, cursor: 'pointer', backgroundColor: hover9, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 150}}>
         <Logo src={require("../assets/images/search-2.png").default} style={{width: 25, height: 25}}/>
       </div>
-      <div onMouseEnter={() => setHover8('rgba(50,50,50,1)')} onMouseLeave={() => setHover8('#000')} style={{height: 58, width: 100, cursor: 'pointer', backgroundColor: hover8, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 50}} onClick={() => props.title ? history.push('/profile/home') : history.push('/login')}>
+      <div onMouseOver={() => setHover8('rgba(50,50,50,1)')} onMouseLeave={() => setHover8('#000')} style={{height: 58, width: 100, cursor: 'pointer', backgroundColor: hover8, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', position: 'absolute', right: 50}} onClick={() => props.title ? history.push('/profile/home') : history.push('/login')}>
         {props.selected === 'Name' ? <div style={{position: 'absolute', top: 0, width: '100%', height: 5, backgroundColor: '#F0A500'}} /> : null}
         <Logo src={require("../assets/images/profile-icon2.png").default} style={{width: 25, height: 24}}/>
         <label style={{color: '#fff', fontFamily: 'Helvetica Bold', fontSize: 13, cursor: 'pointer', marginLeft: 7}}>{props.title ? props.title : 'LOG IN'}</label>

@@ -25,7 +25,7 @@ function ChosenFlights(props) {
 
     const [loggedIn, setLoggedIn] = useState(false);
 
-    const firstName = localStorage.getItem("firstName");
+    const [firstName, setFirstName] = useState('');
 
     useEffect(() => {
       setLoading(true)
@@ -36,6 +36,9 @@ function ChosenFlights(props) {
     const getData = async() => {
       const res = await axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
       setLoggedIn(res.data.isLoggedIn)
+      if(res.data.isLoggedIn){
+        setFirstName(localStorage.getItem('firstName'));
+      }
       if(res.data.isLoggedIn){
         const res2 = await axios.post('http://localhost:8000/getUserByID/', {_id: userID})
         setUser(res2.data[0]);
@@ -80,14 +83,14 @@ function ChosenFlights(props) {
         history.push('/login')
       }
     }
-    const formatDate = (date) =>{
-      const d = new Date(date);
-      const options = {
-        month:'short',
-        day:'numeric',
-      }
-      return new Intl.DateTimeFormat('default',options).format(d);
-    }
+    // const formatDate = (date) =>{
+    //   const d = new Date(date);
+    //   const options = {
+    //     month:'short',
+    //     day:'numeric',
+    //   }
+    //   return new Intl.DateTimeFormat('default',options).format(d);
+    // }
 
     if(props.location['pathname'].includes('iternary') && !props.location['booking']){
       return(

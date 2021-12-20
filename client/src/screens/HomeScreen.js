@@ -41,16 +41,16 @@ function HomeScreen(props) {
 
   const [selected, setSelected] = useState('Search');
 
-  const firstName = useState(localStorage.getItem('firstName'))[0];
+  const [firstName, setFirstName] = useState('');
 
   useEffect(() => {
     axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
       .then(res => {
-        if(res.data.isLoggedIn){
-          
+        if(!res.data.isLoggedIn){
+          localStorage.clear();
         }
         else{
-          localStorage.clear()
+          setFirstName(localStorage.getItem('firstName'))
         }
       })
       .catch(err => {

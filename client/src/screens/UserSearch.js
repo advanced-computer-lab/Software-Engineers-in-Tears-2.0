@@ -24,7 +24,7 @@ function UserSearch(props) {
   const [selectedReturn, setSelectedReturn] = useState('');
   const [viewDepartDetailsID, setViewDepartDetailsID] = useState();
   const [viewReturnDetailsID, setViewReturnDetailsID] = useState();
-  const firstName = localStorage.getItem("firstName");
+  const [firstName, setFirstName] = useState('');
 
   const from = useState(props.match.params.from)[0];
   const to = useState(props.match.params.to)[0];
@@ -36,11 +36,11 @@ function UserSearch(props) {
     setLoading(true)
     axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
       .then(res => {
-        if(res.data.isLoggedIn){
-          
+        if(!res.data.isLoggedIn){
+          localStorage.clear();
         }
         else{
-          localStorage.clear()
+          setFirstName(localStorage.getItem('firstName'))
         }
       })
       .catch(err => {

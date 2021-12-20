@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
-import ButtonIcon from "../components/ButtonIcon";
+import Header from "../components/Header";
 import Button1 from "../components/Button1";
 import Modal from 'react-bootstrap/Modal';
 import Button2 from "../components/Button2";
@@ -12,6 +12,8 @@ import ReactLoading from 'react-loading';
 function ProfileBookings(props) {
 
   const history = useHistory();
+
+  const firstName = useState(localStorage.getItem('firstName'))[0];
 
   const [user, setUser] = useState({});
   const [cancelModal, setCancelModal] = useState(false);
@@ -154,7 +156,11 @@ function ProfileBookings(props) {
       .catch(err => console.log(err));
   }
 
-
+  const [hover1, setHover1] = useState('black');
+  const [hover2, setHover2] = useState('black');
+  const [hover3, setHover3] = useState('#F0A500');
+  const [hover4, setHover4] = useState('black');
+  const [hover5, setHover5] = useState('black');
 
   return (
     <>
@@ -175,46 +181,30 @@ function ProfileBookings(props) {
           />
         </Modal.Footer>
       </Modal>
-
-
-      <Container style={{ display: "flex", flexDirection: 'row', opacity: cancelModal === true ? 0.5 : 1, pointerEvents: cancelModal === true ? 'none' : 'initial' }}>
-        <head>
-          <script src="https://smtpjs.com/v3/smtp.js"></script>
-        </head>
-        <div id='sidebar' style={{ position: 'fixed', width: 200, backgroundColor: '#000', display: 'flex', flexDirection: 'column', height: window.innerHeight, marginBottom: -35, alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ width: 200, backgroundColor: '#000', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 30 }}>
-            <Image2
-              src={require("../assets/images/profile-icon.png").default}
-            />
-            <label style={{ color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 20 }}>{localStorage.getItem("firstName")}</label>
-          </div>
-          <Button1 style={{ width: 170, height: 40, fontSize: 15, position: 'absolute', top: 100 }} title={'Back To Home Page'} onClick={() => history.push('/')} />
-          <ButtonIcon path={'home'} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Home'} onClick={() => history.push('/profile/home')} />
-          <ButtonIcon path={"profile2"} style={{ width: '100%', height: 70, fontSize: 15 }} title={'My Profile'} onClick={() => history.push('/profile/account')} />
-          <ButtonIcon path={"wallet"} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Wallet'} />
-          <ButtonIcon path={"bookings"} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Bookings'} selected={true} />
-          <Button1 style={{ width: 100, height: 40, fontSize: 15, position: 'absolute', bottom: 30 }} title={'Logout'} onClick={() => { localStorage.clear(); history.push('/') }} />
+      <Container style={{display: "flex", flexDirection: 'column'}}>
+      <Header title={firstName} selected={'Name'}/>
+      <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+        <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50, width: 200}}>
+          <label onMouseEnter={() => setHover1('#CF7500')} onMouseLeave={() => setHover1('black')} style={{color: hover1, fontFamily: 'Archivo', cursor: 'pointer', marginTop: 20, fontSize: 15}} onClick={() => history.push('/profile/home')}>Home</label>
+          <label onMouseEnter={() => setHover2('#CF7500')} onMouseLeave={() => setHover2('black')} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: hover2}} onClick={() => history.push('/profile/account')}>My Account</label>
+          <label onMouseEnter={() => setHover3('#CF7500')} onMouseLeave={() => setHover3('#F0A500')} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: hover3}} onClick={() => history.push('/profile/bookings')}>My Bookings</label>
+          <label onMouseEnter={() => setHover4('#CF7500')} onMouseLeave={() => setHover4('black')} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: hover4}} onClick={() => history.push('/profile/changepassword')}>Change Password</label>
+          <label onMouseEnter={() => setHover5('#CF7500')} onMouseLeave={() => setHover5('black')} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: hover5}} onClick={() => {history.push('/'); localStorage.clear()}}>Log Out</label>
         </div>
-
-        {/* page loading handling */}
         {loading ?
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: window.innerWidth, height: window.innerHeight, backgroundColor: 'rgb(244, 244, 244)', marginLeft: '13%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: window.innerWidth-200, height: window.innerHeight, marginLeft: 50, marginRight: 180 }}>
             <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
           </div>
           :
-          /*screen excluding nav bar */
-          <div style={{ display: 'flex', flexDirection: 'column', width: window.innerWidth, height: window.innerHeight, alignItems: 'center', marginLeft: '13%' }}>
-            {/* page title */}
+          <div style={{ display: 'flex', flexDirection: 'column', width: window.innerWidth-200, marginLeft: 50}}>
             <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20 }}> Your Reservations </label>
-            {/* grey boxes */}
-
             {
               bookings.length > 0 ?
                 bookings.map((onebooking, i) => {
                   console.log(bookings.length);
                   var TPrice = (departFlights[onebooking.departFlightID].Price * onebooking.PassengerCount) + (returnFlights[onebooking.returnFlightID].Price * onebooking.PassengerCount);
                   return (
-                    <div style={{ width: '90%', height: 400, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 150, paddingTop:20 }}>
+                    <div style={{ marginRight: 180, height: 400, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 70, paddingTop:20 }}>
                       {/* text inside boxes */}
                       <label style={{ marginLeft: 30, marginTop: 200 }}>
                         <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20, marginTop:50 }}>Booking Number: {' ' + onebooking._id} <br /></label>
@@ -284,13 +274,14 @@ function ProfileBookings(props) {
             }
           </div>
         }
-      </Container>
-
-
-
-    </>
-  );
+        </div>
+  </Container>
+  </>
+);
 }
+
+const Image = styled.img`
+`;
 
 const Container = styled.div`
 `;
