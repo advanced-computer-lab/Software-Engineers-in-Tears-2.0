@@ -47,6 +47,7 @@ exports.login = (req, res) => {
                     token: token,
                     id : dbUser._id,
                     First_Name : dbUser.First_Name
+                    
                 })
               }
             )
@@ -57,6 +58,34 @@ exports.login = (req, res) => {
             })
           }
         })
+    })
+}
+
+exports.changePassword= (req, res)=>{
+  const old_password=req.body.oldPassword;
+  const new_password=req.body.newPassword;
+  const confirm_password=req.body.confirmPassword;
+  Users.findById(req.params.userID)
+    .then(dbUser => {
+      if(dbUser!=null){
+        const hash= dbUser.Password;
+        bycrpt.compare(old_password,hash)
+        .then(isCorrect=>{
+          if(isCorrect){
+            //now check new password and confirm if match
+            if(new_password==confirm_password){
+              bycrpt.hash(new_password,10)
+              .then(hashedPass=>{
+                dbUser.Password=hashedPass;
+                dbUser.save(function(err){
+                    res.status(200).send("Password has been Changed Successfully")
+                })
+
+              })
+            }
+          }
+        })
+      }
     })
 }
 
