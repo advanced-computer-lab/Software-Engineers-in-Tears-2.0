@@ -18,6 +18,7 @@ import UserUpdate from './screens/UserUpdate';
 import PaymentScreen from './screens/PaymentScreen';
 import Signup from './screens/Signup';
 import ChangePassword from './screens/ChangePassword';
+import EditSeatDepart from './screens/EditSeatDepart';
 
 
 class App extends Component {
@@ -37,6 +38,7 @@ class App extends Component {
           <Route exact path='/profile/changepassword' component={ChangePassword} />
           <Route exact path='/profile/account' component={UserUpdate} />
           <Route exact path='/booking/:bookingID/seats/depart' component={ChooseSeatDepart} />
+          <Route exact path='/booking/:bookingID/seats/depart/edit' component={EditSeatDepart} />
           <Route exact path='/booking/:bookingID/seats/return' component={ChooseSeatReturn} />
           <Route exact path='/booking/payment' component={PaymentScreen} />
           <Route exact path='/booking/iternary'  />
