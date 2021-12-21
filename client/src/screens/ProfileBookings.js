@@ -6,7 +6,8 @@ import Header from "../components/Header";
 import Button1 from "../components/Button1";
 import Modal from 'react-bootstrap/Modal';
 import Button2 from "../components/Button2";
-import Button4 from "../components/Button4";
+import BookingCard from "../components/BookingCard";
+import Footer from "../components/Footer";
 import ReactLoading from 'react-loading';
 
 function ProfileBookings(props) {
@@ -22,7 +23,6 @@ function ProfileBookings(props) {
   const [toDelete, setToDelete] = useState({});
   const [departFlights, setDepartFlights] = useState({});
   const [returnFlights, setReturnFlights] = useState({});
-  const [i, seti] = useState();
 
   useEffect(() => {
     axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
@@ -177,11 +177,11 @@ function ProfileBookings(props) {
           <Button1
             title={'Yes'}
             style={{ width: 150, height: 50, marginLeft: 20 }}
-            onClick={() => { deleteBooking(toDelete); setCancelModal(false) }}
+            onClick={() => {deleteBooking(toDelete); setCancelModal(false)}}
           />
         </Modal.Footer>
       </Modal>
-      <Container style={{display: "flex", flexDirection: 'column'}}>
+      <Container style={{display: "flex", flexDirection: 'column', opacity: cancelModal === true ? 0.5 : 1, pointerEvents: cancelModal === true ? 'none' : 'initial'}}>
       <Header title={firstName} selected={'Name'}/>
       <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
         <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50, width: 200}}>
@@ -197,99 +197,28 @@ function ProfileBookings(props) {
           </div>
           :
           <div style={{ display: 'flex', flexDirection: 'column', width: window.innerWidth-200, marginLeft: 50}}>
-            <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20 }}> Your Reservations </label>
+            <label style={{ color: '#000000', fontFamily: 'Archivo', fontSize: 24, textAlign: 'center', marginTop: 20, marginRight: 180}}> Your Reservations </label>
             {
               bookings.length > 0 ?
-                bookings.map((onebooking, i) => {
-                  console.log(bookings.length);
+                bookings.map((onebooking) => {
                   var TPrice = (departFlights[onebooking.departFlightID].Price * onebooking.PassengerCount) + (returnFlights[onebooking.returnFlightID].Price * onebooking.PassengerCount);
                   return (
-                    <div style={{ marginRight: 180, height: 400, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 70, paddingTop:20 }}>
-                      {/* text inside boxes */}
-                      <label style={{ marginLeft: 30, marginTop: 200 }}>
-                        <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20, marginTop:50 }}>Booking Number: {' ' + onebooking._id} <br /></label>
-                        <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> PassengerCount:
-                          {' ' + onebooking.PassengerCount}
-                          <br />
-                        </label>
-                        <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> Total Price: $
-                          {(TPrice)}
-                          <br />
-                        </label>
-                        <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20, marginLeft: 30 }}>Departure Flight Details:</label>
-                        <br />
-                        <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> From:
-                          {' ' + (departFlights[onebooking.departFlightID] ? departFlights[onebooking.departFlightID].From : "NA")}
-                          <br />
-                        </label>
-                        <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> To:
-                          {' ' + (departFlights[onebooking.departFlightID] ? departFlights[onebooking.departFlightID].To : "NA")}
-                          <br />
-                        </label>
-
-                        <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> Departure Flight Seats:
-                          {' ' + onebooking.departFlightSeats.join(', ')}
-                        </label>
-                        <br />
-
-                        <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 20, marginLeft: 30 }}>Return Flight Details: </label>
-                        <br />
-
-                        <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> From:
-                          {' ' + (departFlights[onebooking.departFlightID] ? departFlights[onebooking.departFlightID].To : "NA")}
-                          <br />
-                        </label>
-                        <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> To:
-                          {' ' + (departFlights[onebooking.departFlightID] ? departFlights[onebooking.departFlightID].From : "NA")}
-                          <br />
-                        </label>
-                        <label style={{ color: '#000000', fontSize: 20, marginLeft: 30 }}> Return Flight Seats:
-                          {' ' + onebooking.returnFlightSeats.join(', ')}
-                        </label>
-
-                      </label>
-                      <div style={{ display: 'flex', flexDirection: 'row' , justifyContent:'flex-end'}}>
-                        <Button1
-                          title={'View Iternary'}
-                          style={{ width: 200, height: 50, marginTop: 30, marginBottom: 70 }}
-                          onClick={() => { history.push({
-                            pathname:`/iternary/${onebooking.departFlightID}/${onebooking.returnFlightID}/${onebooking.departFlightSeats.length}`,
-                            booking:onebooking
-                          }) 
-                        }}
-                        />
-                        <Button4
-                          title={'Cancel Reservation'}
-                          style={{ width: 200, height: 50, marginTop: 30, marginBottom: 70, marginLeft:20, marginRight:20}}
-                          onClick={() => { setCancelModal(true); setToDelete(onebooking); seti(i) }}
-                        />
-                      </div>
-                      <label></label>
-                    </div>
+                    <BookingCard DeleteBooking={() => {setCancelModal(true); setToDelete(onebooking)}} DepartFlight={departFlights[onebooking.departFlightID]} ReturnFlight={returnFlights[onebooking.returnFlightID]} Price={TPrice} Booking={onebooking}/>
                   );
-                }
-                )
+                })
                 :
                 null
             }
           </div>
         }
         </div>
+    <Footer />
   </Container>
   </>
 );
 }
 
-const Image = styled.img`
-`;
-
 const Container = styled.div`
-`;
-
-const Image2 = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
 `;
 
 export default ProfileBookings;

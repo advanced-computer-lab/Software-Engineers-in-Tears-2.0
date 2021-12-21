@@ -90,7 +90,7 @@ function AdminFlights(props) {
           />
         </Modal.Footer>
       </Modal>
-      <Container style={{ opacity: deleteModal === true ? 0.5 : 1, pointerEvents: deleteModal === true ? 'none' : 'initial' }}>
+      <Container style={{opacity: deleteModal === true ? 0.5 : 1, pointerEvents: deleteModal === true ? 'none' : 'initial'}}>
       <AdminHeader />
         <table>
           <thead>

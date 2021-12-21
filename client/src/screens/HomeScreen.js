@@ -244,7 +244,7 @@ function HomeScreen(props) {
       <LoremIpsum3 style={{textAlign: 'center'}}>THE DUNE CUSTOMER EXPERIENCE</LoremIpsum3>
       <LoremIpsum4 style={{textAlign: 'center'}}>Supporting You Through Your Travel Journey</LoremIpsum4>
 
-      <Image5Row>
+      <Image5Row style={{justifyContent: 'center'}}>
         <Image5 src={require("../assets/images/43687521.png").default}></Image5>
         <Image6 src={require("../assets/images/30501287.png").default}></Image6>
         <Image7 src={require("../assets/images/bell.png").default}></Image7>
@@ -404,19 +404,19 @@ const Image120 = styled.img`
 `;
 
 const Image5 = styled.img`
-  width: 100%;
+  width: 385px;
   height: 170px;
   object-fit: contain;
 `;
 
 const Image6 = styled.img`
-  width: 100%;
+  width: 385px;
   height: 170px;
   object-fit: contain;
 `;
 
 const Image7 = styled.img`
-  width: 100%;
+  width: 385px;
   height: 170px;
   object-fit: contain;
 `;

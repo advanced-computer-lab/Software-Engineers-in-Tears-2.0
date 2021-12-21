@@ -160,7 +160,8 @@ function Signup(props) {
       .then(res => {
         history.push({
           pathname: '/login',
-          register: true
+          register: true,
+          message: 'Registration Successful!'
         })
         setLoading(false)
       })

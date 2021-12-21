@@ -97,7 +97,7 @@ function LoginScreen(props) {
             <label style={{fontFamily: 'Archivo', fontSize: 25, marginLeft: 40}}>Login</label>
             {register ? 
               <div style={{width: '70%', height: 50, backgroundColor: '#a8e4a0', marginLeft: 40, marginTop: 20, border: '2px solid green', alignItems: 'center', justifyContent: 'center', display: 'flex'}}>
-                <label style={{color: 'green', fontFamily: 'Archivo', fontSize: 17}}>Registration Successful!</label>
+                <label style={{color: 'green', fontFamily: 'Archivo', fontSize: 17}}>{props.location.message}</label>
               </div>
             : null}
             {error ? <div style={{width: '70%', height: 50, backgroundColor: '#ffdbe0', border: '2px solid red', display: 'flex',  alignItems: 'center', justifyContent: 'center', marginLeft: 40, marginTop: 20}}>

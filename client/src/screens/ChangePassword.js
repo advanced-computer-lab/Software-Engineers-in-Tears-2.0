@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import axios from 'axios';
-import Button6 from "../components/Button6";
 import Button1 from "../components/Button1";
 
 function ChangePassword(props) {
@@ -208,8 +207,13 @@ function ChangePassword(props) {
     setErrors(arr)
     if(arr.length === 0){
       const res = await axios.post('http://localhost:8000/changepassword/', {oldPassword: oldPassword, newPassword: newPassword, userID: localStorage.getItem('userID')})
-      if(res.data.message == 'Success'){
-        history.push('/')
+      if(res.data.message === 'Success'){
+        localStorage.clear();
+        history.push({
+          pathname: '/login',
+          register: true,
+          message: 'Password Change Successful!'
+        })
         setLoading(false)
       }
       else{
@@ -246,18 +250,18 @@ function ChangePassword(props) {
             <label onMouseEnter={() => setHover5('#CF7500')} onMouseLeave={() => setHover5('black')} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: hover5}} onClick={() => {history.push('/'); localStorage.clear()}}>Log Out</label>
           </div>
           <div div style={{display: 'flex', flexDirection: 'column', marginLeft: 50, width: window.innerWidth-200}}>
-            <div style={{height: 500, marginRight: 180, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 20, display: 'flex', flexDirection: 'column'}}>
-              <input style={{height: 50, width: '40%', fontSize: 20, border: oldPasswordError ? '2px solid red' : null}} autoComplete="new-password" placeholder="Old Password" type={'password'} value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/>
-              <input style={{height: 50, width: '40%', fontSize: 20, border: newPasswordError ? '2px solid red' : null}} autoComplete="new-password" placeholder="New Password" type={'password'} value={newPassword} onChange={(e) => checkPassword(e.target.value)}/>
-              <input style={{height: 50, width: '40%', fontSize: 20, border: confirmNewPasswordError ? '2px solid red' : null}} placeholder="Confirm Password" type={'password'} value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)}/>
+            <div style={{height: 400, marginRight: 180, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 20, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+              <input style={{height: 50, width: '50%', fontSize: 20, border: oldPasswordError ? '2px solid red' : null}} autoComplete="new-password" placeholder="Old Password" type={'password'} value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/>
+              <input style={{height: 50, width: '50%', fontSize: 20, border: newPasswordError ? '2px solid red' : null, marginTop: 20}} autoComplete="new-password" placeholder="New Password" type={'password'} value={newPassword} onChange={(e) => checkPassword(e.target.value)}/>
+              <input style={{height: 50, width: '50%', fontSize: 20, border: confirmNewPasswordError ? '2px solid red' : null, marginTop: 20}} placeholder="Confirm Password" autoComplete="new-password" type={'password'} value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)}/>
               <div style={{width: '100%', flexDirection: 'row', display: 'flex', justifyContent: 'center', marginTop: 20}}>
-                <div style={{width: '25%', height: 4, backgroundColor: newPassword.length > 0 ? color : 'gray' }}/>
-                <div style={{width: '25%', height: 4, marginLeft: 10, backgroundColor: passowrdStrength !== 'Weak'  && newPassword.length > 0 ? color : 'gray'}}/>
-                <div style={{width: '25%', height: 4, marginLeft: 10, backgroundColor: passowrdStrength === 'Strong' && newPassword.length > 0 ? color : 'gray'}}/>
+                <div style={{width: '15%', height: 4, backgroundColor: newPassword.length > 0 ? color : 'gray' }}/>
+                <div style={{width: '15%', height: 4, marginLeft: 10, backgroundColor: passowrdStrength !== 'Weak'  && newPassword.length > 0 ? color : 'gray'}}/>
+                <div style={{width: '15%', height: 4, marginLeft: 10, backgroundColor: passowrdStrength === 'Strong' && newPassword.length > 0 ? color : 'gray'}}/>
               </div>
               <label style={{fontFamily: 'Archivo', marginTop: 10, fontSize: 14}}>Password Strength: <label style={{fontFamily: 'Archivo Black'}}>{newPassword.length > 0 ? passowrdStrength : ''}</label></label>
               <label style={{fontFamily: 'Archivo', marginTop: 10, fontSize: 12, textAlign: 'center'}}>Your password should contain a minimum of eight characters. Please use a combination of uppercase and lowercase letters along with numbers.</label>
-              {errors.length === 0 ? null : <div style={{width: '80%', backgroundColor: '#ffdbe0', border: '2px solid red', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+              {errors.length === 0 ? null : <div style={{width: '80%', backgroundColor: '#ffdbe0', border: '2px solid red', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
                 {renderErrors()}
               </div>}
               <Button1 onClick={handle} loading={loading} style={{width: 250, height: 50, marginTop: 20}} title={'Change Password'}/>
@@ -270,14 +274,6 @@ function ChangePassword(props) {
 }
 
 const Container = styled.div`
-`;
-
-const Image3 = styled.div`
-  background-image: url(${require("../assets/images/user_bg.jpg").default});
-  background-size: cover;
-`;
-
-const Image = styled.img`
 `;
 
 export default ChangePassword;

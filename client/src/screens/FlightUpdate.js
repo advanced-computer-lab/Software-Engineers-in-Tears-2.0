@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 import axios from 'axios';
 import Footer from "../components/Footer";
-import Header from "../components/Header";
 import AdminHeader from "../components/AdminHeader";
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";

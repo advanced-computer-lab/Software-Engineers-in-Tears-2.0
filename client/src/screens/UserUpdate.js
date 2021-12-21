@@ -4,6 +4,7 @@ import axios from 'axios';
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Modal from 'react-bootstrap/Modal';
 import ReactLoading from 'react-loading';
 
@@ -193,7 +194,7 @@ class UserUpdateScreen extends Component {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: window.innerWidth-200, height: window.innerHeight, marginLeft: 50, marginRight: 180 }}>
               <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
             </div> : (this.state.update ?
-              <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 50, width: window.innerWidth-200, height: window.innerHeight }}>
+              <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 50, width: window.innerWidth-200, height: window.innerHeight}}>
                 <div id='d' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>First Name: <label style={{ color: '#F0A500' }}>*</label></label>
                   <Input
@@ -272,7 +273,7 @@ class UserUpdateScreen extends Component {
                   </div>
                 </div>
               </form> :
-              <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 40, width: '100%', height: window.innerHeight }}>
+              <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 50, width: window.innerWidth-200, height: window.innerHeight}}>
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 
                   <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>First Name: </label>
@@ -295,6 +296,7 @@ class UserUpdateScreen extends Component {
             )
           }
           </div>
+          <Footer />
         </Container>
       </>
     );
