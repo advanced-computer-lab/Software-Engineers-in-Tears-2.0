@@ -10,13 +10,15 @@ import FlightUpdate from './screens/FlightUpdate';
 import AdminFlights from './screens/AdminFlights';
 import ChosenFlights from './screens/ChosenFlights';
 import ChooseSeatDepart from './screens/ChooseSeatDepart';
-import ReservedFlights from './screens/ReservedFlights';
 import UserSearch from './screens/UserSearch';
 import ChooseSeatReturn from './screens/ChooseSeatReturn';
 import ProfileHome from './screens/ProfileHome';
 import ProfileBookings from './screens/ProfileBookings';
 import UserUpdate from './screens/UserUpdate';
 import PaymentScreen from './screens/PaymentScreen';
+import Signup from './screens/Signup';
+import ChangePassword from './screens/ChangePassword';
+import EditSeatDepart from './screens/EditSeatDepart';
 
 
 class App extends Component {
@@ -26,20 +28,23 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={HomeScreen} />
           <Route exact path='/login' component={LoginScreen} />
+          <Route exact path='/signup' component={Signup} />
           <Route exact path='/admin/update/:id' component = {FlightUpdate} />
           <Route exact path='/summary/:id1/:id2/:passengerCount' component={ChosenFlights} />
-          <Route exact path='/search/from=:from#to=:to#cabin=:cabin#p=:pcount#fromDate=:fromDate#toDate=:toDate' component={UserSearch} />
+          <Route exact path='/iternary/:id1/:id2/:passengerCount' component={ChosenFlights} />
+          <Route exact path='/search/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/toDate=:toDate' component={UserSearch} />
           <Route exact path='/profile/home' component={ProfileHome} />
           <Route exact path='/profile/bookings' component={ProfileBookings} />
+          <Route exact path='/profile/changepassword' component={ChangePassword} />
           <Route exact path='/profile/account' component={UserUpdate} />
           <Route exact path='/booking/:bookingID/seats/depart' component={ChooseSeatDepart} />
+          <Route exact path='/booking/:bookingID/seats/depart/edit' component={EditSeatDepart} />
           <Route exact path='/booking/:bookingID/seats/return' component={ChooseSeatReturn} />
           <Route exact path='/booking/payment' component={PaymentScreen} />
           <Route exact path='/booking/iternary'  />
           <Route exact path='/admin/create' component={CreateFlight} />
           <Route exact path='/admin' component={AdminHome} />
           <Route exact path='/admin/flights' component={AdminFlights} />
-          <Route exact path='/reservations/:bookingID' component={ReservedFlights}/>
         </Switch>
       </Router>
     );

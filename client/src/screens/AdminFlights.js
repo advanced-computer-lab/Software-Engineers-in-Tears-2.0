@@ -6,7 +6,7 @@ import Button4 from "../components/Button4";
 import Modal from 'react-bootstrap/Modal';
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
-import ProfileHeader from "../components/ProfileHeader";
+import AdminHeader from "../components/AdminHeader";
 
 
 function AdminFlights(props) {
@@ -20,13 +20,28 @@ function AdminFlights(props) {
   function deleteflight(id) {
     axios.delete("http://localhost:8000/adminflights/delete/" + id)
       .then(() => {
+        console.log('wtf')
         setFlights(flights.filter((flight) => {
           return flight._id !== id;
         }))
-      });
+      })
+      .catch(err => console.log('catching wtf'));
   }
 
   useEffect(() => {
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      .then(res => {
+        if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
+          history.push('/')
+        }
+        else{
+          localStorage.clear()
+          history.push('/')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
     if (props.location.showAll) {
       axios
         .get('http://localhost:8000/adminflights')
@@ -75,8 +90,8 @@ function AdminFlights(props) {
           />
         </Modal.Footer>
       </Modal>
-      <Container style={{ opacity: deleteModal === true ? 0.5 : 1, pointerEvents: deleteModal === true ? 'none' : 'initial' }}>
-      <ProfileHeader title={'Admin'} path={'/admin'}/>
+      <Container style={{opacity: deleteModal === true ? 0.5 : 1, pointerEvents: deleteModal === true ? 'none' : 'initial'}}>
+      <AdminHeader />
         <table>
           <thead>
             <tr>

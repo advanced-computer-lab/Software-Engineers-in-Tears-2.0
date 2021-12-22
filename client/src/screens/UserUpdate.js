@@ -3,7 +3,8 @@ import styled from "styled-components";
 import axios from 'axios';
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
-import ButtonIcon from "../components/ButtonIcon";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Modal from 'react-bootstrap/Modal';
 import ReactLoading from 'react-loading';
 
@@ -32,12 +33,28 @@ class UserUpdateScreen extends Component {
       update: false,
       loading: true,
       emailLoading: false,
-      validEmail: true
+      validEmail: true, 
+      hover1: 'black',
+      hover2: '#F0A500',
+      hover3: 'black',
+      hover4: 'black',
+      hover5: 'black',
+      firstName: localStorage.getItem('firstName')
     };
     this.orig = {};
     this.userID = localStorage.getItem('userID');
   };
   componentDidMount() {
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      .then(res => {
+        if(!res.data.isLoggedIn){
+          localStorage.clear()
+          this.props.history.push('/')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
     axios.post('http://localhost:8000/getUserByID/', { _id: this.userID })
       .then(result => {
         console.log(result);
@@ -158,31 +175,26 @@ class UserUpdateScreen extends Component {
             />
           </Modal.Footer>
         </Modal>
-        <Container style={{ display: 'flex', flexDirection: 'row', opacity: this.state.updateModal === true ? 0.5 : 1, pointerEvents: this.state.updateModal === true ? 'none' : 'initial' }}>
-          <div style={{ minWidth: 200, backgroundColor: '#000', display: 'flex', flexDirection: 'column', height: window.innerHeight, marginBottom: -35, alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ width: 200, backgroundColor: '#000', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 30 }}>
-              <Image2
-                src={require("../assets/images/profile-icon.png").default}
-              />
-              <label style={{ color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 20 }}>{this.state.First_Name}</label>
-            </div>
-            <Button1 style={{ width: 170, height: 40, fontSize: 15, position: 'absolute', top: 100 }} title={'Back To Home Page'} onClick={() => this.props.history.push('/')} />
-            <ButtonIcon path={'home'} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Home'} onClick={() => this.props.history.push('/profile/home')} />
-            <ButtonIcon path={"profile2"} style={{ width: '100%', height: 70, fontSize: 15 }} title={'My Profile'} selected={true} />
-            <ButtonIcon path={"wallet"} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Wallet'} />
-            <ButtonIcon path={"bookings"} style={{ width: '100%', height: 70, fontSize: 15 }} title={'Bookings'} onClick={() => this.props.history.push('/profile/bookings')} />
-            <Button1 style={{ width: 100, height: 40, fontSize: 15, position: 'absolute', bottom: 30 }} title={'Logout'} onClick={() => { localStorage.clear(); this.props.history.push('/') }} />
-          </div>
+        <Container style={{ display: 'flex', flexDirection: 'column', opacity: this.state.updateModal === true ? 0.5 : 1, pointerEvents: this.state.updateModal === true ? 'none' : 'initial' }}>
+          <Header title={this.state.firstName} selected={'Name'}/>
+            <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+              <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50, width: 200}}>
+                <label onMouseEnter={() => this.setState({hover1: '#CF7500'})} onMouseLeave={() => this.setState({hover1: 'black'})} style={{color: this.state.hover1, fontFamily: 'Archivo', cursor: 'pointer', marginTop: 20, fontSize: 15}} onClick={() => this.props.history.push('/profile/home')}>Home</label>
+                <label onMouseEnter={() => this.setState({hover2: '#CF7500'})}onMouseLeave={() => this.setState({hover2: '#F0A500'})} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: this.state.hover2}} onClick={() => this.props.history.push('/profile/account')}>My Account</label>
+                <label onMouseEnter={() => this.setState({hover3: '#CF7500'})} onMouseLeave={() => this.setState({hover3: 'black'})} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: this.state.hover3}} onClick={() => this.props.history.push('/profile/bookings')}>My Bookings</label>
+                <label onMouseEnter={() => this.setState({hover4: '#CF7500'})} onMouseLeave={() => this.setState({hover4: 'black'})} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: this.state.hover4}} onClick={() => this.props.history.push('/profile/changepassword')}>Change Password</label>
+                <label onMouseEnter={() => this.setState({hover5: '#CF7500'})} onMouseLeave={() => this.setState({hover5: 'black'})} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: this.state.hover5}} onClick={() => {this.props.history.push('/'); localStorage.clear()}}>Log Out</label>
+              </div>
           {/* <Button1
               title={'Restore Original Values'}
               style={{ width: 230, position: 'absolute', right: 50, height: 40 }}
               onClick={() => { this.setState(this.orig); }
             /> */}
           {this.state.loading ?
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: 'rgb(244, 244, 244)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: window.innerWidth-200, height: window.innerHeight, marginLeft: 50, marginRight: 180 }}>
               <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
             </div> : (this.state.update ?
-              <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 40, width: '100%', height: window.innerHeight }}>
+              <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 50, width: window.innerWidth-200, height: window.innerHeight}}>
                 <div id='d' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>First Name: <label style={{ color: '#F0A500' }}>*</label></label>
                   <Input
@@ -261,7 +273,7 @@ class UserUpdateScreen extends Component {
                   </div>
                 </div>
               </form> :
-              <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 40, width: '100%', height: window.innerHeight }}>
+              <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 50, width: window.innerWidth-200, height: window.innerHeight}}>
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 
                   <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>First Name: </label>
@@ -283,6 +295,8 @@ class UserUpdateScreen extends Component {
               </form>
             )
           }
+          </div>
+          <Footer />
         </Container>
       </>
     );
@@ -295,7 +309,6 @@ class UserUpdateScreen extends Component {
 
 const Container = styled.div`
   display: flex;
-  background-color: rgba(244,244,244,1);
   flex-direction: column;
 `;
 
@@ -311,11 +324,6 @@ const Input = styled.input`
   font-size: 15px;
 `;
 
-const Image2 = styled.img`
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-`;
 const Image1 = styled.img`
   width: 20px;
   height: 20px;

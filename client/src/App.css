@@ -7,4 +7,13 @@
     font-family: 'Archivo Black';
     src: local('Archivo Black'), url(./assets/fonts/archivo-black-regular.ttf) format('truetype');
 }
-  
+
+@font-face {
+    font-family: 'Helvetica';
+    src: local('Helvetica'), url(./assets/fonts/Helvetica.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Helvetica Bold';
+    src: local('Helvetica Bold'), url(./assets/fonts/Helvetica-Bold.ttf) format('truetype');
+}

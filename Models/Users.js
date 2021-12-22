@@ -14,15 +14,7 @@ const usersSchema = new Schema({
     type: String,
     required: true
   },
-  Age: {
-    type: Number,
-    required: true,
-  },
   Home_Address: {
-    type: String,
-    required: true
-  },
-  Country_Code: {
     type: String,
     required: true
   },
@@ -35,6 +27,10 @@ const usersSchema = new Schema({
     required: true
   },
   Password: {
+    type: String,
+    required: true
+  },
+  Username: {
     type: String,
     required: true
   },

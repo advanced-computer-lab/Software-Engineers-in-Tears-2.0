@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import ProfileHeader from "../components/ProfileHeader";
 import Button1 from "../components/Button1";
 import Button3 from "../components/Button3";
-import NormalHeader from "../components/NormalHeader";
 import Footer from "../components/Footer";
 import ReactLoading from 'react-loading';
 import Button2 from "../components/Button2";
+import Header from '../components/Header'
 import { durationString } from "../Utils.js";
 
 function UserSearch(props) {
@@ -25,8 +24,7 @@ function UserSearch(props) {
   const [selectedReturn, setSelectedReturn] = useState('');
   const [viewDepartDetailsID, setViewDepartDetailsID] = useState();
   const [viewReturnDetailsID, setViewReturnDetailsID] = useState();
-  const [user, setUser] = useState({});
-  const userID = localStorage.getItem("userID");
+  const [firstName, setFirstName] = useState('');
 
   const from = useState(props.match.params.from)[0];
   const to = useState(props.match.params.to)[0];
@@ -36,15 +34,18 @@ function UserSearch(props) {
 
   useEffect(() => {
     setLoading(true)
-    if (userID) {
-      axios.post('http://localhost:8000/getUserByID/', { _id: userID })
-        .then(res => {
-          setUser(res.data[0]);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
+    axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
+      .then(res => {
+        if(!res.data.isLoggedIn){
+          localStorage.clear();
+        }
+        else{
+          setFirstName(localStorage.getItem('firstName'))
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
     axios.post('http://localhost:8000/adminsearchflights', {
       From: from,
       To: to,
@@ -84,11 +85,11 @@ function UserSearch(props) {
       .catch(err => {
         console.log(err);
       })
-  }, [cabin, from, fromDate, props.match.params.pcount, to, toDate, userID]);
+  }, [cabin, from, fromDate, props.match.params.pcount, to, toDate]);
 
   return (
     <Container >
-      {userID ? <ProfileHeader title={user.First_Name} path={'/'} /> : <NormalHeader />}
+      <Header title={firstName}/>
       {
         loading ?
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#fff' }}>
