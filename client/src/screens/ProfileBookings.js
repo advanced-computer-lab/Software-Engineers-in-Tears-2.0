@@ -104,12 +104,9 @@ function ProfileBookings(props) {
           html: `<p> ${emailText}</p>`,
         };
         
-        
         const array = user.Bookings.filter((b) => {
           return b !== toDel._id;
         });
-        
-
         axios.put('http://localhost:8000/updateUser/' + user._id, { Bookings: array })
           .then(res => {
             console.log('User updated')
@@ -119,6 +116,9 @@ function ProfileBookings(props) {
             setUser(newUser);
 
             setLoading(false);
+          })
+          .catch(err =>{
+            console.log(err);
           })
 
         const arrF1 = departFlights[toDel.departFlightID].SeatsBooked.filter((b) => {
