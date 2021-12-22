@@ -19,6 +19,8 @@ import PaymentScreen from './screens/PaymentScreen';
 import Signup from './screens/Signup';
 import ChangePassword from './screens/ChangePassword';
 import EditSeatDepart from './screens/EditSeatDepart';
+import SearchNewDepart from './screens/SearchNewDepart';
+import SearchResultsDepart from './screens/SearchResultsDepart';
 
 
 class App extends Component {
@@ -33,6 +35,8 @@ class App extends Component {
           <Route exact path='/summary/:id1/:id2/:passengerCount' component={ChosenFlights} />
           <Route exact path='/iternary/:id1/:id2/:passengerCount' component={ChosenFlights} />
           <Route exact path='/search/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/toDate=:toDate' component={UserSearch} />
+          <Route exact path='/search/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/toDate=:toDate/edit' component={SearchResultsDepart} />
+          <Route exact path='/search' component={SearchNewDepart} />
           <Route exact path='/profile/home' component={ProfileHome} />
           <Route exact path='/profile/bookings' component={ProfileBookings} />
           <Route exact path='/profile/changepassword' component={ChangePassword} />
