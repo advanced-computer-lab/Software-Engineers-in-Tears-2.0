@@ -32,7 +32,7 @@ exports.deleteBooking =(req,res)=>{
   Bookings.findByIdAndDelete(req.params.id)
   .then(result => {
     console.log('Booking has been deleted successfully');
-    
+    res.status(200).send("booking deleted kys");
   })
     .catch(err => {
       console.log(err);
