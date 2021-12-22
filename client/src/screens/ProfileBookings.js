@@ -121,30 +121,30 @@ function ProfileBookings(props) {
             console.log(err);
           })
 
-        const arrF1 = departFlights[toDel.departFlightID].SeatsBooked.filter((b) => {
-          return !toDel.departFlightSeats.includes(b);
-        })
-        const arrF2 = returnFlights[toDel.returnFlightID].SeatsBooked.filter((b) => {
-          return !toDel.returnFlightSeats.includes(b);
-        })
+        // const arrF1 = departFlights[toDel.departFlightID].SeatsBooked.filter((b) => {
+        //   return !toDel.departFlightSeats.includes(b);
+        // })
+        // const arrF2 = returnFlights[toDel.returnFlightID].SeatsBooked.filter((b) => {
+        //   return !toDel.returnFlightSeats.includes(b);
+        // })
 
-        axios.put('http://localhost:8000/adminUpdateFlight/' + toDel.departFlightID, { SeatsBooked: arrF1 })
-          .then(res => {
-            console.log('dep updated')
+        // axios.put('http://localhost:8000/adminUpdateFlight/' + toDel.departFlightID, { SeatsBooked: arrF1 })
+        //   .then(res => {
+        //     console.log('dep updated')
 
-            const newDep = {...departFlights}
-            newDep[toDel.departFlightID].SeatsBooked = arrF1;
-            setDepartFlights(newDep);
+        //     const newDep = {...departFlights}
+        //     newDep[toDel.departFlightID].SeatsBooked = arrF1;
+        //     setDepartFlights(newDep);
             
-          })
-        axios.put('http://localhost:8000/adminUpdateFlight/' + toDel.returnFlightID, { SeatsBooked: arrF2 })
-          .then(res => {
-            console.log('ret updated')
+        //   })
+        // axios.put('http://localhost:8000/adminUpdateFlight/' + toDel.returnFlightID, { SeatsBooked: arrF2 })
+        //   .then(res => {
+        //     console.log('ret updated')
 
-            const newRet = {...returnFlights}
-            newRet[toDel.returnFlightID].SeatsBooked = arrF2;
-            setReturnFlights(newRet);
-          })
+        //     const newRet = {...returnFlights}
+        //     newRet[toDel.returnFlightID].SeatsBooked = arrF2;
+        //     setReturnFlights(newRet);
+        //   })
 
         axios.post('http://localhost:8000/sendMail', mailOptions)
           .then(res => {

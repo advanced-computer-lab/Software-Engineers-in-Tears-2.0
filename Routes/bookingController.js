@@ -32,7 +32,25 @@ exports.deleteBooking =(req,res)=>{
   Bookings.findByIdAndDelete(req.params.id)
   .then(result => {
     console.log('Booking has been deleted successfully');
-    res.status(200).send("booking deleted kys");
+    // res.status(200).send("booking deleted kys");
+    
+    console.log(result);
+    Flights.findByIdAndUpdate(result.departFlightID, {
+      $pullAll:{
+        SeatsBooked: result.departFlightSeats 
+      }
+    })
+    .then(result => console.log("depart seats removed"))
+    .catch(err => console.log(err));
+
+    Flights.findByIdAndUpdate(result.returnFlightID,{
+      $pullAll:{
+        SeatsBooked: result.returnFlightSeats
+      }
+    })
+    .then(result => console.log("return seats removed"))
+    .catch(err => console.log(err));
+
   })
     .catch(err => {
       console.log(err);
