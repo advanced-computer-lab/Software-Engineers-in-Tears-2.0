@@ -58,13 +58,18 @@ app.post("/createuser", userController.createUser);
 app.put("/updateBooking/:id", bookingController.updateBooking);
 app.put("/updateUser/:userID", userController.updateUser)
 app.put('/adminUpdateFlight/:id', flightController.updateFlight);
-app.delete("/deleteBooking/:id", bookingController.deleteBooking);
+app.delete("/deleteBooking/:id", (req, res)=>{
+  bookingController.deleteBooking(req, res);
+  res.status(200).send("booking deleted");
+});
 app.delete("/adminflights/delete/:id", (req, res)=>{
   flightController.deleteFlight(req, res);
   bookingController.getBookingsForFlight(req, res)
   .then(bookings =>{
     bookings.map(booking =>{
+      console.log(booking);
       var fake = {
+        // body: booking,
         params:{
           id:booking.id
         }
@@ -72,6 +77,7 @@ app.delete("/adminflights/delete/:id", (req, res)=>{
       // console.log(fake.params.id)
       bookingController.deleteBooking(fake, res);
     })
+    res.status(200).send("multiple bookings deleted");
 
     userController.updateAllUsersWithBooking(bookings, res);
 

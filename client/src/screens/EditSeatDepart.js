@@ -62,7 +62,7 @@ function EditSeatDepart(props) {
         .catch(err => console.log(err));
         axios.put('http://localhost:8000/adminUpdateFlight/' + flight._id, data)
         .then(result=> {
-            history.push('/profile/bookings');
+            props.location.Payment ? history.push('/payyyy') : history.push('/profile/bookings');
             setLoading2(false);
         })
         .catch(err => console.log(err));
