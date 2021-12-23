@@ -25,8 +25,8 @@ function SearchResultsDepart(props) {
   
     const from = useState(props.match.params.from)[0];
     const to = useState(props.match.params.to)[0];
-    const cabin = useState(props.match.params.cabin)[0];
-    const fromDate = useState(props.match.params.fromDate)[0];
+    const cabin = useState(props.match.params.cabin === 'null' ? null : props.match.params.cabin)[0];
+    const fromDate = useState(props.match.params.fromDate === 'null' ? null : props.match.params.fromDate)[0];
   
     useEffect(() => {
       setLoading(true)
@@ -96,7 +96,7 @@ function SearchResultsDepart(props) {
                 <Image src={require("../assets/images/error-icon.png").default} style={{width: 100, height: 100}}/>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 30, color:'#F0A500'}}>No Results</label>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, color:'#000', marginTop: 20}}>Modify your search criteria and try again.</label>
-                <Button2 style={{width: 200, height: 50, marginTop: 20}} title={'Back to Home Screen'} onClick={() => history.push('/')}/>
+                <Button2 style={{width: 250, height: 50, marginTop: 20}} title={'Back to Profile Bookings'} onClick={() => history.push('/profile/bookings')}/>
             </div>
             :
           <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
