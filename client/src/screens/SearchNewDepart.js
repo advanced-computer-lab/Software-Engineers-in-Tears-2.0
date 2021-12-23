@@ -37,9 +37,9 @@ function SearchNewDepart(props){
         return () => {
           document.removeEventListener("keydown", listener);
         };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [handle]);
+      }, [handle, history]);
 
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       function handle(event){
         event.preventDefault();
 

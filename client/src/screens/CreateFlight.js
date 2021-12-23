@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import  {useState, useEffect} from 'react';
 import Footer from "../components/Footer";
-import Modal from 'react-bootstrap/Modal';
 import AdminHeader from "../components/AdminHeader";
 import axios from 'axios';
 import Button1 from '../components/Button1';

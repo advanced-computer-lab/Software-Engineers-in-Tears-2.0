@@ -32,8 +32,7 @@ function ProfileHome(props) {
       .catch(err => {
         console.log(err);
       })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [history]);
 
   return (
     <Container style={{display: "flex", flexDirection: 'column'}}>
