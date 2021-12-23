@@ -14,29 +14,12 @@ function BookingCard(props) {
   const history = useHistory();
 
 
-  function handle(event){
-    event.preventDefault();
+  function handle(){
     history.push({
       pathname: '/search',
-      showAll: false,
-      DepartflightData: {
-        FlightNumber: props.DepartFlight.FlightNumber, 
-        DepartureTime: props.DepartFlight.DepartureTime,
-        ArrivalTime: props.DepartFlight.ArrivalTime ,
-        Flight_Date: props.DepartFlight.Flight_Date,
-        AirportTerminal:props.DepartFlight.AirportTerminal,
-        From: props.DepartFlight.From,
-        To:props.DepartFlight.To,
-        Price: props.DepartFlight.Price ,
-      },
-      ReturnflightData:{
-        Flight_Date: props.ReturnFlight.Flight_Date,
-
-      },
-      BookingData:{
-        PassengerCount: props.Booking.PassengerCount,
-      }
-
+      DepartFlight: props.DepartFlight,
+      ReturnFlight: props.ReturnFlight,
+      Booking: props.Booking
     });
    }
 
@@ -88,13 +71,13 @@ function BookingCard(props) {
                         <label style={{fontFamily: 'Archivo', fontSize: 18}}>From: <label style={{color: '#F0A500'}}>{props.DepartFlight.From}</label></label>
                         <label style={{fontFamily: 'Archivo', fontSize: 18, marginLeft: 20}}>To: <label style={{color: '#F0A500'}}>{props.DepartFlight.To}</label></label>
                     </div>
-                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Flight Number: <label style={{color: '#F0A500'}}>{props.DepartFlight.FlightNumber ? props.DepartFlight.FlightNumber : 'N/A' }</label></label>
+                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Flight Date: <label style={{color: '#F0A500'}}>{props.DepartFlight.Flight_Date ? props.DepartFlight.Flight_Date.substring(0,10) : 'N/A' }</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Number of Passengers: <label style={{color: '#F0A500'}}>{props.Booking.PassengerCount}</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Cabin: <label style={{color: '#F0A500'}}>{props.DepartFlight.Cabin}</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Seats Booked: <label style={{color: '#F0A500'}}>{props.DepartFlight.Cabin.substring(0,1)}{props.Booking.departFlightSeats.join(', ' + props.DepartFlight.Cabin.substring(0,1))}</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Baggage Allowance: <label style={{color: '#F0A500'}}>{props.DepartFlight.Baggage_Allowance ? props.DepartBaggageAllowance : 'N/A'} KG</label></label>
                     <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginLeft: 20, marginTop: 40}}>
-                        <Button1 style={{width: 180, height: 35}} title={'Modify Flight'} onClick= {handle} />
+                        <Button1 style={{width: 180, height: 35}} title={'Modify Flight'} onClick= {() => handle()} />
                         <Button1 style={{width: 180, height: 35, marginLeft: 20}} title={'Change Seats'} onClick={() => history.push(`/booking/${props.Booking._id}/seats/depart/edit`)}/>
                     </div>
                 </div>
@@ -104,7 +87,7 @@ function BookingCard(props) {
                         <label style={{fontFamily: 'Archivo', fontSize: 18}}>From: <label style={{color: '#F0A500'}}>{props.ReturnFlight.From}</label></label>
                         <label style={{fontFamily: 'Archivo', fontSize: 18, marginLeft: 20}}>To: <label style={{color: '#F0A500'}}>{props.ReturnFlight.To}</label></label>
                     </div>
-                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Flight Number: <label style={{color: '#F0A500'}}>{props.ReturnFlight.FlightNumber ? props.ReturnFlight.FlightNumber : 'N/A' }</label></label>
+                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Flight Date: <label style={{color: '#F0A500'}}>{props.ReturnFlight.Flight_Date ? props.ReturnFlight.Flight_Date.substring(0,10)  : 'N/A' }</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Number of Passengers: <label style={{color: '#F0A500'}}>{props.Booking.PassengerCount}</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Cabin: <label style={{color: '#F0A500'}}>{props.ReturnFlight.Cabin}</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Seats Booked: <label style={{color: '#F0A500'}}>{props.ReturnFlight.Cabin.substring(0,1)}{props.Booking.returnFlightSeats.join(', ' + props.ReturnFlight.Cabin.substring(0,1))}</label></label>

@@ -33,7 +33,6 @@ function ChooseSeatDepart(props) {
         const res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res.data[0].departFlightID})
         setFlight(res3.data[0])
         const arr = res.data[0].departFlightSeats;
-        console.log(res.data[0].departFlightSeats)
         setCurrentSelection(arr)
         const arr4 = res3.data[0].SeatsBooked;
         for(let i = 0; i < res.data[0].departFlightSeats.length; i++){

@@ -1,31 +1,21 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
-import Button5 from "../components/Button5";
-import Button1 from "../components/Button1";
-import Button6 from "../components/Button6";
-import Button7 from "../components/Button7";
 import Footer from "../components/Footer";
-import {Motion, spring} from 'react-motion';
-import "./styles.css";
 import { useHistory } from "react-router-dom";
 import Header from "../components/Header";
 import axios from 'axios';
-import { handle } from "express/lib/application";
-
-
-
+import Button1 from "../components/Button1";
 
 function SearchNewDepart(props){
 
     const history = useHistory();
     const [fromDate, setFromDate] = useState('');
     const [cabin, setCabin] = useState('');
-    const toDate =props.location.ReturnflightData.Flight_Date;
-    const pcount=props.location.BookingData.PassengerCount;
-    const from= props.location.DepartflightData.From;
-    const to= props.location.DepartflightData.To;
+    const toDate = props.location.ReturnFlight.Flight_Date;
+    const pcount = props.location.Booking.PassengerCount;
+    const from = props.location.DepartFlight.From;
+    const to = props.location.DepartFlight.To;
     
-
     useEffect(() => {
         axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
           .then(res => {
@@ -33,7 +23,6 @@ function SearchNewDepart(props){
               localStorage.clear();
               history.push('/')
             }
-          
           })
           .catch(err => {
             console.log(err);
@@ -48,30 +37,64 @@ function SearchNewDepart(props){
         return () => {
           document.removeEventListener("keydown", listener);
         };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [handle]);
 
       function handle(event){
-
         event.preventDefault();
-       
-       
-        
+
         var f = new Date(fromDate)
         var t = new Date(toDate)
-        
-    
-        
-         if(t.getTime()<f.getTime()){
+
+        if(cabin === '' && fromDate === ''){
+          alert("Please enter your search critera")
+        }
+        else if(t.getTime()<f.getTime()){
           alert('Your arrival date is before your departure date!')
         }
-        
         else{
-        history.push({
-            pathname: `/search/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? null : fromDate}/toDate=${toDate === '' ? null : toDate}/edit`
+          history.push({
+            pathname: `/search/from=${from}/to=${to}/cabin=${cabin === '' ? props.location.DepartFlight.Cabin : cabin}/p=${pcount}/fromDate=${fromDate === '' ? props.location.DepartFlight.Flight_Date : fromDate}/edit`,
+            DepartFlight: props.location.DepartFlight,
+            ReturnFlight: props.location.ReturnFlight,
+            Booking: props.location.Booking
+          });
         }
-        );}
        }
 
-       
-    }
+       return (
+        <Container>
+          <Header title={localStorage.getItem('firstName')}/>
+          <div style={{height: 400,width: '90%', boxShadow: '0px 1px 5px  0.35px #000', marginTop: 20, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
+            <label style={{color: '#F0A500', fontFamily: 'Archivo Black'}}>Flight Date</label>
+            <input
+              type='date'
+              value={fromDate}
+              placeholder={'Fromdate'}
+              style={{
+                height: 40,
+                width: 150,
+                backgroundColor: '#fff',
+                borderTop: 'none',
+                borderRight: 'none',
+                borderLeft: 'none',
+                borderBottom: '2px solid #F0A500',
+                color: '#000',
+              }}
+                  onChange={(e) => setFromDate(e.target.value)}
+            />
+            <label style={{color: '#F0A500', fontFamily: 'Archivo Black', marginTop: 20}}>Cabin Class</label>
+            <input value={cabin} onChange={(e) => setCabin(e.target.value)} style={{height: 40, width: 150, fontSize: 20, borderTop: 'none', borderRight: 'none', borderLeft: 'none', borderBottom: '2px solid #F0A500', color: '#000'}}/>
+            <Button1 onClick={handle} title={'Search'} style={{width: 150, height: 40, marginTop: 20}}/>  
+          </div>
+          <Footer />
+        </Container>
+      );
+}
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export default SearchNewDepart;
