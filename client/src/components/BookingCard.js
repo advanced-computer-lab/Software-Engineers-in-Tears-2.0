@@ -84,7 +84,7 @@ function BookingCard(props) {
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Baggage Allowance: <label style={{color: '#F0A500'}}>{props.ReturnFlight.Baggage_Allowance ? props.DepartBaggageAllowance : 'N/A'} KG</label></label>
                     <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginLeft: 20, marginTop: 40}}>
                         <Button1 style={{width: 180, height: 35}} title={'Modify Flight'}/>
-                        <Button1 style={{width: 180, height: 35, marginLeft: 20}} title={'Change Seats'}/>
+                        <Button1 style={{width: 180, height: 35, marginLeft: 20}} title={'Change Seats'} onClick={() => history.push(`/booking/${props.Booking._id}/seats/return/edit`)}/>
                     </div>
                 </div>
             }
