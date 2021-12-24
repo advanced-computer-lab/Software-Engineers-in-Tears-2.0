@@ -38,8 +38,8 @@ class App extends Component {
           <Route exact path='/summary/:id1/:id2/:passengerCount' component={ChosenFlights} />
           <Route exact path='/iternary/:id1/:id2/:passengerCount' component={ChosenFlights} />
           <Route exact path='/search/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/toDate=:toDate' component={UserSearch} />
-          <Route exact path='/search/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/editDepart' component={SearchResultsDepart} />
-          <Route exact path='/search/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/editReturn' component={ModifyReturnBookingResults} />
+          <Route exact path='/searchDepart/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/editDepart' component={SearchResultsDepart} />
+          <Route exact path='/searchReturn/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/editReturn' component={ModifyReturnBookingResults} />
           <Route exact path='/searchDepart' component={SearchNewDepart} />
           <Route exact path='/searchReturn' component={ModifyReturnBooking} />
           <Route exact path='/profile/home' component={ProfileHome} />

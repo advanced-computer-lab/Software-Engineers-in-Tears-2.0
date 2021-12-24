@@ -54,7 +54,7 @@ function SearchNewDepart(props){
         }
         else{
           history.push({
-            pathname: `/searchDepart/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? props.location.DepartFlight.Flight_Date : fromDate}/edit`,
+            pathname: `/searchDepart/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? props.location.DepartFlight.Flight_Date : fromDate}/editDepart`,
             DepartFlight: props.location.DepartFlight,
             ReturnFlight: props.location.ReturnFlight,
             Booking: props.location.Booking
