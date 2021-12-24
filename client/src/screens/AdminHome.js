@@ -41,8 +41,9 @@ function AdminHome(props) {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [handle]);
+  }, [handle, history]);
 
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    function handle(event){
     event.preventDefault();
     history.push({

@@ -176,9 +176,9 @@ function ChangePassword(props) {
       return () => {
         document.removeEventListener("keydown", listener);
       };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handle, history]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   async function handle(event){
     event.preventDefault();
     setErrors([])
@@ -219,6 +219,7 @@ function ChangePassword(props) {
       else{
         const arr2=[]
         arr2.push("Incorrect old password")
+        setOldPasswordError(true)
         setErrors(arr2)
         setLoading(false)
       }
@@ -250,8 +251,8 @@ function ChangePassword(props) {
             <label onMouseEnter={() => setHover5('#CF7500')} onMouseLeave={() => setHover5('black')} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: hover5}} onClick={() => {history.push('/'); localStorage.clear()}}>Log Out</label>
           </div>
           <div div style={{display: 'flex', flexDirection: 'column', marginLeft: 50, width: window.innerWidth-200}}>
-            <div style={{height: 400, marginRight: 180, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 20, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-              <input style={{height: 50, width: '50%', fontSize: 20, border: oldPasswordError ? '2px solid red' : null}} autoComplete="new-password" placeholder="Old Password" type={'password'} value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/>
+            <div style={{ marginRight: 180, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 20, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+              <input style={{height: 50, width: '50%', fontSize: 20, border: oldPasswordError ? '2px solid red' : null, marginTop: 20}} autoComplete="new-password" placeholder="Old Password" type={'password'} value={oldPassword} onChange={(e) => setOldPassword(e.target.value)}/>
               <input style={{height: 50, width: '50%', fontSize: 20, border: newPasswordError ? '2px solid red' : null, marginTop: 20}} autoComplete="new-password" placeholder="New Password" type={'password'} value={newPassword} onChange={(e) => checkPassword(e.target.value)}/>
               <input style={{height: 50, width: '50%', fontSize: 20, border: confirmNewPasswordError ? '2px solid red' : null, marginTop: 20}} placeholder="Confirm Password" autoComplete="new-password" type={'password'} value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)}/>
               <div style={{width: '100%', flexDirection: 'row', display: 'flex', justifyContent: 'center', marginTop: 20}}>
@@ -264,7 +265,7 @@ function ChangePassword(props) {
               {errors.length === 0 ? null : <div style={{width: '80%', backgroundColor: '#ffdbe0', border: '2px solid red', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
                 {renderErrors()}
               </div>}
-              <Button1 onClick={handle} loading={loading} style={{width: 250, height: 50, marginTop: 20}} title={'Change Password'}/>
+              <Button1 onClick={handle} loading={loading} style={{width: 250, height: 50, marginTop: 20, marginBottom: 20}} title={'Change Password'}/>
             </div>
           </div>
         </div>

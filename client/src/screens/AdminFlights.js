@@ -62,7 +62,7 @@ function AdminFlights(props) {
           console.log(err);
         })
     }
-  }, [props.location.flightData, props.location.showAll]);
+  }, [history, props.location.flightData, props.location.showAll]);
 
   return (
     <>

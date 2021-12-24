@@ -37,9 +37,9 @@ function SearchNewDepart(props){
         return () => {
           document.removeEventListener("keydown", listener);
         };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [handle]);
+      }, [handle, history]);
 
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       function handle(event){
         event.preventDefault();
 
@@ -54,7 +54,7 @@ function SearchNewDepart(props){
         }
         else{
           history.push({
-            pathname: `/searchDepart/from=${from}/to=${to}/cabin=${cabin === '' ? props.location.DepartFlight.Cabin : cabin}/p=${pcount}/fromDate=${fromDate === '' ? props.location.DepartFlight.Flight_Date : fromDate}/edit`,
+            pathname: `/searchDepart/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? props.location.DepartFlight.Flight_Date : fromDate}/edit`,
             DepartFlight: props.location.DepartFlight,
             ReturnFlight: props.location.ReturnFlight,
             Booking: props.location.Booking
