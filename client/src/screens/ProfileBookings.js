@@ -31,6 +31,9 @@ function ProfileBookings(props) {
           localStorage.clear()
           history.push('/')
         }
+        else if(res.data.Type === 'administrator'){
+          history.push('/admin')
+        }
       })
       .catch(err => {
         console.log(err);

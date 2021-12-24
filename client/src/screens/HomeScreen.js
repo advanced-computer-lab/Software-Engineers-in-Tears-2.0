@@ -49,6 +49,9 @@ function HomeScreen(props) {
         if(!res.data.isLoggedIn){
           localStorage.clear();
         }
+        else if(res.data.Type === 'administrator'){
+          history.push('/admin')
+        }
         else{
           setFirstName(localStorage.getItem('firstName'))
         }
@@ -66,7 +69,7 @@ function HomeScreen(props) {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [handle]);
+  }, [handle, history]);
   
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

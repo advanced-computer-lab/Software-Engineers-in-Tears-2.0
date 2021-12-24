@@ -21,8 +21,6 @@ function SearchResultsDepart(props) {
     const [departFlights, setDepartFlights] = useState([]);
     const [selectedDepart, setSelectedDepart] = useState('');
   
-    const [firstName, setFirstName] = useState('');
-  
     const from = useState(props.match.params.from)[0];
     const to = useState(props.match.params.to)[0];
     const cabin = useState(props.match.params.cabin === 'null' ? null : props.match.params.cabin)[0];
@@ -34,9 +32,10 @@ function SearchResultsDepart(props) {
         .then(res => {
           if(!res.data.isLoggedIn){
             localStorage.clear();
+            history.push('/')
           }
-          else{
-            setFirstName(localStorage.getItem('firstName'))
+          else if(res.data.Type === 'administrator'){
+            history.push('/admin')
           }
         })
         .catch(err => {
@@ -63,7 +62,7 @@ function SearchResultsDepart(props) {
           console.log(err);
         })
       
-    }, [cabin, from, fromDate, props.match.params.pcount, to]);
+    }, [cabin, from, fromDate, history, props.match.params.pcount, to]);
 
     const handle =  async() => {
       setLoading2(true)
@@ -84,7 +83,7 @@ function SearchResultsDepart(props) {
   
     return (
       <Container >
-        <Header title={firstName}/>
+        <Header title={localStorage.getItem('firstName')}/>
         {
           loading ?
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#fff' }}>

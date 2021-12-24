@@ -38,6 +38,9 @@ function UserSearch(props) {
         if(!res.data.isLoggedIn){
           localStorage.clear();
         }
+        else if(res.data.Type === 'administrator'){
+          history.push('/admin')
+        }
         else{
           setFirstName(localStorage.getItem('firstName'))
         }
@@ -84,7 +87,7 @@ function UserSearch(props) {
       .catch(err => {
         console.log(err);
       })
-  }, [cabin, from, fromDate, props.match.params.pcount, to, toDate]);
+  }, [cabin, from, fromDate, history, props.match.params.pcount, to, toDate]);
 
   return (
     <Container >

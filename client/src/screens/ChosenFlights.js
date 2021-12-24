@@ -39,6 +39,9 @@ function ChosenFlights(props) {
       if(res.data.isLoggedIn){
         setFirstName(localStorage.getItem('firstName'));
       }
+      else if(res.data.Type === 'administrator'){
+        history.push('/admin')
+      }
       if(res.data.isLoggedIn){
         const res2 = await axios.post('http://localhost:8000/getUserByID/', {_id: userID})
         setUser(res2.data[0]);

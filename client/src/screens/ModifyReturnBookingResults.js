@@ -34,6 +34,10 @@ function ModifyReturnBookingResults(props) {
         .then(res => {
           if(!res.data.isLoggedIn){
             localStorage.clear();
+            history.push('/')
+          }
+          else if(res.data.Type === 'administrator'){
+            history.push('/admin')
           }
           else{
             setFirstName(localStorage.getItem('firstName'))
@@ -63,7 +67,7 @@ function ModifyReturnBookingResults(props) {
           console.log(err);
         })
       
-    }, [cabin, from, fromDate, props.match.params.pcount, to]);
+    }, [cabin, from, fromDate, history, props.match.params.pcount, to]);
 
     const handle =  async() => {
       setLoading2(true)

@@ -34,7 +34,7 @@ function AdminFlights(props) {
         if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
           history.push('/')
         }
-        else{
+        else if(!res.data.isLoggedIn){
           localStorage.clear()
           history.push('/')
         }
@@ -91,7 +91,7 @@ function AdminFlights(props) {
         </Modal.Footer>
       </Modal>
       <Container style={{opacity: deleteModal === true ? 0.5 : 1, pointerEvents: deleteModal === true ? 'none' : 'initial'}}>
-      <AdminHeader />
+      <AdminHeader title={localStorage.getItem('firstName')}/>
         <table>
           <thead>
             <tr>

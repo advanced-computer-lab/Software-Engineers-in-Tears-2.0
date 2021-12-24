@@ -23,7 +23,7 @@ function AdminHome(props) {
         if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
           history.push('/')
         }
-        else{
+        else if(!res.data.isLoggedIn){
           localStorage.clear()
           history.push('/')
         }
@@ -61,7 +61,7 @@ function AdminHome(props) {
 
   return (
     <Container>
-    <AdminHeader />
+    <AdminHeader title={localStorage.getItem('firstName')}/>
     <Rect2>
         <SearchFlight>SEARCH FLIGHT</SearchFlight>
         <MaterialFixedLabelTextboxRow>  

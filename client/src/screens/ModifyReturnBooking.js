@@ -23,6 +23,9 @@ function ModifyReturnBooking(props){
               localStorage.clear();
               history.push('/')
             }
+            else if(res.data.Type === 'administrator'){
+              history.push('/admin')
+            }
           })
           .catch(err => {
             console.log(err);
@@ -37,9 +40,9 @@ function ModifyReturnBooking(props){
         return () => {
           document.removeEventListener("keydown", listener);
         };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [handleReturn]);
+      }, [handleReturn, history]);
 
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       function handleReturn(event){
         event.preventDefault();
 

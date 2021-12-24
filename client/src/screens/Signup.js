@@ -46,7 +46,12 @@ function Signup(props) {
     axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
       .then(res => {
         if(res.data.isLoggedIn){
-          history.push('/')
+          if(res.data.Type === 'administrator'){
+            history.push('/admin')
+          }
+          else{
+            history.push('/')
+          }
         }
       })
       .catch(err => {
