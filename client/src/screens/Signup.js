@@ -153,7 +153,7 @@ function Signup(props) {
         Telephone_Number: phoneNumber,
         Passport_Number: passportNumber,
         Password: password,
-        Username: username,
+        Username: username.trim(),
         Type: 'Customer',
       })
       .then(res => {
