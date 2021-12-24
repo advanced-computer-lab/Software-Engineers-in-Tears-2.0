@@ -1,0 +1,18 @@
+
+Adham Shams 46-0388:
+-FR 1,1.1,1.2,1.3,2,2.1,36
+-UI styling
+
+Maiar Ashraf 46-6070:
+-FR 37,38,39,40,50,51,52
+
+Farah Hassan 46-4649:
+-FR 30,30.1,31,32,33,34,35
+
+Aya Saleh 46-3902: 
+-FR 43,44,45,46,47,48,49
+
+John Sedrak 46-3935:
+-FR 23,25,41,42,53,54,55
+
+Everyone handeled the Non-functional requirements aspect of their parts
