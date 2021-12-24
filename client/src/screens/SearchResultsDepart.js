@@ -20,9 +20,6 @@ function SearchResultsDepart(props) {
 
     const [departFlights, setDepartFlights] = useState([]);
     const [selectedDepart, setSelectedDepart] = useState('');
-    // const [returnFlights, setReturnFlights] = useState([]);
-    // const [selectedReturn, setSelectedReturn] = useState('');
-    const [viewDepartDetailsID, setViewDepartDetailsID] = useState();
   
     const [firstName, setFirstName] = useState('');
   

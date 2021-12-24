@@ -23,8 +23,6 @@ function UserSearch(props) {
   const [returnFlights, setReturnFlights] = useState([]);
   const [selectedDepart, setSelectedDepart] = useState('');
   const [selectedReturn, setSelectedReturn] = useState('');
-  const [viewDepartDetailsID, setViewDepartDetailsID] = useState();
-  const [viewReturnDetailsID, setViewReturnDetailsID] = useState();
   const [firstName, setFirstName] = useState('');
 
   const from = useState(props.match.params.from)[0];
@@ -116,7 +114,7 @@ function UserSearch(props) {
           }
           return(
            <div style={{display: 'flex', flexDirection: 'column'}}>
-<div style={{height: 90,width: '95%' ,marginRight: 250,marginLeft: 30, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 30, marginBottom: 20, display: 'flex', flexDirection: 'row',backgroundImage: "url(" + Background + ")"}}>
+            <div style={{height: 90,width: '95%' ,marginRight: 250,marginLeft: 30, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 30, marginBottom: 20, display: 'flex', flexDirection: 'row',backgroundImage: "url(" + Background + ")"}}>
             <div style={{width: '100%', display: "flex", flexDirection: 'column', height: '100%',marginRight: 650,marginLeft: 100}}>
                 <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 20,marginLeft:10}}>
                     <label style={{fontFamily: 'Archivo', fontSize: 20,marginRight:20,marginLeft:-40}}>{flight.From}</label>

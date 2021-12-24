@@ -9,7 +9,7 @@ function BookingCard(props) {
 
   const [hover1, setHover1] = useState('#F0A500');
   const [hover2, setHover2] = useState('');
-  const [hover3, setHover3] = useState('');
+  const [hover3, setHover3] = useState('red');
 
   const history = useHistory();
 
@@ -44,7 +44,7 @@ function BookingCard(props) {
             <Image src={require("../assets/images/world-map.png").default} style={{width: 320, height: 180, alignSelf: 'center'}}/>
             <Image src={require("../assets/images/barcode.png").default} style={{width: 210, height: 50, alignSelf: 'center'}}/>
             <label style={{fontFamily: 'Archivo', textAlign: 'center', marginTop: 10, fontSize: 14}}>{props.Booking._id}</label>
-            <label onClick={props.DeleteBooking} onMouseEnter={() => setHover3('#F0A500')} onMouseLeave={() => setHover3('')} style={{cursor: 'pointer', fontFamily: 'Archivo', textAlign: 'center', marginTop: 'auto', marginBottom: 35, fontSize: 17, textDecorationLine: 'underline', color: '#FF0000'}}>Cancel Reservation</label>
+            <label onClick={props.DeleteBooking} onMouseEnter={() => setHover3('darkred')} onMouseLeave={() => setHover3('red')} style={{cursor: 'pointer', fontFamily: 'Archivo', textAlign: 'center', marginTop: 'auto', marginBottom: 35, fontSize: 17, textDecorationLine: 'underline', color: hover3}}>Cancel Reservation</label>
         </div>
 
         <div style={{height: '100%', width: 3, display: 'flex', flexDirection: 'column'}}>

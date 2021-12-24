@@ -25,8 +25,8 @@ function ModifyReturnBookingResults(props) {
   
     const from = useState(props.match.params.from)[0];
     const to = useState(props.match.params.to)[0];
-    const cabin = useState(props.match.params.cabin)[0];
-    const fromDate = useState(props.match.params.fromDate)[0];
+    const cabin = useState(props.match.params.cabin === 'null' ? null : props.match.params.cabin)[0];
+    const fromDate = useState(props.match.params.fromDate === 'null' ? null : props.match.params.fromDate)[0];
   
     useEffect(() => {
       setLoading(true)
