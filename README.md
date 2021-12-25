@@ -7,6 +7,9 @@ for flights in order to travel to different countries and sometimes domestic cit
 
 <br> This project was implemented using MERN stack technologies in JavaScript. The project architecture is MVC style. Backend requests are handled in App.js file and the backend route controllers are in the Routes folder. All frontend styling and functionalities are in the client folder. Database Schemas are handled in the Models folder. <br />
 <br>To run the project on VS code, first clone our repository "git clone https://github.com/advanced-computer-lab/Software-Engineers-in-Tears-2.0.gitmake".Then make sure you install the necessary files or softwares by running "npm i" in your console. Afterwards, split your terminal and run backend by typing "node App.js" in cosole. To run the front end chaneg the directory to client then typle "npm start".<br />
+<br> Emailing API used is nodemailer (https://nodemailer.com/about/)<br/>
+<br> Payment by card was handled by Stripe API()<br/>
+
 
 <br> There are 3 navigation modes on the website:Admin,Guest and User. Each have different access priviliges to the website's features <br />
 <br> *Admin Mode* <br />
