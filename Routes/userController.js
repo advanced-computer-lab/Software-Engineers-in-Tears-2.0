@@ -46,7 +46,8 @@ exports.login = (req, res) => {
                     message: 'Success',
                     token: token,
                     id : dbUser._id,
-                    First_Name : dbUser.First_Name
+                    First_Name : dbUser.First_Name,
+                    Email: dbUser.Email
                     
                 })
               }

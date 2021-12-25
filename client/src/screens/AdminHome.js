@@ -23,8 +23,8 @@ function AdminHome(props) {
         if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
           history.push('/')
         }
-        else{
-          localStorage.clear()
+        else if (!res.data.isLoggedIn){
+          localStorage.clear();
           history.push('/')
         }
       })

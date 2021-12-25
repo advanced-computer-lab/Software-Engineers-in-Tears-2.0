@@ -63,6 +63,7 @@ function LoginScreen(props) {
           localStorage.setItem('token', res.data.token)
           localStorage.setItem('firstName', res.data.First_Name)
           localStorage.setItem('userID', res.data.id)
+          localStorage.setItem('userEmail', res.data.Email)
           if(res.data.Type === 'administrator'){
             history.push('/admin')
           }

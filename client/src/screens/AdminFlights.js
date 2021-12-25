@@ -34,7 +34,7 @@ function AdminFlights(props) {
         if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
           history.push('/')
         }
-        else{
+        else if (!res.data.isLoggedIn){
           localStorage.clear()
           history.push('/')
         }

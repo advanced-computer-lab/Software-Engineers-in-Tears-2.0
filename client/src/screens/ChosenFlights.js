@@ -65,15 +65,15 @@ function ChosenFlights(props) {
         }
         axios.post('http://localhost:8000/createbooking',newBooking).then(res => {
           history.push(`/booking/${res.data._id}/seats/depart`)
-          const arr = bookings.slice()
-          arr.push(res.data._id)
-          const data = {
-            Bookings: arr
-          }
-          axios.put('http://localhost:8000/updateUser/' + userID, data)
-            .then(result=> {
-          })
-            .catch(err => console.log(err));
+          // const arr = bookings.slice()
+          // arr.push(res.data._id)
+          // const data = {
+          //   Bookings: arr
+          // }
+          // axios.put('http://localhost:8000/updateUser/' + userID, data)
+          //   .then(result=> {
+          // })
+          //   .catch(err => console.log(err));
         })
         .catch(err =>{
           console.log(err);
