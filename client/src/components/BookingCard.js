@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Button1 from "./Button1";
 import { useHistory } from "react-router-dom";
+import {durationString} from "../Utils.js";
 
 function BookingCard(props) {
 
@@ -33,7 +34,7 @@ function BookingCard(props) {
    }
 
   return (
-    <div style={{height: 400, marginRight: 180, backgroundColor: '#F4F4F4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 30, marginBottom: 20, display: 'flex', flexDirection: 'row'}}>
+    <div style={{height: 450, marginRight: 180, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 30, marginBottom: 20, display: 'flex', flexDirection: 'row'}}>
         <div style={{width: '40%', display: "flex", flexDirection: 'column', height: '100%'}}>
             <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
                 <label style={{fontFamily: 'Archivo', fontSize: 20}}>{props.DepartFlight.From}</label>
@@ -81,10 +82,15 @@ function BookingCard(props) {
                         <label style={{fontFamily: 'Archivo', fontSize: 18, marginLeft: 20}}>To: <label style={{color: '#F0A500'}}>{props.DepartFlight.To}</label></label>
                     </div>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Flight Date: <label style={{color: '#F0A500'}}>{props.DepartFlight.Flight_Date ? props.DepartFlight.Flight_Date.substring(0,10) : 'N/A' }</label></label>
+                    <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Departure Time: <label style={{color: '#F0A500'}}>{props.DepartFlight.DepartureTime ? props.DepartFlight.DepartureTime : 'N/A' }</label></label>
+                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Arrival Time: <label style={{color: '#F0A500'}}>{props.DepartFlight.ArrivalTime ? props.DepartFlight.ArrivalTime : 'N/A' }</label></label>
+                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Trip Duration: <label style={{color: '#F0A500'}}>{props.DepartFlight.Trip_Duration ? durationString(props.DepartFlight.Trip_Duration) : 'N/A' }</label></label>
+                    </div>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Number of Passengers: <label style={{color: '#F0A500'}}>{props.Booking.PassengerCount}</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Cabin: <label style={{color: '#F0A500'}}>{props.DepartFlight.Cabin}</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Seats Booked: {props.Booking.departFlightSeats.length === 0 ? <label style={{color: '#F0A500'}}>No Seats Booked</label> : <label style={{color: '#F0A500'}}>{props.DepartFlight.Cabin.substring(0,1)}{props.Booking.departFlightSeats.join(', ' + props.DepartFlight.Cabin.substring(0,1))}</label>}</label>
-                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Baggage Allowance: <label style={{color: '#F0A500'}}>{props.DepartFlight.Baggage_Allowance ? props.DepartFlight.BaggageAllowance : 'N/A'} KG</label></label>
+                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Baggage Allowance: <label style={{color: '#F0A500'}}>{props.DepartFlight.Baggage_Allowance ? props.DepartFlight.Baggage_Allowance : 'N/A'} KG</label></label>
                     <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginLeft: 20, marginTop: 40}}>
                         {!props.beforePayment?<Button1 style={{width: 200, height: 35}} title={'Modify Reservation'} onClick= {()=>handle()} />:null}
                         {!props.beforePayment?<Button1 style={{width: 200, height: 35, marginLeft: 20}} title={'Change Seats'} onClick={() => history.push(`/booking/${props.Booking._id}/seats/depart/edit`)}/>:null}
@@ -97,10 +103,15 @@ function BookingCard(props) {
                         <label style={{fontFamily: 'Archivo', fontSize: 18, marginLeft: 20}}>To: <label style={{color: '#F0A500'}}>{props.ReturnFlight.To}</label></label>
                     </div>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Flight Date: <label style={{color: '#F0A500'}}>{props.ReturnFlight.Flight_Date ? props.ReturnFlight.Flight_Date.substring(0,10)  : 'N/A' }</label></label>
+                    <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Departure Time: <label style={{color: '#F0A500'}}>{props.DepartFlight.DepartureTime ? props.DepartFlight.DepartureTime : 'N/A' }</label></label>
+                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Arrival Time: <label style={{color: '#F0A500'}}>{props.DepartFlight.ArrivalTime ? props.DepartFlight.ArrivalTime : 'N/A' }</label></label>
+                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Trip Duration: <label style={{color: '#F0A500'}}>{props.DepartFlight.Trip_Duration ? durationString(props.DepartFlight.Trip_Duration) : 'N/A' }</label></label>
+                    </div>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Number of Passengers: <label style={{color: '#F0A500'}}>{props.Booking.PassengerCount}</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Cabin: <label style={{color: '#F0A500'}}>{props.ReturnFlight.Cabin}</label></label>
                     <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Seats Booked: {props.Booking.returnFlightSeats.length === 0 ? <label style={{color: '#F0A500'}}>No Seats Booked</label> : <label style={{color: '#F0A500'}}>{props.ReturnFlight.Cabin.substring(0,1)}{props.Booking.returnFlightSeats.join(', ' + props.ReturnFlight.Cabin.substring(0,1))}</label>}</label>
-                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Baggage Allowance: <label style={{color: '#F0A500'}}>{props.ReturnFlight.Baggage_Allowance ? props.ReturnFlight.BaggageAllowance : 'N/A'} KG</label></label>
+                    <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 20, marginLeft: 20}}>Baggage Allowance: <label style={{color: '#F0A500'}}>{props.ReturnFlight.Baggage_Allowance ? props.ReturnFlight.Baggage_Allowance : 'N/A'} KG</label></label>
                     <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginLeft: 20, marginTop: 40}}>
                         {!props.beforePayment?<Button1 style={{width: 200, height: 35}} title={'Modify Reservation'} onClick= {() => handleReturn()}/>:null}
                         {!props.beforePayment?<Button1 style={{width: 200, height: 35, marginLeft: 20}} title={'Change Seats'} onClick={() => history.push(`/booking/${props.Booking._id}/seats/return/edit`)}/>:null}
