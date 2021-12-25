@@ -18,4 +18,9 @@ for flights in order to travel to different countries and sometimes domestic cit
 
 <br> Both an admin and a registered user can login by their credentials from the log in page. <br/>
 
+<br>*Suggested uncompleted future feature*<br>
+<br> 1- The top navigation bar buttons in the homepage.<br/>
+<br> 2- The "manage booking", "check-in" and "Hotels" section in the user homepage.<br/>
+<br> 3- The loyality Skywards program features. <br/>
+
 
