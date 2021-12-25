@@ -98,7 +98,7 @@ function SearchResultsDepart(props) {
                 <Button2 style={{width: 250, height: 50, marginTop: 20}} title={'Back to Profile Bookings'} onClick={() => history.push('/profile/bookings')}/>
             </div>
             :
-          <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
+          <div style={{width: '100%', display: 'flex', flexDirection: 'column',alignItems: 'center'}}>
           <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)'}}>
             <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25}}>Choose Depart Flight</label>
           </div>
@@ -138,9 +138,9 @@ function SearchResultsDepart(props) {
                   
                     {durationString(flight.Trip_Duration)}</label>
    
-   
+                    <div style={{alignItems:'center',width:'50%'}}>
                  {selectedDepart === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right:50 }} onClick={()=>{setSelectedDepart(''); }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute',right:50  }}  onClick={() => {setSelectedDepart(flight._id);}}/>}
-                 
+                 </div>
    
                    </div>
                   </div>
