@@ -6,12 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "app": "nodemon app.js",
-    "build":"cd client && npm run build",
-    "install-client":"cd client && npm install",
-    "heroku-postbuild":"npm run install-client && npm run build",
-    "start":"node App.js"
-
-
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "start": "node App.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +23,7 @@
   },
   "homepage": "https://github.com/advanced-computer-lab/Software-Engineers-in-Tears-2.0#readme",
   "dependencies": {
+    "@stripe/react-stripe-js": "^1.7.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "csv-parse": "^4.16.3",
@@ -33,7 +32,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
     "nodemailer": "^6.7.2",
-    "nodemon": "^2.0.14"
-  },
-  "devDependencies": {}
+    "nodemon": "^2.0.14",
+    "stripe": "^8.195.0"
+  }
 }

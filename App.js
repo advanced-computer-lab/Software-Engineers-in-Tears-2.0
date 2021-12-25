@@ -5,10 +5,10 @@ var cors = require('cors');
 const flightController = require('./Routes/flightController.js');
 const userController = require('./Routes/userController.js');
 const bookingController = require('./Routes/bookingController.js');
+const paymentController = require('./Routes/paymentController');
 const auth = require('./Routes/auth.js');
 require("dotenv").config({ path: "./config.env" });
 const MongoURI = process.env.ATLAS_URI
-
 //App variables
 const app = express();
 const port = process.env.PORT || "8000";
@@ -64,6 +64,7 @@ app.post("/createuser", userController.createUser);
 app.put("/updateBooking/:id", bookingController.updateBooking);
 app.put("/updateUser/:userID", userController.updateUser)
 app.put('/adminUpdateFlight/:id', flightController.updateFlight);
+app.put('/pay', paymentController.charge);
 app.delete("/deleteBooking/:id", (req, res)=>{
   bookingController.deleteBooking(req, res);
   res.status(200).send("booking deleted");
