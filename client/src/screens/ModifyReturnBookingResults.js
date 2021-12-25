@@ -106,7 +106,7 @@ function ModifyReturnBookingResults(props) {
             :
             <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
             <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)'}}>
-              <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25}}>Choose Depart Flight</label>
+              <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25}}>Choose Return Flight</label>
             </div>
          
           {returnFlights.map((flight) => {
