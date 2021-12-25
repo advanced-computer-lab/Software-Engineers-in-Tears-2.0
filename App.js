@@ -51,6 +51,7 @@ app.post("/auth", (req, res) => {
 app.get("/adminflights", flightController.listAllFlights);
 app.post("/login", userController.login);
 app.post('/changepassword',userController.changePassword);
+app.post('/resetpassword',userController.resetPassword);
 app.get('/adminUpdateFlight/:id', flightController.viewFlightDetails);
 app.post("/getUserByID", userController.getUserByID);
 app.post("/adminsearchflights", flightController.searchFlights);
