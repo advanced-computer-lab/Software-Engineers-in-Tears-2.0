@@ -42,8 +42,7 @@ function LoginScreen(props) {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handle, history]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   function handle(event){
@@ -56,7 +55,7 @@ function LoginScreen(props) {
     
     axios.post('http://localhost:8000/login', {
         Password: password,
-        Username: username,
+        Username: username.trim(),
       })
       .then(res => {
         if(res.data.message === 'Success'){
@@ -64,6 +63,7 @@ function LoginScreen(props) {
           localStorage.setItem('firstName', res.data.First_Name)
           localStorage.setItem('userID', res.data.id)
           localStorage.setItem('userEmail', res.data.Email)
+          console.log(res.data)
           if(res.data.Type === 'administrator'){
             history.push('/admin')
           }

@@ -6,15 +6,15 @@ import Header from "../components/Header";
 import axios from 'axios';
 import Button1 from "../components/Button1";
 
-function SearchNewDepart(props){
+function ModifyReturnBooking(props){
 
     const history = useHistory();
     const [fromDate, setFromDate] = useState('');
     const [cabin, setCabin] = useState('');
-    const toDate = props.location.ReturnFlight.Flight_Date;
+    const fromDateDep = props.location.DepartFlight.Flight_Date;
     const pcount = props.location.Booking.PassengerCount;
-    const from = props.location.DepartFlight.From;
-    const to = props.location.DepartFlight.To;
+    const from = props.location.ReturnFlight.From;
+    const to = props.location.ReturnFlight.To;
     
     useEffect(() => {
         axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
@@ -33,31 +33,31 @@ function SearchNewDepart(props){
         const listener = event => {
           if (event.code === "Enter" || event.code === "NumpadEnter") {
             console.log("Enter key was pressed. Run your function.");
-            handle(event)
+            handleReturn(event)
           }
         };
         document.addEventListener("keydown", listener);
         return () => {
           document.removeEventListener("keydown", listener);
         };
-      }, [handle, history]);
+      }, [handleReturn, history]);
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      function handle(event){
+      function handleReturn(event){
         event.preventDefault();
 
-        var f = new Date(fromDate)
-        var t = new Date(toDate)
+        var fOfReturn = new Date(fromDate)
+        var fOfDepart = new Date(fromDateDep)
 
         if(cabin === '' && fromDate === ''){
           alert("Please enter your search critera")
         }
-        else if(t.getTime()<f.getTime()){
-          alert('Your arrival date is before your departure date!')
+        else if(fOfReturn.getTime()<fOfDepart.getTime()){
+          alert('Your chosen return date is before your departure flight date!')
         }
         else{
           history.push({
-            pathname: `/searchDepart/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? props.location.DepartFlight.Flight_Date : fromDate}/editDepart`,
+            pathname: `/searchReturn/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? props.location.ReturnFlight.Flight_Date : fromDate}/editReturn`,
             DepartFlight: props.location.DepartFlight,
             ReturnFlight: props.location.ReturnFlight,
             Booking: props.location.Booking
@@ -88,7 +88,7 @@ function SearchNewDepart(props){
             />
             <label style={{color: '#F0A500', fontFamily: 'Archivo Black', marginTop: 20}}>Cabin Class</label>
             <input value={cabin} onChange={(e) => setCabin(e.target.value)} style={{height: 40, width: 150, fontSize: 20, borderTop: 'none', borderRight: 'none', borderLeft: 'none', borderBottom: '2px solid #F0A500', color: '#000'}}/>
-            <Button1 onClick={handle} title={'Search'} style={{width: 150, height: 40, marginTop: 20}}/>  
+            <Button1 onClick={handleReturn} title={'Search'} style={{width: 150, height: 40, marginTop: 20}}/>  
           </div>
           <Footer />
         </Container>
@@ -100,4 +100,4 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-export default SearchNewDepart;
+export default ModifyReturnBooking;

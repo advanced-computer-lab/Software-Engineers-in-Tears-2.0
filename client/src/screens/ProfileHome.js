@@ -28,12 +28,14 @@ function ProfileHome(props) {
           localStorage.clear()
           history.push('/')
         }
+        else if(res.data.Type === 'administrator'){
+          history.push('/admin')
+        }
       })
       .catch(err => {
         console.log(err);
       })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [history]);
 
   return (
     <Container style={{display: "flex", flexDirection: 'column'}}>

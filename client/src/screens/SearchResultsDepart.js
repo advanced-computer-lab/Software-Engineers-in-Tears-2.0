@@ -3,36 +3,28 @@ import styled from "styled-components";
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import Button1 from "../components/Button1";
+import Button2 from "../components/Button2";
 import Button3 from "../components/Button3";
 import Footer from "../components/Footer";
 import ReactLoading from 'react-loading';
-import Button2 from "../components/Button2";
 import Header from '../components/Header'
 import { durationString } from "../Utils.js";
-
-
+import Background from '../assets/images/cloud22.jpg';
 
 function SearchResultsDepart(props) {
 
     const history = useHistory();
-    const [selectedDepDate, setselectedDepDate] = useState('');
-    
-  
+
     const [loading, setLoading] = useState(true);
-  
+    const [loading2, setLoading2] = useState(false);
+
     const [departFlights, setDepartFlights] = useState([]);
-   
     const [selectedDepart, setSelectedDepart] = useState('');
-    
-    const [viewDepartDetailsID, setViewDepartDetailsID] = useState();
-    
-    const [firstName, setFirstName] = useState('');
   
     const from = useState(props.match.params.from)[0];
     const to = useState(props.match.params.to)[0];
     const cabin = useState(props.match.params.cabin === 'null' ? null : props.match.params.cabin)[0];
     const fromDate = useState(props.match.params.fromDate === 'null' ? null : props.match.params.fromDate)[0];
-    const toDate = useState(props.match.params.toDate === 'null' ? null : props.match.params.toDate)[0];
   
     useEffect(() => {
       setLoading(true)
@@ -40,9 +32,10 @@ function SearchResultsDepart(props) {
         .then(res => {
           if(!res.data.isLoggedIn){
             localStorage.clear();
+            history.push('/')
           }
-          else{
-            setFirstName(localStorage.getItem('firstName'))
+          else if(res.data.Type === 'administrator'){
+            history.push('/admin')
           }
         })
         .catch(err => {
@@ -63,16 +56,34 @@ function SearchResultsDepart(props) {
             }
           }
           setDepartFlights(arr);
+          setLoading(false)
         })
         .catch(err => {
           console.log(err);
         })
       
-    }, [cabin, from, fromDate, props.match.params.pcount, to, toDate]);
-  /*
+    }, [cabin, from, fromDate, history, props.match.params.pcount, to]);
+
+    const handle =  async() => {
+      setLoading2(true)
+      const res = await axios.post('http://localhost:8000/adminsearchflights/', {_id: props.location.DepartFlight._id})
+      const arr = res.data[0].SeatsBooked;
+      console.log(arr);
+      console.log(props.location.Booking.departFlightSeats)
+      for(let i = 0; i < props.location.Booking.departFlightSeats.length; i++){
+        arr.splice(arr.indexOf(props.location.Booking.departFlightSeats[i]), 1);
+      }
+      await axios.put('http://localhost:8000/adminUpdateFlight/'+props.location.DepartFlight._id, {SeatsBooked: arr})
+      await axios.put('http://localhost:8000/updateBooking/'+props.location.Booking._id, {departFlightID: selectedDepart, departFlightSeats: []})
+      history.push({
+        pathname: `/booking/${props.location.Booking._id}/seats/depart/edit`,
+        Payment: true
+      });
+    }
+  
     return (
       <Container >
-        <Header title={firstName}/>
+        <Header title={localStorage.getItem('firstName')}/>
         {
           loading ?
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: 557, backgroundColor: '#fff' }}>
@@ -84,57 +95,80 @@ function SearchResultsDepart(props) {
                 <Image src={require("../assets/images/error-icon.png").default} style={{width: 100, height: 100}}/>
                 <label style={{fontFamily: 'Archivo Black', fontSize: 30, color:'#F0A500'}}>No Results</label>
                 <label style={{fontFamily: 'Archivo', fontSize: 20, color:'#000', marginTop: 20}}>Modify your search criteria and try again.</label>
-                <Button2 style={{width: 200, height: 50, marginTop: 20}} title={'Back to Home Screen'} onClick={() => history.push('/')}/>
+                <Button2 style={{width: 250, height: 50, marginTop: 20}} title={'Back to Profile Bookings'} onClick={() => history.push('/profile/bookings')}/>
             </div>
             :
-          <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
+          <div style={{width: '100%', display: 'flex', flexDirection: 'column',alignItems: 'center'}}>
           <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)'}}>
             <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25}}>Choose Depart Flight</label>
           </div>
-          <div style={{ height: 20, display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 50}}>               
-              <label style={{ textAlign: 'center', fontFamily: 'Archivo Black' }}>From</label>
-              <label style={{ textAlign: 'center', fontFamily: 'Archivo Black', position: 'absolute', left: 150 }}>To</label>
-              <label style={{ textAlign: 'center', fontFamily: 'Archivo Black', position: 'absolute', left: 250}}>Flight Date</label>
-              <label style={{ textAlign: 'center', fontFamily: 'Archivo Black', position: 'absolute', left: 400 }}>Cabin</label>
-            </div>
+          
           {departFlights.map((flight) => {
-            if(new Date(flight.Flight_Date).getTime()>new Date(toDate).getTime()){
-              return null;
-            }
             return(
-            <div style={{display: 'flex', flexDirection: 'column'}}>
-              <div style={{ height: 80, display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 50}}>               
-                <label style={{ textAlign: 'center', fontFamily: 'Archivo' }}>{flight.From}</label>
-                <label style={{ textAlign: 'center', fontFamily: 'Archivo', position: 'absolute', left: 150 }}>{flight.To}</label>
-                <label style={{ textAlign: 'center', fontFamily: 'Archivo', position: 'absolute', left: 250}}>{flight.Flight_Date!=null?flight.Flight_Date.substring(0,10):null}</label>
-                <label style={{ textAlign: 'center', fontFamily: 'Archivo', position: 'absolute', left: 400 }}>{flight.Cabin}</label>
-                <Button1 title={'View Details'} style={{ width: 160, height: 35, position: 'absolute', right: 230  }} onClick={() => viewDepartDetailsID === flight._id ? setViewDepartDetailsID('') : (setViewDepartDetailsID(flight._id))} />
-                {selectedDepart === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50 }} onClick={()=>{setSelectedDepart('');setselectedDepDate(''); }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50  }}  onClick={() => {setSelectedDepart(flight._id); setselectedDepDate(flight.Flight_Date)}}/>}
-              </div>
-              {viewDepartDetailsID != null && viewDepartDetailsID===flight._id ? 
-                  <div style={{height: 80, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                      <label style={{fontFamily: 'Archivo'}}>Flight Number:{flight.FlightNumber?flight.FlightNumber:'N/A'}</label>
-                      <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Depart time: {flight.DepartureTime?flight.DepartureTime:'N/A'}</label>
-                      <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Arrival time: {flight.ArrivalTime?flight.ArrivalTime:'N/A'}</label>
-                      <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Trip duration:  {durationString(flight.Trip_Duration)}</label>
-                      <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Baggage Allowance: {flight.Baggage_Allowance?flight.Baggage_Allowance:'N/A'}</label>
-                      <label style={{fontFamily: 'Archivo', marginLeft: 50}}>Price: ${flight.Price?flight.Price:'N/A'}</label>
+              <div style={{display: 'flex', flexDirection: 'column'}}>
+   <div style={{height: 90,width: '95%' ,marginRight: 250,marginLeft: 30, backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 30, marginBottom: 20, display: 'flex', flexDirection: 'row',backgroundImage: "url(" + Background + ")"}}>
+               <div style={{width: '100%', display: "flex", flexDirection: 'column', height: '100%',marginRight: 650,marginLeft: 100}}>
+                   <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 20,marginLeft:10}}>
+                       <label style={{fontFamily: 'Archivo', fontSize: 20,marginRight:20,marginLeft:-40}}>{flight.From}</label>
+   
+   
+                       <Image src={require("../assets/images/plane.png").default} style={{height: 24, width: 30, marginLeft: -10,marginRight:40}}/>
+                       <label style={{fontFamily: 'Archivo', fontSize: 20, marginLeft:-30,marginRight:10}}>{flight.To}</label>
+                       
+   
+                       <Image src={require("../assets/images/cabin.png").default} style={{height: 24, width: 30, marginLeft: 10}}/>
+                       <label style={{fontFamily: 'Archivo', fontSize: 20,marginRight: 20}}>{flight.Cabin}</label>
+                       <Image src={require("../assets/images/cal.png").default} style={{height: 17, width: 20, marginLeft: 10}}/>
+
+                       <label style={{fontFamily: 'Archivo', fontSize:20,marginRight:0,marginLeft:0,textOrientation:'sideways'}}>{flight.Flight_Date!=null?(flight.Flight_Date.substring(0,4)):null}</label>
+                    <label style={{fontFamily: 'Archivo', fontSize:20,marginRight:0,marginLeft:0,textOrientation:'sideways'}}>{flight.Flight_Date!=null?(flight.Flight_Date.substring(4,7)):null}</label>
+                    <label style={{fontFamily: 'Archivo', fontSize:20,marginRight:40,marginLeft:0,textOrientation:'sideways'}}>{flight.Flight_Date!=null?(flight.Flight_Date.substring(7,10)):null}</label>
+
+                       <label style={{fontFamily: 'Archivo',fontSize: 20,marginLeft:-10}}>#{flight.FlightNumber?flight.FlightNumber:'N/A'}</label>
+                       <Image src={require("../assets/images/lug5.png").default} style={{height: 24, width: 30, marginLeft: 30}}/>
+                       <label style={{fontFamily: 'Archivo', marginRight: 20}}>{flight.Baggage_Allowance?flight.Baggage_Allowance:'N/A'}</label>
+                       <label style={{fontFamily: 'Archivo', marginRight:20,marginLeft:10}}><label style={{fontFamily: 'Archivo', fontWeight:'bold',fontSize: 20}}>$</label>{flight.Price?flight.Price:'N/A'}</label>
+   
+   
+                       <label style={{fontFamily: 'Archivo', marginLeft:10,marginRight:-10,textAlignVertical: 'top'}}>{flight.DepartureTime?flight.DepartureTime:'N/A'}</label>
+                       <Image src={require("../assets/images/line2.png").default} style={{height: 24, width: 30, marginLeft:10}}/>
+                       <label style={{fontFamily: 'Archivo', marginLeft:0}}>{flight.ArrivalTime?flight.ArrivalTime:'N/A'}</label>
+                       <Image src={require("../assets/images/dur2.jpg").default} style={{height: 24, width: 30, marginLeft: 10}}/>
+                       <label style={{fontFamily: 'Archivo', marginLeft: 0,marginRight:-50}}>   
+                  
+                    {durationString(flight.Trip_Duration)}</label>
+   
+                    <div style={{alignItems:'center',width:'50%'}}>
+                 {selectedDepart === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right:50 }} onClick={()=>{setSelectedDepart(''); }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute',right:50  }}  onClick={() => {setSelectedDepart(flight._id);}}/>}
+                 </div>
+   
+                   </div>
                   </div>
-                : null}
-            </div>
+                   
+               </div>
+             </div>
+           
           );})}
+
+
+
+
+
+
+
+
           
          
           <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35}}>
             <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Round Trip Flight: <label style={{fontFamily: 'Archivo Black', color: '#F0A500'}}>{ props.match.params.from} - {props.match.params.to}</label></label>
-            <Button1 disabled={selectedDepart === '' } onClick={() => history.push(`/summary/${selectedDepart}/${selectedReturn}/${props.match.params.pcount}`)} title={'Confirm Selection'} style={{fontSize: 20, position: 'absolute', right: 50, width: 180, height: 40}}/>
+            <Button1 loading={loading2} disabled={selectedDepart === '' } onClick={() => handle()} title={'Confirm Selection'} style={{fontSize: 20, position: 'absolute', right: 50, width: 180, height: 40}}/>
           </div>
           </div>
           )
         }
         <Footer />
       </Container>
-    );*/
+    );
   }
 
 const Container = styled.div`

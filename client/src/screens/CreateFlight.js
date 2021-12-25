@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import  {useState, useEffect} from 'react';
 import Footer from "../components/Footer";
-import Modal from 'react-bootstrap/Modal';
 import AdminHeader from "../components/AdminHeader";
 import axios from 'axios';
 import Button1 from '../components/Button1';
@@ -41,7 +40,7 @@ function CreateFlight() {
         if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
           history.push('/')
         }
-        else{
+        else if(!res.data.isLoggedIn){
           localStorage.clear()
           history.push('/')
         }
@@ -49,7 +48,7 @@ function CreateFlight() {
       .catch(err => {
         console.log(err);
       })
-  }, []);
+  }, [history]);
 
  
   function create(event){
@@ -160,7 +159,7 @@ function CreateFlight() {
   return (
     
     <Container>
-    <AdminHeader />
+    <AdminHeader title={localStorage.getItem('firstName')}/>
     <div style={{height: 80, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
       <text style={{fontFamily: 'Archivo Black', color: '#f4f4f4', fontSize: 30, marginLeft: 50}}>Create Flight</text>
     </div>

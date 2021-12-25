@@ -51,6 +51,9 @@ class UserUpdateScreen extends Component {
           localStorage.clear()
           this.props.history.push('/')
         }
+        else if(res.data.Type === 'administrator'){
+          this.props.history.push('/admin')
+        }
       })
       .catch(err => {
         console.log(err);

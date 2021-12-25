@@ -19,13 +19,16 @@ import PaymentScreen from './screens/PaymentScreen';
 import Signup from './screens/Signup';
 import ChangePassword from './screens/ChangePassword';
 import EditSeatDepart from './screens/EditSeatDepart';
+import EditSeatReturn from './screens/EditSeatReturn';
 import SearchNewDepart from './screens/SearchNewDepart';
 import SearchResultsDepart from './screens/SearchResultsDepart';
-
+import ModifyReturnBooking from './screens/ModifyReturnBooking';
+import ModifyReturnBookingResults from './screens/ModifyReturnBookingResults';
 
 class App extends Component {
   render() {
     return (
+
       <Router>
         <Switch>
           <Route exact path='/' component={HomeScreen} />
@@ -35,8 +38,10 @@ class App extends Component {
           <Route exact path='/summary/:id1/:id2/:passengerCount' component={ChosenFlights} />
           <Route exact path='/iternary/:id1/:id2/:passengerCount' component={ChosenFlights} />
           <Route exact path='/search/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/toDate=:toDate' component={UserSearch} />
-          <Route exact path='/search/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/toDate=:toDate/edit' component={SearchResultsDepart} />
-          <Route exact path='/search' component={SearchNewDepart} />
+          <Route exact path='/searchDepart/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/editDepart' component={SearchResultsDepart} />
+          <Route exact path='/searchReturn/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/editReturn' component={ModifyReturnBookingResults} />
+          <Route exact path='/searchDepart' component={SearchNewDepart} />
+          <Route exact path='/searchReturn' component={ModifyReturnBooking} />
           <Route exact path='/profile/home' component={ProfileHome} />
           <Route exact path='/profile/bookings' component={ProfileBookings} />
           <Route exact path='/profile/changepassword' component={ChangePassword} />
@@ -44,6 +49,7 @@ class App extends Component {
           <Route exact path='/booking/:bookingID/seats/depart' component={ChooseSeatDepart} />
           <Route exact path='/booking/:bookingID/seats/depart/edit' component={EditSeatDepart} />
           <Route exact path='/booking/:bookingID/seats/return' component={ChooseSeatReturn} />
+          <Route exact path='/booking/:bookingID/seats/return/edit' component={EditSeatReturn} />
           <Route exact path='/booking/payment' component={PaymentScreen} />
           <Route exact path='/booking/iternary'  />
           <Route exact path='/admin/create' component={CreateFlight} />

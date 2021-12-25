@@ -23,8 +23,8 @@ function AdminHome(props) {
         if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
           history.push('/')
         }
-        else if (!res.data.isLoggedIn){
-          localStorage.clear();
+        else if(!res.data.isLoggedIn){
+          localStorage.clear()
           history.push('/')
         }
       })
@@ -41,8 +41,9 @@ function AdminHome(props) {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [handle]);
+  }, [handle, history]);
 
+   // eslint-disable-next-line react-hooks/exhaustive-deps
    function handle(event){
     event.preventDefault();
     history.push({
@@ -60,7 +61,7 @@ function AdminHome(props) {
 
   return (
     <Container>
-    <AdminHeader />
+    <AdminHeader title={localStorage.getItem('firstName')}/>
     <Rect2>
         <SearchFlight>SEARCH FLIGHT</SearchFlight>
         <MaterialFixedLabelTextboxRow>  

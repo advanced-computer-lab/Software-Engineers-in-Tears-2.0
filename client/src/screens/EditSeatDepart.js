@@ -62,7 +62,7 @@ function EditSeatDepart(props) {
         .catch(err => console.log(err));
         axios.put('http://localhost:8000/adminUpdateFlight/' + flight._id, data)
         .then(result=> {
-            history.push('/profile/bookings');
+            props.location.Payment ? history.push('/payyyy') : history.push('/profile/bookings');
             setLoading2(false);
         })
         .catch(err => console.log(err));
@@ -91,7 +91,7 @@ function EditSeatDepart(props) {
         let seats = [];
         for(let i = 0; i < currentSelection.length; i++){
             seats.push(
-                <label style={{fontFamily: 'Archivo Black', color: '#F0A500'}}>{flight.Cabin.substr(0,1)}{currentSelection[i]}{i === currentSelection.length-1 ? '' :', '}</label>
+                <label style={{fontFamily: 'Archivo', color: '#F0A500'}}>{flight.Cabin.substr(0,1)}{currentSelection[i]}{i === currentSelection.length-1 ? '' : ','}</label>
             )
         }
         return seats;
@@ -100,9 +100,10 @@ function EditSeatDepart(props) {
     const renderSeats = () => {
         if(!loading){
         let seats = [];
+        let j = 1;
         for (let i = 1; i <= flight.Seats_Available_on_Flight; i+=5) {
           seats.push(
-              <div key={i} style={{display: 'flex', flexDirection: 'column', height: 50, width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 25, marginBottom: 25, marginLeft: 25, marginRight: 25}}>
+              <div key={i} style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginLeft: 25, marginRight: 25}}>
                 <Image1 
                     key={i} 
                     style={{width: 50, height: 50, cursor: seatsBooked.includes(i) ? null : 'pointer' }} 
@@ -117,17 +118,26 @@ function EditSeatDepart(props) {
                     onClick={!seatsBooked.includes(i+1) ? () => handleSelect(i+1) : null}
                     />
                     :
-                    null
+                    <Image1 
+                    key={i+1} 
+                    style={{width: 50, height: 50}} 
+                    src={require("../assets/images/unavailable-seat.png").default}
+                    />
                 }
+                <label style={{fontFamily: 'Archivo', fontSize: 18, marginTop: 25}}>{j}</label>
                 { i+2 <= flight.Seats_Available_on_Flight ?
                     <Image1 
                     key={i+2} 
-                    style={{width: 50, height: 50, cursor: seatsBooked.includes(i+2) ? null : 'pointer', marginTop: 50}} 
+                    style={{width: 50, height: 50, cursor: seatsBooked.includes(i+2) ? null : 'pointer', marginTop: 25}} 
                     src={ seatsBooked.includes(i+2) ? require("../assets/images/unavailable-seat.png").default : (currentSelection.includes(i+2) ?  require("../assets/images/selected-seat.png").default :  require("../assets/images/available-seat.png").default)}
                     onClick={!seatsBooked.includes(i+2) ? () => handleSelect(i+2) : null}
                     />
                     :
-                    null
+                    <Image1 
+                    key={i+2} 
+                    style={{width: 50, height: 50, marginTop: 25}} 
+                    src={require("../assets/images/unavailable-seat.png").default}
+                    />
                 }
                 { i+3 <= flight.Seats_Available_on_Flight ?
                     <Image1 
@@ -137,7 +147,11 @@ function EditSeatDepart(props) {
                     onClick={!seatsBooked.includes(i+3) ? () => handleSelect(i+3) : null}
                     />
                     :
-                    null
+                    <Image1 
+                    key={i+3} 
+                    style={{width: 50, height: 50}} 
+                    src={require("../assets/images/unavailable-seat.png").default}
+                    />
                 }
                 { i+4 <= flight.Seats_Available_on_Flight ?
                     <Image1 
@@ -147,10 +161,15 @@ function EditSeatDepart(props) {
                     onClick={!seatsBooked.includes(i+4) ? () => handleSelect(i+4) : null}
                     />
                     :
-                    null
+                    <Image1 
+                    key={i+4} 
+                    style={{width: 50, height: 50}} 
+                    src={require("../assets/images/unavailable-seat.png").default}
+                    />
                 }
               </div>
           )
+          j+=1;
         }
         return seats;
     }
@@ -165,24 +184,80 @@ function EditSeatDepart(props) {
                 <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
             </div> 
         :
-            <div style={{display: 'flex', flexDirection: 'column', width: '100%', minHeight: 557, backgroundColor: '#fff'}}>
-                <div style={{height: 70, width: '100%', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                    <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>Depart Flight From {flight.From} to {flight.To}</label>
+            <div style={{display: 'flex', flexDirection: 'column', width: '100%', backgroundColor: '#f4f4f4'}}>
+                <div style={{height: 80, width: '100%', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', backgroundColor: '#fff'}}>
+                    <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: 170, marginLeft: 50}}>
+                        <div style={{display: 'flex', flexDirection: 'row', height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}>
+                            <Image1 style={{width: 40, height: 40}} src={require("../assets/images/logo2.png").default}/>
+                            <div style={{display: 'flex', flexDirection: 'column', marginLeft: 5}}>
+                                <label style={{fontFamily: 'Archivo', fontSize: 15}}>{flight.From} - {flight.To}</label>
+                                <label style={{fontFamily: 'Archivo', fontSize: 12}}>{currentSelection.length} seats selected</label>
+                            </div>
+                        </div>
+                        <div style={{width: '100%', height: 3, backgroundColor: '#F0A500', marginTop: 'auto'}}/>
+                    </div>
                 </div>
-                <div style={{height: 120, width: '100%', backgroundColor: '#fff', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                    <Image1 style={{width: 50, height: 50}} src={require("../assets/images/available-seat.png").default}/>
-                    <label style={{color: '#000', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 10}}>= Available Seat</label>
-                    <Image1 style={{width: 50, height: 50, marginLeft: 50}} src={require("../assets/images/selected-seat.png").default}/>
-                    <label style={{color: '#000', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 10}}>= Selected Seat</label>
-                    <Image1 style={{width: 50, height: 50, marginLeft: 50}} src={require("../assets/images/unavailable-seat.png").default}/>
-                    <label style={{color: '#000', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 10}}>= Unavailable Seat</label>
+
+                <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <div style={{height: 120, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+
+                        <div style={{height: '100%', position: 'absolute', left: 50, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                            <label style={{fontFamily: 'Archivo Black', fontSize: 15}}>{flight.From} - {flight.To}</label>
+                            <label style={{fontFamily: 'Archivo', fontSize: 15, marginTop: 5}}>Flight {flight.FlightNumber ? flight.FlightNumber : '1170'} <label style={{marginLeft: 20}}>Dune Airlines</label></label>
+                            <label style={{fontFamily: 'Archivo', fontSize: 15, marginTop: 5}}>{flight.Flight_Date.substr(0,10)}</label>
+                        </div>
+
+                        <Image1 style={{width: 35, height: 35, marginLeft: 100}} src={require("../assets/images/available-seat.png").default}/>
+                        <label style={{color: '#000', fontFamily: 'Archivo', fontSize: 21, marginLeft: 10}}>Available Seat</label>
+                        <Image1 style={{width: 35, height: 35, marginLeft: 35}} src={require("../assets/images/selected-seat.png").default}/>
+                        <label style={{color: '#000', fontFamily: 'Archivo', fontSize: 21, marginLeft: 10}}>Selected Seat</label>
+                        <Image1 style={{width: 35, height: 35, marginLeft: 35}} src={require("../assets/images/unavailable-seat.png").default}/>
+                        <label style={{color: '#000', fontFamily: 'Archivo', fontSize: 21, marginLeft: 10}}>Unavailable Seat</label>
+                    </div>
+
+                    <div style={{display: 'flex', flexDirection: 'row'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', backgroundColor: '#fff', marginLeft: 50, height: 400, width: 250, border: '2px solid #F0A500', borderRadius: 5, alignSelf: 'center'}}>
+                            <div style={{display: 'flex', flexDirection: 'row', width: '100%', alignItems: 'center', marginTop: 20}}>
+                                <div style={{width: 40, height: 40, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F0A500', marginLeft: 20}}>
+                                    <label style={{fontFamily: 'Archivo', fontSize: 20, color: '#fff'}}>{booking.PassengerCount}</label>
+                                </div>
+                                <label style={{fontFamily: 'Archivo', color: '#000', fontSize: 25, marginLeft: 10}}>{firstName}</label>
+                            </div> 
+                            <div style={{display:'flex', flexDirection: 'row', marginLeft: 20, marginTop: 10}}>
+                                <label style={{fontFamily: 'Archivo'}}>Seats selected: </label>
+                                {renderText()}
+                            </div>
+                            <label style={{fontFamily: 'Archivo', marginLeft: 20, marginTop: 25, fontSize: 13}}>-Extra leg space</label>  
+                            <label style={{fontFamily: 'Archivo', marginLeft: 20, marginTop: 10, fontSize: 13}}>-Fine cuisine</label> 
+                            <label style={{fontFamily: 'Archivo', marginLeft: 20, marginTop: 10, fontSize: 13}}>-90 degrees recline</label> 
+                            <label style={{fontFamily: 'Archivo', marginLeft: 20, marginTop: 10, fontSize: 13}}>-Adjacent to restrooms</label>                         
+                            <Image1 style={{width: '100%', height: 120, marginTop: 'auto', borderRadius: 5}} src={require("../assets/images/seats.jpg").default}/> 
+                        </div>
+                        <Image4 style={{width: 1000, height: 500, marginLeft: 'auto', marginRight: 50, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                            {loading ? null : renderSeats()}
+                        </Image4>
+                    </div>
                 </div>
-                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', minHeight: 350}}>
-                    {loading ? null : renderSeats()}
-                </div>
-                <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35, marginTop: 50}}>
-                    <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Chosen Seats: {renderText()}</label>
-                    <Button1 disabled={currentSelection.length<booking.PassengerCount} onClick={() => handleSubmit()} loading={loading2} title={'Confirm'} style={{fontSize: 20, position: 'absolute', right: 50, width: 180, height: 40}}/>
+
+                <div style={{display: 'flex', flexDirection: 'row', height: 115, backgroundColor: '#000', marginBottom: -35, borderBottom: '1px solid rgba(60,60,60,1)', alignItems: 'center', marginTop: 20}}>
+                    <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50, width: 300}}>
+                        <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
+                            <label style={{fontFamily: 'Archivo', fontSize: 15, color: '#fff'}}>Seat Price:</label>
+                            <label style={{fontFamily: 'Archivo', fontSize: 15, marginLeft: 'auto', marginRight: 10, color: '#F0A500'}}>${flight.Price ? flight.Price : 'N/A'}</label>
+                        </div>
+                        <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginTop: 5}}>
+                            <label style={{fontFamily: 'Archivo', fontSize: 15, color: '#fff'}}>Passenger Count:</label>
+                            <label style={{fontFamily: 'Archivo', fontSize: 15, marginLeft: 'auto', marginRight: 10, color: '#F0A500'}}>{booking.PassengerCount}</label>
+                        </div>
+                        <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginTop: 15, alignItems: 'center'}}>
+                            <label style={{fontFamily: 'Archivo', fontSize: 15, color: '#fff'}}>Total Price:</label>
+                            <label style={{fontFamily: 'Archivo', fontSize: 19, marginLeft: 'auto', marginRight: 10, color: '#F0A500'}}>${flight.Price ? flight.Price*booking.PassengerCount : 'N/A'}</label>
+                        </div>
+                    </div>
+                    <div style={{display: 'flex', flexDirection: 'column', marginLeft: 'auto', width: 300, marginRight: 50}}>
+                        <Button1 disabled={currentSelection.length<booking.PassengerCount} onClick={() => handleSubmit()} loading={loading2} title={'Confirm'} style={{fontSize: 20, width: 180, height: 40, marginLeft: 'auto'}}/>
+                        <label style={{fontFamily: 'Archivo', fontSize: 12, color: '#fff', marginLeft: 'auto', marginTop: 10}}>Terms and conditions apply.</label>
+                    </div>
                 </div>
             </div>
       }
@@ -197,6 +272,12 @@ const Container = styled.div`
 `;
 
 const Image1 = styled.img`
+`;
+
+const Image4 = styled.div`
+  background-image: url(${require("../assets/images/plane-seats.png").default});
+  background-repeat: no-repeat;
+  background-size: 1000px 500px;
 `;
 
 export default EditSeatDepart;

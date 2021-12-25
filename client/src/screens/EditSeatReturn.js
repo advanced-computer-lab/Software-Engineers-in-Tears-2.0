@@ -7,7 +7,7 @@ import Footer from "../components/Footer";
 import Button1 from "../components/Button1";
 import Header from "../components/Header";
 
-function ChooseSeatDepart(props) {
+function EditSeatReturn(props) {
 
     const history = useHistory();
 
@@ -30,13 +30,14 @@ function ChooseSeatDepart(props) {
     const getData = async() => {
         const res = await axios.post('http://localhost:8000/getBookingByID/', {_id: bookingID})
         setBooking(res.data[0])
-        const res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res.data[0].departFlightID})
+        const res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res.data[0].returnFlightID})
         setFlight(res3.data[0])
-        const arr = res.data[0].departFlightSeats;
+        const arr = res.data[0].returnFlightSeats;
+        console.log(res.data[0].returnFlightSeats)
         setCurrentSelection(arr)
         const arr4 = res3.data[0].SeatsBooked;
-        for(let i = 0; i < res.data[0].departFlightSeats.length; i++){
-            if(res3.data[0].SeatsBooked.includes(res.data[0].departFlightSeats[i])){
+        for(let i = 0; i < res.data[0].returnFlightSeats.length; i++){
+            if(res3.data[0].SeatsBooked.includes(res.data[0].returnFlightSeats[i])){
                 arr4.splice(arr4.indexOf(arr[i]), 1)
             }
         }
@@ -52,7 +53,7 @@ function ChooseSeatDepart(props) {
             SeatsBooked: arr
         }
         const data2 = {
-            departFlightSeats: currentSelection
+            returnFlightSeats: currentSelection
         }
         axios.put('http://localhost:8000/updateBooking/' + bookingID, data2)
         .then(result=> {
@@ -61,7 +62,7 @@ function ChooseSeatDepart(props) {
         .catch(err => console.log(err));
         axios.put('http://localhost:8000/adminUpdateFlight/' + flight._id, data)
         .then(result=> {
-            history.push(`/booking/${bookingID}/seats/return`);
+            props.location.Payment ? history.push('/payyyy') : history.push('/profile/bookings');
             setLoading2(false);
         })
         .catch(err => console.log(err));
@@ -195,16 +196,6 @@ function ChooseSeatDepart(props) {
                         </div>
                         <div style={{width: '100%', height: 3, backgroundColor: '#F0A500', marginTop: 'auto'}}/>
                     </div>
-                    <div style={{display: 'flex', flexDirection: 'column', height: '100%', width: 170, opacity: 0.7}}>
-                        <div style={{display: 'flex', flexDirection: 'row', height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center'}}>
-                            <Image1 style={{width: 40, height: 40}} src={require("../assets/images/logo2.png").default}/>
-                            <div style={{display: 'flex', flexDirection: 'column', marginLeft: 5}}>
-                                <label style={{fontFamily: 'Archivo', fontSize: 15}}>{flight.To} - {flight.From}</label>
-                                <label style={{fontFamily: 'Archivo', fontSize: 12}}>{booking.returnFlightSeats.length} seats selected</label>
-                            </div>
-                        </div>
-                        <div style={{width: '100%', height: 3, backgroundColor: '#fff', marginTop: 'auto'}}/>
-                    </div>
                 </div>
 
                 <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -264,7 +255,7 @@ function ChooseSeatDepart(props) {
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'column', marginLeft: 'auto', width: 300, marginRight: 50}}>
-                        <Button1 disabled={currentSelection.length<booking.PassengerCount} onClick={() => handleSubmit()} loading={loading2} title={'Next Flight'} style={{fontSize: 20, width: 180, height: 40, marginLeft: 'auto'}}/>
+                        <Button1 disabled={currentSelection.length<booking.PassengerCount} onClick={() => handleSubmit()} loading={loading2} title={'Confirm'} style={{fontSize: 20, width: 180, height: 40, marginLeft: 'auto'}}/>
                         <label style={{fontFamily: 'Archivo', fontSize: 12, color: '#fff', marginLeft: 'auto', marginTop: 10}}>Terms and conditions apply.</label>
                     </div>
                 </div>
@@ -289,4 +280,4 @@ const Image4 = styled.div`
   background-size: 1000px 500px;
 `;
 
-export default ChooseSeatDepart;
+export default EditSeatReturn;

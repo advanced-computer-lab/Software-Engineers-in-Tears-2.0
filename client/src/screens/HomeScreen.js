@@ -49,6 +49,9 @@ function HomeScreen(props) {
         if(!res.data.isLoggedIn){
           localStorage.clear();
         }
+        else if(res.data.Type === 'administrator'){
+          history.push('/admin')
+        }
         else{
           setFirstName(localStorage.getItem('firstName'))
         }
@@ -66,7 +69,7 @@ function HomeScreen(props) {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [handle]);
+  }, [handle, history]);
   
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -222,7 +225,7 @@ function HomeScreen(props) {
             null}
             {selected === 'Manage' ?
               <div style={{height: 160, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                <label style={{fontFamily: 'Archivo', fontSize: 17, color: hover5, cursor: 'pointer', textDecorationLine: 'underline', marginLeft: 40}} onMouseEnter={() => setHover5('rgba(207,117,0,1)')} onMouseLeave={() => setHover5('rgba(240,165,0,1)')}>Login to view your trips</label>
+                <label onClick={() => firstName ? history.push('/profile/bookings') : null} style={{fontFamily: 'Archivo', fontSize: 17, color: hover5, cursor: 'pointer', textDecorationLine: 'underline', marginLeft: 40}} onMouseEnter={() => setHover5('rgba(207,117,0,1)')} onMouseLeave={() => setHover5('rgba(240,165,0,1)')}>{firstName ? 'View your trips' : 'Login to view your trips'}</label>
                 <div style={{display: 'flex', flexDirection: 'row', marginTop: 20}}>
                   <input style={{height: 50, width: 250, fontSize: 20, marginLeft: 40}} placeholder="Last Name"/>
                   <input style={{height: 50, width: 250, fontSize: 20, marginLeft: 20}} placeholder="Booking Number"/>

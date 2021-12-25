@@ -47,8 +47,9 @@ exports.login = (req, res) => {
                     token: token,
                     id : dbUser._id,
                     First_Name : dbUser.First_Name,
-                    Email: dbUser.Email
+                    Email: dbUser.Email,
                     
+                    Type: dbUser.Type 
                 })
               }
             )
@@ -103,7 +104,7 @@ exports.createUser = async (req, res)=>{
   const Telephone_Number= req.body.Telephone_Number;
   const Passport_Number= req.body.Passport_Number;
   const Password= await bcrypt.hash(req.body.Password, 10);
-  const Username= req.body.Username.toLowerCase();
+  const Username= req.body.Username;
   const Type= req.body.Type;
   const newUser= new Users({
     First_Name,

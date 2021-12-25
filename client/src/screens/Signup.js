@@ -46,7 +46,12 @@ function Signup(props) {
     axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
       .then(res => {
         if(res.data.isLoggedIn){
-          history.push('/')
+          if(res.data.Type === 'administrator'){
+            history.push('/admin')
+          }
+          else{
+            history.push('/')
+          }
         }
       })
       .catch(err => {
@@ -61,8 +66,7 @@ function Signup(props) {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handle, history]);
   
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,7 +158,7 @@ function Signup(props) {
         Telephone_Number: phoneNumber,
         Passport_Number: passportNumber,
         Password: password,
-        Username: username,
+        Username: username.trim(),
         Type: 'Customer',
       })
       .then(res => {

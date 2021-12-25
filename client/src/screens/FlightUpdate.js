@@ -47,11 +47,11 @@ class FlightUpdateScreen extends Component {
     axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
       .then(res => {
         if(res.data.isLoggedIn && res.data.Type !== 'administrator'){
-          this.history.push('/')
+          this.props.history.push('/')
         }
-        else{
+        else if(!res.data.isLoggedIn){
           localStorage.clear()
-          this.history.push('/')
+          this.props.history.push('/')
         }
       })
       .catch(err => {
@@ -197,7 +197,7 @@ class FlightUpdateScreen extends Component {
           </Modal.Footer>
         </Modal>
         <Container style={{ minHeight: "100%", opacity: this.state.updateModal === true ? 0.5 : 1, pointerEvents: this.state.updateModal === true ? 'none' : 'initial' }}>
-        <AdminHeader />
+        <AdminHeader title={localStorage.getItem('firstName')}/>
           <div style={{ height: 80, backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <text style={{ fontFamily: 'Archivo Black', color: '#f4f4f4', fontSize: 30, marginLeft: 50 }}>Update Flight</text>
             <Button1
