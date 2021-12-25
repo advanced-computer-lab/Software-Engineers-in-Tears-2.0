@@ -200,7 +200,7 @@ function ProfileBookings(props) {
           </div>
           :
           <div style={{ display: 'flex', flexDirection: 'column', width: window.innerWidth-200, marginLeft: 50}}>
-            <label style={{ color: '#000000', fontFamily: 'Archivo', fontSize: 24, textAlign: 'center', marginTop: 20, marginRight: 180}}> Your Reservations </label>
+            {bookings.length > 0 ? <label style={{ color: '#000000', fontFamily: 'Archivo', fontSize: 24, textAlign: 'center', marginTop: 20, marginRight: 180}}> Your Reservations </label> : null}
             {
               bookings.length > 0 ?
                 bookings.map((onebooking) => {
@@ -210,7 +210,11 @@ function ProfileBookings(props) {
                   );
                 })
                 :
-                null
+                <div style={{display: 'flex', flexDirection: 'column', height: 300, justifyContent: 'center'}}>
+                  <Image src={require("../assets/images/i.png").default} style={{width: 60, height: 60, alignSelf: 'center', marginRight: 180, marginTop: 20}}/>
+                  <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 22, textAlign: 'center', marginTop: 20, marginRight: 180}}> No Reservations </label> 
+                  <label style={{ color: '#000000', fontFamily: 'Archivo', fontSize: 24, textAlign: 'center', marginTop: 20, marginRight: 180}}>You currently have no reservations to view.</label> 
+                </div>
             }
           </div>
         }
@@ -222,6 +226,9 @@ function ProfileBookings(props) {
 }
 
 const Container = styled.div`
+`;
+
+const Image = styled.img`
 `;
 
 export default ProfileBookings;

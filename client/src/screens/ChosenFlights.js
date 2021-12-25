@@ -77,7 +77,7 @@ function ChosenFlights(props) {
             .then(result=> {
           })
             .catch(err => console.log(err));
-        })
+          })
         .catch(err =>{
           console.log(err);
         })

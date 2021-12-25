@@ -20,7 +20,6 @@ function ModifyReturnBookingResults(props) {
 
     const [returnFlights, setReturnFlights] = useState([]);
     const [selectedReturn, setSelectedReturn] = useState('');
-    const [viewReturnDetailsID, setViewReturnDetailsID] = useState();
   
     const [firstName, setFirstName] = useState('');
   
