@@ -52,7 +52,7 @@ function ForgotPassword(props) {
     else{
         const res = await axios.post('http://localhost:8000/getUserByID/', {Username: username})
         if(res.data.length > 0){
-            var emailText = `Please click the following link to change your password: localhost:3000/forgotpassword/${res.data[0]._id}`;
+            var emailText = `Please click the following link to change your password: http://localhost:3000/forgotpassword/${res.data[0]._id}`;
             let mailOptions = {
             from: 'dunesairlines@gmail.com',
             to: res.data[0].Email,
