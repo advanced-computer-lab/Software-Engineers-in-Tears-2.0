@@ -113,7 +113,7 @@ function AdminFlights(props) {
                 <td style={{ textAlign: 'center' }}>{flight.Flight_Date!=null?flight.Flight_Date.substring(0,10):null}</td>
                 <td style={{ textAlign: 'center' }}>{flight.Cabin}</td>
                 <td style={{ textAlign: 'center' }}>{flight.Seats_Available_on_Flight}</td>
-                <td style={{ display: 'flex', marginLeft: 70, marginTop: 8 }}><Button1 title={'View Flight'} style={{ width: 160, height: 35 }} /></td>
+                {/* <td style={{ display: 'flex', marginLeft: 70, marginTop: 8 }}><Button1 title={'View Flight'} style={{ width: 160, height: 35 }} /></td> */}
                 <td><Button1 title={'Update'} style={{ width: 120, height: 35 }} onClick={() => history.push(`/admin/update/${flight._id}`)} /></td>
                 <td><Button4 title={'Delete'} style={{ width: 120, height: 35 }} onClick={() => { setDeleteModal(true); setToDelete(flight._id) }} /></td>
               </tr>
