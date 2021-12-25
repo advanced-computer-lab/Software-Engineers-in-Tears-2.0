@@ -6,7 +6,7 @@
 for flights in order to travel to different countries and sometimes domestic cities.We offer only round trips. No one way tickets.<br />
 
 <br> This project was implemented using MERN stack technologies in JavaScript. The project architecture is MVC style. Backend requests are handled in App.js file and the backend route controllers are in the Routes folder. All frontend styling and functionalities are in the client folder. Database Schemas are handled in the Models folder. <br />
-<br>To run the project on VS code, first clone our repository "git clone https://github.com/advanced-computer-lab/Software-Engineers-in-Tears-2.0.gitmake".Then make sure you install the necessary files or softwares by running "npm i" in your console. Afterwards, split your terminal and run backend by running "node App.js" in console. To run the front end, run "cd client/src", then run "npm start" in the second console.<br />
+<br>To run the project on VS code, first clone our repository "git clone https://github.com/advanced-computer-lab/Software-Engineers-in-Tears-2.0.git". Then make sure you install the necessary files or softwares by running "npm i" in your console. Afterwards, split your terminal and run backend by running "node App.js" in console. To run the front end, run "cd client/src", then run "npm start" in the second console.<br />
 <br> Emailing API used is nodemailer (https://nodemailer.com/about/)<br/>
 <br> Payment by card was handled using Stripe API(https://thushaltk.medium.com/how-to-add-stripe-payment-gateway-to-your-mern-project-82f34691dc57)<br/>
 <br> Authentication was handled by jsonWebTokens (https://jwt.io/)<br/>
