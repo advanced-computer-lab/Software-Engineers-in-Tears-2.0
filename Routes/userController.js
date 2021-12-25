@@ -89,6 +89,21 @@ exports.changePassword= (req, res)=>{
     })
 }
 
+exports.resetPassword= (req, res)=>{
+  const new_password=req.body.newPassword;
+  Users.findById(req.body.userID)
+    .then(dbUser => {
+            //now check new password and confirm if match
+              bcrypt.hash(new_password,10)
+              .then(hashedPass=>{
+                dbUser.Password = hashedPass;
+                dbUser.save()
+                res.send({message: 'Success'})
+              })
+        })
+    }
+
+
 exports.updateUser = (req, res)=>{
   Users.findByIdAndUpdate(req.params.userID, req.body)
   .then(result => {

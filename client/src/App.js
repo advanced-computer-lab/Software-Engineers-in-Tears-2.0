@@ -24,6 +24,8 @@ import SearchNewDepart from './screens/SearchNewDepart';
 import SearchResultsDepart from './screens/SearchResultsDepart';
 import ModifyReturnBooking from './screens/ModifyReturnBooking';
 import ModifyReturnBookingResults from './screens/ModifyReturnBookingResults';
+import ForgotPassword from './screens/ForgotPassword';
+import ResetPassword from './screens/ResetPassword';
 
 class App extends Component {
   render() {
@@ -43,6 +45,8 @@ class App extends Component {
           <Route exact path='/searchDepart' component={SearchNewDepart} />
           <Route exact path='/searchReturn' component={ModifyReturnBooking} />
           <Route exact path='/profile/home' component={ProfileHome} />
+          <Route exact path='/forgotpassword' component={ForgotPassword} />
+          <Route exact path='/forgotpassword/:id' component={ResetPassword} />
           <Route exact path='/profile/bookings' component={ProfileBookings} />
           <Route exact path='/profile/changepassword' component={ChangePassword} />
           <Route exact path='/profile/account' component={UserUpdate} />

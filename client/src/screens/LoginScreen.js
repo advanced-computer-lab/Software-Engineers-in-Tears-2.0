@@ -11,7 +11,6 @@ function LoginScreen(props) {
 
   const history = useHistory();
 
-  const [hover1, setHover1] = useState('rgba(240,165,0,1)');
   const [hover2, setHover2] = useState('rgba(240,165,0,1)');
 
   const [loading, setLoading] = useState(false);
@@ -105,9 +104,8 @@ function LoginScreen(props) {
               <label style={{color: 'red', fontFamily: 'Archivo', fontSize: 17}}>Invalid Username or Password</label>
             </div> : null}
             <input style={{height: 50, width: '70%', marginTop: 20, fontSize: 20, marginLeft: 40}} placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-            <label style={{fontFamily: 'Archivo', fontSize: 18, color: hover1, cursor: 'pointer', marginTop: 10, textDecorationLine: 'underline', marginLeft: 40}} onMouseEnter={() => setHover1('rgba(207,117,0,1)')} onMouseLeave={() => setHover1('rgba(240,165,0,1)')}>Forgot your email?</label>
             <input style={{height: 50, width: '70%', marginTop: 20, fontSize: 20, marginLeft: 40}} placeholder="Password" type={'password'} value={password} onChange={(e) => setPassword(e.target.value)}/>
-            <label style={{fontFamily: 'Archivo', fontSize: 18, color: hover2, cursor: 'pointer', marginTop: 10, textDecorationLine: 'underline', marginLeft: 40}} onMouseEnter={() => setHover2('rgba(207,117,0,1)')} onMouseLeave={() => setHover2('rgba(240,165,0,1)')}>Forgot your password?</label>
+            <label style={{fontFamily: 'Archivo', fontSize: 18, color: hover2, cursor: 'pointer', marginTop: 10, textDecorationLine: 'underline', marginLeft: 40}} onMouseEnter={() => setHover2('rgba(207,117,0,1)')} onMouseLeave={() => setHover2('rgba(240,165,0,1)')} onClick={() => history.push('/forgotpassword')}>Forgot your password?</label>
             <Button1 loading={loading} style={{height: 50, width: '70%', marginTop: 20, marginLeft: 40}} title={'Log in'} onClick={handle}/>
           </div>
           <div style={{width: 3, height: '85%', backgroundColor: '#696969'}}/>

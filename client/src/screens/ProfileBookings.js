@@ -248,7 +248,7 @@ function ProfileBookings(props) {
                 bookings.map((onebooking) => {
                   var TPrice = (departFlights[onebooking.departFlightID].Price * onebooking.PassengerCount) + (returnFlights[onebooking.returnFlightID].Price * onebooking.PassengerCount);
                   return (
-                    <BookingCard 
+                    <BookingCard
                     emailLoading={emailLoading}
                     EmailItinerary={()=>emailItinerary(onebooking, departFlights[onebooking.departFlightID], returnFlights[onebooking.returnFlightID])}
                     DeleteBooking={() => {setCancelModal(true); setToDelete(onebooking)}} 
