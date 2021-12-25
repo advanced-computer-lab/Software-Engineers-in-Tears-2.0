@@ -123,8 +123,7 @@ function UserSearch(props) {
               <Image src={require("../assets/images/cabin.png").default} style={{height: 30, width: 30, marginLeft: 20}}/>
               <label style={{fontFamily: 'Archivo', fontSize: 20}}>{flight.Cabin}</label>
               <Image src={require("../assets/images/cal.png").default} style={{height: 20, width: 20, marginLeft: 20}}/>
-              <label style={{fontFamily: 'Archivo', fontSize:20, marginLeft:5}}>{flight.Flight_Date?(flight.Flight_Date.substring(0,7)):'N/A'}</label>
-              <label style={{fontFamily: 'Archivo', fontSize:20,marginRight:10,marginLeft:0,textOrientation:'sideways'}}>{flight.Flight_Date!=null?(flight.Flight_Date.substring(7,10)):null}</label>
+              <label style={{fontFamily: 'Archivo', fontSize:20, marginLeft:5}}>{flight.Flight_Date?(flight.Flight_Date.substring(0,10)):'N/A'}</label>
               <label style={{fontFamily: 'Archivo', fontSize: 20, marginLeft:20}}>#{flight.FlightNumber?flight.FlightNumber:'N/A'}</label>
               <Image src={require("../assets/images/lug5.png").default} style={{height: 30, width: 30, marginLeft: 20}}/>
               <label style={{fontFamily: 'Archivo'}}>{flight.Baggage_Allowance?flight.Baggage_Allowance:'N/A'}Kg</label>
@@ -153,8 +152,7 @@ function UserSearch(props) {
               <Image src={require("../assets/images/cabin.png").default} style={{height: 30, width: 30, marginLeft: 20}}/>
               <label style={{fontFamily: 'Archivo', fontSize: 20}}>{flight.Cabin}</label>
               <Image src={require("../assets/images/cal.png").default} style={{height: 20, width: 20, marginLeft: 20}}/>
-              <label style={{fontFamily: 'Archivo', fontSize:20, marginLeft:5}}>{flight.Flight_Date?(flight.Flight_Date.substring(0,7)):'N/A'}</label>
-              <label style={{fontFamily: 'Archivo', fontSize:20,marginRight:10,marginLeft:0,textOrientation:'sideways'}}>{flight.Flight_Date!=null?(flight.Flight_Date.substring(7,10)):null}</label>
+              <label style={{fontFamily: 'Archivo', fontSize:20, marginLeft:5}}>{flight.Flight_Date?(flight.Flight_Date.substring(0,10)):'N/A'}</label>
               <label style={{fontFamily: 'Archivo', fontSize: 20, marginLeft:20}}>#{flight.FlightNumber?flight.FlightNumber:'N/A'}</label>
               <Image src={require("../assets/images/lug5.png").default} style={{height: 30, width: 30, marginLeft: 20}}/>
               <label style={{fontFamily: 'Archivo'}}>{flight.Baggage_Allowance?flight.Baggage_Allowance:'N/A'}Kg</label>

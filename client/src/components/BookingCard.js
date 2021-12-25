@@ -19,6 +19,11 @@ function BookingCard(props) {
 
 
   function handle(){
+    localStorage.setItem('From', props.DepartFlight.From)
+    localStorage.setItem('To', props.DepartFlight.To)
+    localStorage.setItem('PassCount', props.Booking.PassengerCount)
+    localStorage.setItem('DepartDate', props.DepartFlight.Flight_Date)
+    localStorage.setItem('ReturnDate', props.ReturnFlight.Flight_Date)
     history.push({
       pathname: '/searchDepart',
       DepartFlight: props.DepartFlight,
@@ -28,6 +33,11 @@ function BookingCard(props) {
    }
 
    function handleReturn(){
+    localStorage.setItem('From', props.ReturnFlight.From)
+    localStorage.setItem('To', props.ReturnFlight.To)
+    localStorage.setItem('PassCount', props.Booking.PassengerCount)
+    localStorage.setItem('DepartDate', props.DepartFlight.Flight_Date)
+    localStorage.setItem('ReturnDate', props.ReturnFlight.Flight_Date)
     history.push({
       pathname: '/searchReturn',
       DepartFlight: props.DepartFlight,

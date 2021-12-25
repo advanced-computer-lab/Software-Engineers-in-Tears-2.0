@@ -11,10 +11,10 @@ function ModifyReturnBooking(props){
     const history = useHistory();
     const [fromDate, setFromDate] = useState('');
     const [cabin, setCabin] = useState('');
-    const fromDateDep = props.location.DepartFlight.Flight_Date;
-    const pcount = props.location.Booking.PassengerCount;
-    const from = props.location.ReturnFlight.From;
-    const to = props.location.ReturnFlight.To;
+    const fromDateDep = localStorage.getItem('DepartDate');
+    const pcount = localStorage.getItem('PassCount');
+    const from = localStorage.getItem('From')
+    const to = localStorage.getItem('To')
     
     useEffect(() => {
         axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
@@ -57,7 +57,7 @@ function ModifyReturnBooking(props){
         }
         else{
           history.push({
-            pathname: `/searchReturn/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? props.location.ReturnFlight.Flight_Date : fromDate}/editReturn`,
+            pathname: `/searchReturn/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? localStorage.getItem('ReturnDate') : fromDate}/editReturn`,
             DepartFlight: props.location.DepartFlight,
             ReturnFlight: props.location.ReturnFlight,
             Booking: props.location.Booking

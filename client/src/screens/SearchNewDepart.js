@@ -11,10 +11,10 @@ function SearchNewDepart(props){
     const history = useHistory();
     const [fromDate, setFromDate] = useState('');
     const [cabin, setCabin] = useState('');
-    const toDate = props.location.ReturnFlight.Flight_Date;
-    const pcount = props.location.Booking.PassengerCount;
-    const from = props.location.DepartFlight.From;
-    const to = props.location.DepartFlight.To;
+    const toDate = localStorage.getItem('ReturnDate');
+    const pcount = localStorage.getItem('PassCount');
+    const from = localStorage.getItem('From')
+    const to = localStorage.getItem('To')
     
     useEffect(() => {
         axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
@@ -57,7 +57,7 @@ function SearchNewDepart(props){
         }
         else{
           history.push({
-            pathname: `/searchDepart/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? props.location.DepartFlight.Flight_Date : fromDate}/editDepart`,
+            pathname: `/searchDepart/from=${from}/to=${to}/cabin=${cabin === '' ? null : cabin}/p=${pcount}/fromDate=${fromDate === '' ? localStorage.getItem('DepartDate') : fromDate}/editDepart`,
             DepartFlight: props.location.DepartFlight,
             ReturnFlight: props.location.ReturnFlight,
             Booking: props.location.Booking
