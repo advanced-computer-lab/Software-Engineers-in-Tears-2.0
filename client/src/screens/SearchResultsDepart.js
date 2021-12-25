@@ -127,7 +127,7 @@ function SearchResultsDepart(props) {
                        <label style={{fontFamily: 'Archivo',fontSize: 20,marginLeft:-10}}>#{flight.FlightNumber?flight.FlightNumber:'N/A'}</label>
                        <Image src={require("../assets/images/lug5.png").default} style={{height: 24, width: 30, marginLeft: 30}}/>
                        <label style={{fontFamily: 'Archivo', marginRight: 20}}>{flight.Baggage_Allowance?flight.Baggage_Allowance:'N/A'}</label>
-                       <label style={{fontFamily: 'Archivo', marginRight:20,marginLeft:10}}><label style={{fontFamily: 'Archivo', fontWeight:'bold',fontSize: 20}}>$</label>{flight.Price?flight.Price:'N/A'}</label>
+                       <label style={{fontFamily: 'Archivo', marginRight:20,marginLeft:10}}><label style={{fontFamily: 'Archivo', fontWeight:'bold',fontSize: 20}}>$</label>{flight.Price?( flight.Price-props.location.DepartFlight.Price):'N/A'}</label>
    
    
                        <label style={{fontFamily: 'Archivo', marginLeft:10,marginRight:-10,textAlignVertical: 'top'}}>{flight.DepartureTime?flight.DepartureTime:'N/A'}</label>
