@@ -98,10 +98,10 @@ function SearchResultsDepart(props) {
                 <Button2 style={{width: 250, height: 50, marginTop: 20}} title={'Back to Profile Bookings'} onClick={() => history.push('/profile/bookings')}/>
             </div>
             :
-          <div style={{width: '100%', display: 'flex', flexDirection: 'column',alignItems: 'center'}}>
-          <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)'}}>
-            <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25}}>Choose Depart Flight</label>
-          </div>
+            <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
+            <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)'}}>
+              <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25}}>Choose Depart Flight</label>
+            </div>
           
           {departFlights.map((flight) => {
             return(
