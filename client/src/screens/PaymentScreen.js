@@ -18,6 +18,12 @@ class PaymentScreen extends Component {
             booking: null,
             flight1: null,
             flight2: null,
+            newFlight1: null,
+            newFlight2: null,
+            selectedDepartSeats: null,
+            selectedReturnSeats: null,
+            paymentAmount: 0,
+            loading: false,
             payLoading: true,
             userID: '',
             email: '',
@@ -52,6 +58,29 @@ class PaymentScreen extends Component {
                     this.setState({error:true})
                 }
                 console.log(res);
+
+                if(this.props.location.state['paymentAmount'] && this.props.location.state['paymentAmount']>0){
+                    this.setState({paymentAmount:  this.props.location.state['paymentAmount']})
+                }
+                
+                if(this.props.location.state['departFlightID']){
+                    axios.post('http://localhost:8000/adminsearchflights', { _id: this.props.location.state['departFlightID'] })
+                    .then(f => this.setState({
+                        newFlight1: f.data[0],
+                        selectedDepartSeats: this.props.location.state.selectedDepartSeats
+                    }))
+                    .catch(err=>console.log(err))
+                }
+
+                if(this.props.location.state['returnFlightID']){
+                    axios.post('http://localhost:8000/adminsearchflights', { _id: this.props.location.state['returnFlightID'] })
+                    .then(f => this.setState({
+                        newFlight2: f.data[0],
+                        selectedReturnSeats: this.props.location.state.selectedReturnSeats
+                    }))
+                    .catch(err=>console.log(err))
+                }
+
                 axios.post('http://localhost:8000/adminsearchflights', { _id: res.data[0].departFlightID })
                     .then(f1 => {
                         this.setState({ flight1: f1.data[0] });
@@ -72,7 +101,8 @@ class PaymentScreen extends Component {
     }
 
     tokenHandler = (token) =>{
-        const amount = (this.state.flight1['Price'] + this.state.flight2['Price'])*this.state.booking['departFlightSeats'].length;
+        this.setState({loading: true});
+        const amount = this.state.paymentAmount||(this.state.flight1['Price'] + this.state.flight2['Price'])*this.state.booking['departFlightSeats'].length;
         console.log(amount);
         // const amount = 20;
         console.log('in token handler')
@@ -80,13 +110,13 @@ class PaymentScreen extends Component {
         .then(res=>{
 
             console.log('in .then of payment')
-
+            if(!this.state.newFlight1 && !this.state.newFlight2){
             var emailString = `You have successfully reserved and paid $${amount} for your round trip from ${this.state.flight1.From} to ${this.state.flight1.To} and back!
         Your booking ID is ${this.state.booking._id}
         Departure Fight:
         From: ${this.state.flight1.From} To: ${this.state.flight1.To}
-        Takeoff: ${this.state.flight1.Flight_Date} at ${this.state.flight1.DepartureTime}
-        Landing: ${this.state.flight1.Arrival_Date} at ${this.state.flight1.ArrivalTime}
+        Takeoff: ${this.state.flight1.Flight_Date.toString().substring(0, 10)} at ${this.state.flight1.DepartureTime}
+        Landing: ${this.state.flight1.Arrival_Date.toString().substring(0, 10)} at ${this.state.flight1.ArrivalTime}
         Flight Number: ${this.state.flight1.FlightNumber}
         Number of Passengers: ${this.state.booking.departFlightSeats.length}
         Cabin: ${this.state.flight1.Cabin}
@@ -95,8 +125,8 @@ class PaymentScreen extends Component {
             
         Return Flight:
         From: ${this.state.flight2.From} To: ${this.state.flight2.To}
-        Takeoff: ${this.state.flight2.Flight_Date} at ${this.state.flight2.DepartureTime}
-        Landing: ${this.state.flight2.Arrival_Date} at ${this.state.flight2.ArrivalTime}
+        Takeoff: ${this.state.flight2.Flight_Date.toString().substring(0, 10)} at ${this.state.flight2.DepartureTime}
+        Landing: ${this.state.flight2.Arrival_Date.toString().substring(0, 10)} at ${this.state.flight2.ArrivalTime}
         Flight Number: ${this.state.flight2.FlightNumber}
         Number of Passengers: ${this.state.booking.returnFlightSeats.length}
         Cabin: ${this.state.flight2.Cabin}
@@ -105,7 +135,6 @@ class PaymentScreen extends Component {
             
         Please use the following link to access your reservations.
         http://localhost:3000/profile/bookings`; 
-            var div = document.createElement('div');
             let mailOptions = {
                 from: 'dunesairlines@gmail.com',
                 to: token.email,
@@ -118,6 +147,7 @@ class PaymentScreen extends Component {
             console.log(res.data);
             })
             .catch(err => console.log(err));
+        
 
             axios.post('http://localhost:8000/getUserByID', {_id: this.state.userID} )
             .then(user =>{
@@ -142,6 +172,57 @@ class PaymentScreen extends Component {
                 .catch(err => console.log(err));
 
                 })
+                .catch(err => console.log(err));
+            }
+            else{ // if either the depart or the return flight was modified
+                if(this.state.newFlight1){
+                    const res = this.state.flight1;
+                    const arr = res.SeatsBooked;
+                    console.log(arr);
+                    console.log(this.state.booking.departFlightSeats)
+                    for(let i = 0; i < this.state.booking.departFlightSeats.length; i++){
+                        arr.splice(arr.indexOf(this.state.booking.departFlightSeats[i]), 1);
+                    }
+                    var promiseArr = [];
+                    promiseArr.push(axios.put('http://localhost:8000/adminUpdateFlight/'+this.state.flight1._id, {SeatsBooked: arr}).catch(err=>console.log(err)));
+                    promiseArr.push(axios.put('http://localhost:8000/adminUpdateFlight/'+this.state.newFlight1._id, {$push:{SeatsBooked:this.state.selectedDepartSeats}}).catch(err=>console.log(err)));
+                    promiseArr.push(axios.put('http://localhost:8000/updateBooking/'+this.state.booking._id, {departFlightID: this.state.newFlight1._id, departFlightSeats: this.state.selectedDepartSeats}).catch(err=>console.log(err)));
+
+                    Promise.all(promiseArr)
+                    .then(results =>{
+                        var newBooking = {...this.state.booking}
+                        newBooking.departFlightSeats = this.state.selectedDepartSeats;
+                        this.props.history.push({
+                            pathname:`/iternary/${this.state.newFlight1._id}/${this.state.flight2._id}/${this.state.selectedDepartSeats.length}`,
+                            booking: newBooking
+                        })
+                    })
+                }
+                else if(this.state.newFlight2){
+                    const res = this.state.flight2;
+                    const arr = res.SeatsBooked;
+                    console.log(arr);
+                    console.log(this.state.booking.returnFlightSeats)
+                    for(let i = 0; i < this.state.booking.returnFlightSeats.length; i++){
+                        arr.splice(arr.indexOf(this.state.booking.returnFlightSeats[i]), 1);
+                    }
+                    var promiseArr = [];
+                    promiseArr.push(axios.put('http://localhost:8000/adminUpdateFlight/'+this.state.flight2._id, {SeatsBooked: arr}).catch(err=>console.log(err)));
+                    promiseArr.push(axios.put('http://localhost:8000/adminUpdateFlight/'+this.state.newFlight2._id, {$push:{SeatsBooked:this.state.selectedReturnSeats}}).catch(err=>console.log(err)));
+                    promiseArr.push(axios.put('http://localhost:8000/updateBooking/'+this.state.booking._id, {returnFlightID: this.state.newFlight2._id, returnFlightSeats: this.state.selectedReturnSeats}).catch(err=>console.log(err)));
+
+                    Promise.all(promiseArr)
+                    .then(results =>{
+                        var newBooking = {...this.state.booking}
+                        newBooking.returnFlightSeats = this.state.selectedReturnSeats;
+                        this.props.history.push({
+                            pathname:`/iternary/${this.state.flight1._id}/${this.state.newFlight2._id}/${this.state.selectedReturnSeats.length}`,
+                            booking: newBooking
+                        })
+                    })
+                }
+            }
+
         })
     }
 
@@ -170,16 +251,18 @@ class PaymentScreen extends Component {
                     )} /> */}
                 <div style={{display:'flex', flexDirection:'column', alignItems:'center', marginTop:50, marginBottom:50}}>
                 {
-                this.state.flight1 && this.state.flight2?
+                this.state.flight1 && this.state.flight2 && !this.state.loading?
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent:'center', alignItems:'center'}}>
                     <div style={{marginLeft:200, width:'100%'}}>
                 <BookingCard
                     style={{marginLeft:300, width:window.innerWidth}}
                     Booking={this.state.booking}
                     beforePayment={true}
-                    DepartFlight={this.state.flight1}
-                    ReturnFlight={this.state.flight2}
-                    Price={(this.state.flight1['Price'] + this.state.flight2['Price'])*this.state.booking['departFlightSeats'].length}
+                    DepartFlight={this.state.newFlight1||this.state.flight1}
+                    ReturnFlight={this.state.newFlight2||this.state.flight2}
+                    DepartFlightSeats={this.state.selectedDepartSeats}
+                    ReturnFlightSeats={this.state.selectedReturnSeats}
+                    Price={this.state.paymentAmount||(this.state.flight1['Price'] + this.state.flight2['Price'])*this.state.booking['departFlightSeats'].length}
                     DeleteBooking={()=>{
                         axios.delete("http://localhost:8000/deleteBooking/"+ this.state.booking._id, this.state.booking)
                         .then(res=>{

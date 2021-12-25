@@ -20,6 +20,7 @@ function SearchResultsDepart(props) {
 
     const [departFlights, setDepartFlights] = useState([]);
     const [selectedDepart, setSelectedDepart] = useState('');
+    const [paymentAmount, setPaymentAmount] = useState(0);
   
     const from = useState(props.match.params.from)[0];
     const to = useState(props.match.params.to)[0];
@@ -66,6 +67,7 @@ function SearchResultsDepart(props) {
 
     const handle =  async() => {
       setLoading2(true)
+      if(paymentAmount <= 0){
       const res = await axios.post('http://localhost:8000/adminsearchflights/', {_id: props.location.DepartFlight._id})
       const arr = res.data[0].SeatsBooked;
       console.log(arr);
@@ -75,9 +77,11 @@ function SearchResultsDepart(props) {
       }
       await axios.put('http://localhost:8000/adminUpdateFlight/'+props.location.DepartFlight._id, {SeatsBooked: arr})
       await axios.put('http://localhost:8000/updateBooking/'+props.location.Booking._id, {departFlightID: selectedDepart, departFlightSeats: []})
+    }
       history.push({
         pathname: `/booking/${props.location.Booking._id}/seats/depart/edit`,
-        Payment: true
+        departFlightID: selectedDepart,
+        paymentAmount: paymentAmount
       });
     }
   
@@ -139,7 +143,7 @@ function SearchResultsDepart(props) {
                     {durationString(flight.Trip_Duration)}</label>
    
                     <div style={{alignItems:'center',width:'50%'}}>
-                 {selectedDepart === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right:50 }} onClick={()=>{setSelectedDepart(''); }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute',right:50  }}  onClick={() => {setSelectedDepart(flight._id);}}/>}
+                 {selectedDepart === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right:50 }} onClick={()=>{setSelectedDepart(''); setPaymentAmount(0) }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute',right:50  }}  onClick={() => {setSelectedDepart(flight._id); setPaymentAmount(flight.Price?( flight.Price-props.location.DepartFlight.Price):0)}}/>}
                  </div>
    
                    </div>

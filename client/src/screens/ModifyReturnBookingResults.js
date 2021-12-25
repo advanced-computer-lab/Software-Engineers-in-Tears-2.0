@@ -21,7 +21,7 @@ function ModifyReturnBookingResults(props) {
     const [returnFlights, setReturnFlights] = useState([]);
     const [selectedReturn, setSelectedReturn] = useState('');
     const [viewReturnDetailsID, setViewReturnDetailsID] = useState();
-  
+    const [paymentAmount, setPaymentAmount] = useState(0);
     const [firstName, setFirstName] = useState('');
   
     const from = useState(props.match.params.from)[0];
@@ -72,6 +72,7 @@ function ModifyReturnBookingResults(props) {
 
     const handle =  async() => {
       setLoading2(true)
+      if(paymentAmount <= 0){
       const res = await axios.post('http://localhost:8000/adminsearchflights/', {_id: props.location.ReturnFlight._id})
       const arr = res.data[0].SeatsBooked;
       console.log(arr);
@@ -81,9 +82,11 @@ function ModifyReturnBookingResults(props) {
       }
       await axios.put('http://localhost:8000/adminUpdateFlight/'+props.location.ReturnFlight._id, {SeatsBooked: arr})
       await axios.put('http://localhost:8000/updateBooking/'+props.location.Booking._id, {returnFlightID: selectedReturn, returnFlightSeats: []})
+    }
       history.push({
         pathname: `/booking/${props.location.Booking._id}/seats/return/edit`,
-        Payment: true
+        returnFlightID: selectedReturn,
+        paymentAmount: paymentAmount
       });
     }
   
@@ -143,7 +146,7 @@ function ModifyReturnBookingResults(props) {
                                {durationString(flight.Trip_Duration)}</label>
               
                                <div style={{alignItems:'center',width:'50%'}}>
-                            {selectedReturn === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right:50 }} onClick={()=>{setSelectedReturn('');  }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50  }}  onClick={() => {setSelectedReturn(flight._id);}}/>}
+                            {selectedReturn === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right:50 }} onClick={()=>{setSelectedReturn(''); setPaymentAmount(0) }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50  }}  onClick={() => {setSelectedReturn(flight._id);setPaymentAmount(flight.Price?flight.Price -props.location.ReturnFlight.Price:0)}}/>}
                             
               </div>
                               </div>
