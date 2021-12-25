@@ -20,6 +20,7 @@ function EditSeatDepart(props) {
     const [booking, setBooking] = useState({});
 
     const firstName = localStorage.getItem("firstName");
+    const email = localStorage.getItem('userEmail');
 
     useEffect(() => {
         setLoading(true)
@@ -30,7 +31,7 @@ function EditSeatDepart(props) {
     const getData = async() => {
         const res = await axios.post('http://localhost:8000/getBookingByID/', {_id: bookingID})
         setBooking(res.data[0])
-        const res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: res.data[0].departFlightID})
+        const res3 = await axios.post('http://localhost:8000/adminsearchflights/', {_id: props.location.departFlightID||res.data[0].departFlightID})
         setFlight(res3.data[0])
         const arr = res.data[0].departFlightSeats;
         console.log(res.data[0].departFlightSeats)
@@ -55,17 +56,59 @@ function EditSeatDepart(props) {
         const data2 = {
             departFlightSeats: currentSelection
         }
+        if(!props.location.paymentAmount || props.location.paymentAmount<= 0){
+            var newBooking = {...booking};
+            newBooking.departFlightSeats = currentSelection;
         axios.put('http://localhost:8000/updateBooking/' + bookingID, data2)
         .then(result=> {
-            
+            setBooking(newBooking);
         })
         .catch(err => console.log(err));
         axios.put('http://localhost:8000/adminUpdateFlight/' + flight._id, data)
         .then(result=> {
-            props.location.Payment ? history.push('/payyyy') : history.push('/profile/bookings');
+            if( typeof props.location.paymentAmount === 'undefined'){
+                history.push('/profile/bookings');
+            }
+            else{
+                
+                    var emailString = `You have successfully modified your reserved flight (id: ${booking._id}). We have refunded $${-props.location.paymentAmount} into your account.
+                    Please click on the following link to view your reservations
+                    http://localhost:3000/profile/bookings`;
+                    let mailOptions = {
+                        from: 'dunesairlines@gmail.com',
+                        to: email,
+                        subject: 'Reservation Successfully Changed',
+                        text:  `${emailString}`
+                      };
+
+                      axios.post('http://localhost:8000/sendMail', mailOptions)
+                      .then(res => {
+                      console.log(res.data);
+                      })
+                      .catch(err => console.log(err));
+                    history.push({
+                        pathname:`/iternary/${booking.departFlightID}/${booking.returnFlightID}/${currentSelection.length}`,
+                        booking: newBooking
+                    });
+                
+            }
+                
             setLoading2(false);
         })
         .catch(err => console.log(err));
+    }
+    else{// if paymentAmount exists and is greater than 0
+
+        history.push({
+            pathname:'/booking/payment',
+            state:{
+                bookingID: booking._id,
+                departFlightID: props.location.departFlightID,
+                selectedDepartSeats: currentSelection,
+                paymentAmount: props.location.paymentAmount
+            }
+        });
+    }
     }
 
     function handleSelect(i) { 

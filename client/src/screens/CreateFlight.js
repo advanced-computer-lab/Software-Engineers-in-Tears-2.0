@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import AdminHeader from "../components/AdminHeader";
 import axios from 'axios';
 import Button1 from '../components/Button1';
-import { durationString } from "../Utils.js";
+// import { durationString } from "../Utils.js";
 import { useHistory } from "react-router-dom";
 
 function CreateFlight() {
@@ -24,7 +24,7 @@ function CreateFlight() {
   const[arrivalTime, setArrivalTime] = useState('');
   const[baggage, setBaggage] = useState('');
   const[price, setPrice] = useState('');
-  const[duration, setDuration] = useState('');
+  // const[duration, setDuration] = useState('');
 
 
   const[created, setCreated] = useState(false);

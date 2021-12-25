@@ -23,6 +23,7 @@ function ProfileBookings(props) {
   const [toDelete, setToDelete] = useState({});
   const [departFlights, setDepartFlights] = useState({});
   const [returnFlights, setReturnFlights] = useState({});
+  const [emailLoading, setEmailLoading] = useState(false);
 
   useEffect(() => {
     axios.post('http://localhost:8000/auth', {token: localStorage.getItem('token')})
@@ -98,7 +99,7 @@ function ProfileBookings(props) {
         }))
 
         var TotalPrice = (departFlights[toDel.departFlightID].Price * toDel.PassengerCount) + (returnFlights[toDel.returnFlightID].Price * toDel.PassengerCount);
-        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[toDel.departFlightID].From}) to (${departFlights[toDel.departFlightID].To}) has been cancelled upon your request.(${TotalPrice}) will be refunded to your bank account`;
+        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[toDel.departFlightID].From}) to (${departFlights[toDel.departFlightID].To}) has been cancelled upon your request.($${TotalPrice}) will be refunded to your bank account`;
         let mailOptions = {
           from: 'dunesairlines@gmail.com',
           to: user.Email,
@@ -159,6 +160,47 @@ function ProfileBookings(props) {
       .catch(err => console.log(err));
   }
 
+  function emailItinerary(booking, flight1, flight2){
+    setEmailLoading(true);
+    var emailString = `Here are the details of your round trip from ${flight1.From} to ${flight1.To} and back:
+        Your booking ID is ${booking._id}
+        Departure Fight:
+        From: ${flight1.From} To: ${flight1.To}
+        Takeoff: ${flight1.Flight_Date.toString().substring(0, 10)} at ${flight1.DepartureTime}
+        Landing: ${flight1.Arrival_Date.toString().substring(0, 10)} at ${flight1.ArrivalTime}
+        Flight Number: ${flight1.FlightNumber}
+        Number of Passengers: ${booking.departFlightSeats.length}
+        Cabin: ${flight1.Cabin}
+        Seat Number(s): ${booking.departFlightSeats.join(', ')}
+        Baggage Allowance: ${flight1.Baggage_Allowance} kg
+            
+        Return Flight:
+        From: ${flight2.From} To: ${flight2.To}
+        Takeoff: ${flight2.Flight_Date.toString().substring(0, 10)} at ${flight2.DepartureTime}
+        Landing: ${flight2.Arrival_Date.toString().substring(0, 10)} at ${flight2.ArrivalTime}
+        Flight Number: ${flight2.FlightNumber}
+        Number of Passengers: ${booking.returnFlightSeats.length}
+        Cabin: ${flight2.Cabin}
+        Seat Number(s): ${booking.returnFlightSeats.join(', ')}
+        Baggage Allowance: ${flight2.Baggage_Allowance} kg
+            
+        Please use the following link to access your reservations.
+        http://localhost:3000/profile/bookings`; 
+            let mailOptions = {
+                from: 'dunesairlines@gmail.com',
+                to: user.Email,
+                subject: 'Flight Itinerary',
+                text:  `${emailString}`
+              };
+
+            axios.post('http://localhost:8000/sendMail', mailOptions)
+            .then(res => {
+              setEmailLoading(false);
+            console.log(res.data);
+            })
+            .catch(err => console.log(err));
+  }
+
   const [hover1, setHover1] = useState('black');
   const [hover2, setHover2] = useState('black');
   const [hover3, setHover3] = useState('#F0A500');
@@ -200,17 +242,27 @@ function ProfileBookings(props) {
           </div>
           :
           <div style={{ display: 'flex', flexDirection: 'column', width: window.innerWidth-200, marginLeft: 50}}>
-            <label style={{ color: '#000000', fontFamily: 'Archivo', fontSize: 24, textAlign: 'center', marginTop: 20, marginRight: 180}}> Your Reservations </label>
+            {bookings.length > 0 ? <label style={{ color: '#000000', fontFamily: 'Archivo', fontSize: 24, textAlign: 'center', marginTop: 20, marginRight: 180}}> Your Reservations </label> : null}
             {
               bookings.length > 0 ?
                 bookings.map((onebooking) => {
                   var TPrice = (departFlights[onebooking.departFlightID].Price * onebooking.PassengerCount) + (returnFlights[onebooking.returnFlightID].Price * onebooking.PassengerCount);
                   return (
-                    <BookingCard DeleteBooking={() => {setCancelModal(true); setToDelete(onebooking)}} DepartFlight={departFlights[onebooking.departFlightID]} ReturnFlight={returnFlights[onebooking.returnFlightID]} Price={TPrice} Booking={onebooking}/>
+                    <BookingCard 
+                    emailLoading={emailLoading}
+                    EmailItinerary={()=>emailItinerary(onebooking, departFlights[onebooking.departFlightID], returnFlights[onebooking.returnFlightID])}
+                    DeleteBooking={() => {setCancelModal(true); setToDelete(onebooking)}} 
+                    DepartFlight={departFlights[onebooking.departFlightID]} 
+                    ReturnFlight={returnFlights[onebooking.returnFlightID]} 
+                    Price={TPrice} Booking={onebooking}/>
                   );
                 })
                 :
-                null
+                <div style={{display: 'flex', flexDirection: 'column', height: 300, justifyContent: 'center'}}>
+                  <Image src={require("../assets/images/i.png").default} style={{width: 60, height: 60, alignSelf: 'center', marginRight: 180, marginTop: 20}}/>
+                  <label style={{ color: '#000000', fontFamily: 'Archivo Black', fontSize: 22, textAlign: 'center', marginTop: 20, marginRight: 180}}> No Reservations </label> 
+                  <label style={{ color: '#000000', fontFamily: 'Archivo', fontSize: 24, textAlign: 'center', marginTop: 20, marginRight: 180}}>You currently have no reservations to view.</label> 
+                </div>
             }
           </div>
         }
@@ -222,6 +274,9 @@ function ProfileBookings(props) {
 }
 
 const Container = styled.div`
+`;
+
+const Image = styled.img`
 `;
 
 export default ProfileBookings;

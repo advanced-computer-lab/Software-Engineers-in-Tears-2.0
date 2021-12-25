@@ -246,71 +246,74 @@ function HomeScreen(props) {
     
       <LoremIpsum3 style={{textAlign: 'center'}}>THE DUNE CUSTOMER EXPERIENCE</LoremIpsum3>
       <LoremIpsum4 style={{textAlign: 'center'}}>Supporting You Through Your Travel Journey</LoremIpsum4>
-
-      <Image5Row style={{justifyContent: 'center'}}>
-        <Image5 src={require("../assets/images/43687521.png").default}></Image5>
-        <Image6 src={require("../assets/images/30501287.png").default}></Image6>
-        <Image7 src={require("../assets/images/bell.png").default}></Image7>
-      </Image5Row>
-
-      <Rect2Row style={{justifyContent: 'center'}}>
-        <Rect2>
-          <LoremIpsum10>WHAT IS THE CURRENT<br/>FLIGHT SCHEDULE?</LoremIpsum10>
-          <LoremIpsum11>
-            Flight impacted due to covid? Stay<br/>on top of the flight
-            schedule and <br/>follow all the latest updates.
-          </LoremIpsum11>
-          <Button1
-            style={{
-              height: 46,
-              width: 175,
-              marginTop: 86,
-              marginLeft: 30
-            }}
-            title={'VIEW FLIGHTS'}
-          />
-        </Rect2>
-        <Rect3>
-          <LoremIpsum5>CAN I CANCEL/CHANGE <br/>MY FLIGHT?</LoremIpsum5>
-          <LoremIpsum6>
-            We understand you have questions <br/>about our change/cancel
-            policy. <br/>Learn more about our tickets, <br/>change fees and
-            fare difference <br/>policies.
-          </LoremIpsum6>
-          <Button1
-            style={{
-              height: 46,
-              width: 201,
-              marginTop: 40,
-              marginLeft: 30
-            }}
-            title={'MODIFY FLIGHT'}
-            onClick={() => (firstName ? history.push('/profile/bookings') : null)}
-          />
-        </Rect3>
-        <Rect4>
-          <LoremIpsum7>WHAT ARE THE LATEST <br/>TRAVEL UPDATES?</LoremIpsum7>
-          <LoremIpsum8Stack>
-            <LoremIpsum8></LoremIpsum8>
-            <LoremIpsum9>
-              Information is more important than <br/>ever. We pledge to share
-              updates <br/>with you as quickly as possible, <br/>with full
-              transparency. Sign up to<br/>stay updated with all the latest
-              news.
-            </LoremIpsum9>
-          </LoremIpsum8Stack>
-          <Button1
-            style={{
-              height: 46,
-              width: 166,
-              marginTop: 39,
-              marginLeft: 37
-            }}
-            title={'SIGN UP NOW'}
-            onClick={() => firstName ? null : history.push('/signup')}
-          />
-        </Rect4>
-      </Rect2Row>
+      
+      <div style={{display: 'flex', flexDirection: 'row', width: '100%', marginTop: 20}}>
+        <div style={{display: 'flex', flexDirection: 'column', width: '33.33%', alignItems: 'center'}}>
+          <Image5 src={require("../assets/images/43687521.png").default}></Image5>
+          <Rect2 style={{marginTop: 20}}>
+            <LoremIpsum10>WHAT IS THE CURRENT<br/>FLIGHT SCHEDULE?</LoremIpsum10>
+            <LoremIpsum11>
+              Flight impacted due to covid? Stay<br/>on top of the flight
+              schedule and <br/>follow all the latest updates.
+            </LoremIpsum11>
+            <Button1
+              style={{
+                height: 46,
+                width: 175,
+                marginTop: 86,
+                marginLeft: 30
+              }}
+              title={'VIEW FLIGHTS'}
+            />
+          </Rect2>
+        </div>
+        <div style={{display: 'flex', flexDirection: 'column', width: '33.33%', alignItems: 'center'}}>
+          <Image6 src={require("../assets/images/30501287.png").default}></Image6>
+          <Rect3 style={{marginTop: 20}}>
+            <LoremIpsum5>CAN I CANCEL/CHANGE <br/>MY FLIGHT?</LoremIpsum5>
+            <LoremIpsum6>
+              We understand you have questions <br/>about our change/cancel
+              policy. <br/>Learn more about our tickets, <br/>change fees and
+              fare difference <br/>policies.
+            </LoremIpsum6>
+            <Button1
+              style={{
+                height: 46,
+                width: 201,
+                marginTop: 40,
+                marginLeft: 30
+              }}
+              title={'MODIFY FLIGHT'}
+              onClick={() => (firstName ? history.push('/profile/bookings') : null)}
+            />
+          </Rect3>
+        </div>
+        <div style={{display: 'flex', flexDirection: 'column', width: '33.33%', alignItems: 'center'}}>
+          <Image7 src={require("../assets/images/bell.png").default}></Image7>
+          <Rect4 style={{marginTop: 20}}>
+            <LoremIpsum7>WHAT ARE THE LATEST <br/>TRAVEL UPDATES?</LoremIpsum7>
+            <LoremIpsum8Stack>
+              <LoremIpsum8></LoremIpsum8>
+              <LoremIpsum9>
+                Information is more important than <br/>ever. We pledge to share
+                updates <br/>with you as quickly as possible, <br/>with full
+                transparency. Sign up to<br/>stay updated with all the latest
+                news.
+              </LoremIpsum9>
+            </LoremIpsum8Stack>
+            <Button1
+              style={{
+                height: 46,
+                width: 166,
+                marginTop: 39,
+                marginLeft: 37
+              }}
+              title={'SIGN UP NOW'}
+              onClick={() => firstName ? null : history.push('/signup')}
+            />
+          </Rect4>
+        </div>
+      </div>
 
       <Image3 style={{marginTop: 40, height: 400, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <label style={{color: '#FFF', fontFamily: 'Archivo', fontSize: 15, marginTop: 70}}>SPECIAL OFFER</label>
@@ -359,7 +362,6 @@ function HomeScreen(props) {
           </div>
           <Button6 style={{width: 200, height: 40, marginTop: 40}} title={'More Destinations'}/>
       </div>
-
       <Footer />
     </Container>
   );
@@ -424,13 +426,6 @@ const Image7 = styled.img`
   object-fit: contain;
 `;
 
-const Image5Row = styled.div`
-  height: 171px;
-  flex-direction: row;
-  display: flex;
-  margin-top: 66px;
-`;
-
 const Rect2 = styled.div`
   width: 385px;
   height: 321px;
@@ -465,7 +460,6 @@ const Rect3 = styled.div`
   background-color: #E6E6E6;
   flex-direction: column;
   display: flex;
-  margin-left: 54px;
 `;
 
 const LoremIpsum5 = styled.span`
@@ -494,7 +488,6 @@ const Rect4 = styled.div`
   background-color: #E6E6E6;
   flex-direction: column;
   display: flex;
-  margin-left: 56px;
 `;
 
 const LoremIpsum7 = styled.span`
@@ -534,13 +527,6 @@ const LoremIpsum8Stack = styled.div`
   margin-top: 6px;
   margin-left: 36px;
   position: relative;
-`;
-
-const Rect2Row = styled.div`
-  height: 321px;
-  flex-direction: row;
-  display: flex;
-  margin-top: 35px;
 `;
 
 

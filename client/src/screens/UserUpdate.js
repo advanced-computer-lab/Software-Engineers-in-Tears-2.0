@@ -142,6 +142,9 @@ class UserUpdateScreen extends Component {
       .then(result => {
         this.setState(data);
         this.orig = this.state;
+        localStorage.setItem('firstName', data.First_Name);
+        localStorage.setItem('userEmail', data.Email);
+        this.setState({firstName: data.First_Name});
         this.setState({ update: false });
       })
       .catch(err => console.log(err));
