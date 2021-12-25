@@ -1,7 +1,7 @@
 # Software-Engineers-in-Tears-2.0
 
 <br>Hello!<br />
-<br>*Welcome to Dunes Airlines*<br />
+<br>*Welcome to Dune Airlines*<br />
 <br>The aim of this project is to create a complete Airline Reservation System. Our website allows individuals can reserve and pay
 for flights in order to travel to different countries and sometimes domestic cities.We offer only round trips. No one way tickets.<br />
 
