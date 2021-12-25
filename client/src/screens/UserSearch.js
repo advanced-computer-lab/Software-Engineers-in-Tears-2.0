@@ -152,9 +152,9 @@ function UserSearch(props) {
                
                  {durationString(flight.Trip_Duration)}</label>
 
-
+                 <div style={{alignItems:'center',width:'50%'}}>
               {selectedDepart === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right:50 }} onClick={()=>{setSelectedDepart(''); setselectedDepDate(''); }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50  }}  onClick={() => {setSelectedDepart(flight._id);setselectedDepDate(flight.Flight_Date)}}/>}
-              
+              </div>
 
                 </div>
                </div>
@@ -201,10 +201,10 @@ function UserSearch(props) {
                                 <label style={{fontFamily: 'Archivo', marginLeft: 0,marginRight:-50}}>   
                            
                              {durationString(flight.Trip_Duration)}</label>
-            
-            
+             
+                          <div style={{alignItems:'center',width:'50%'}}>
                           {selectedReturn === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right:50 }} onClick={()=>{setSelectedReturn(''); setselectedReturnDate(''); }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50  }}  onClick={() => {setSelectedReturn(flight._id);setselectedReturnDate(flight.Flight_Date)}}/>}
-                          
+                          </div>
             
                             </div>
                            </div>
@@ -212,7 +212,7 @@ function UserSearch(props) {
                         </div>
                       </div>
         );})}
-        <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35}}>
+        <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', marginBottom: -35}}>
           <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Round Trip Flight: <label style={{fontFamily: 'Archivo Black', color: '#F0A500'}}>{ props.match.params.from} - {props.match.params.to}</label></label>
           <Button1 disabled={selectedDepart === '' || selectedReturn === ''} onClick={() => history.push(`/summary/${selectedDepart}/${selectedReturn}/${props.match.params.pcount}`)} title={'Confirm Selection'} style={{fontSize: 20, position: 'absolute', right: 50, width: 180, height: 40}}/>
         </div>

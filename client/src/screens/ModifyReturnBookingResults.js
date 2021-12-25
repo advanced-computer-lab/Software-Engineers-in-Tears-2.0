@@ -103,10 +103,10 @@ function ModifyReturnBookingResults(props) {
                 <Button2 style={{width: 200, height: 50, marginTop: 20}} title={'Back to Home Screen'} onClick={() => history.push('/')}/>
             </div>
             :
-          <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
-          <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)'}}>
-            <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25}}>Choose Return Flight</label>
-          </div>
+            <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
+            <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)'}}>
+              <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25}}>Choose Return Flight</label>
+            </div>
          
           {returnFlights.map((flight) => {
             return(
@@ -132,7 +132,7 @@ function ModifyReturnBookingResults(props) {
                                   <label style={{fontFamily: 'Archivo',fontSize: 20,marginLeft:-10}}>#{flight.FlightNumber?flight.FlightNumber:'N/A'}</label>
                                   <Image src={require("../assets/images/lug5.png").default} style={{height: 24, width: 30, marginLeft: 30}}/>
                                   <label style={{fontFamily: 'Archivo', marginRight: 20}}>{flight.Baggage_Allowance?flight.Baggage_Allowance:'N/A'}</label>
-                                  <label style={{fontFamily: 'Archivo', marginRight:20,marginLeft:10}}><label style={{fontFamily: 'Archivo', fontWeight:'bold',fontSize: 20}}>$</label>{flight.Price?flight.Price:'N/A'}</label>
+                                  <label style={{fontFamily: 'Archivo', marginRight:20,marginLeft:10}}><label style={{fontFamily: 'Archivo', fontWeight:'bold',fontSize: 20}}>$</label>{flight.Price?flight.Price -props.location.ReturnFlight.Price:'N/A'}</label>
                                   <label style={{fontFamily: 'Archivo', marginLeft:10,marginRight:-10,textAlignVertical: 'top'}}>{flight.ArrivalTime?flight.ArrivalTime:'N/A'}</label>
                                   <Image src={require("../assets/images/line2.png").default} style={{height: 24, width: 30, marginLeft:10}}/>
                                   <label style={{fontFamily: 'Archivo', marginLeft:0}}>{flight.ArrivalTime?flight.ArrivalTime:'N/A'}</label>
@@ -141,10 +141,10 @@ function ModifyReturnBookingResults(props) {
                              
                                {durationString(flight.Trip_Duration)}</label>
               
-              
+                               <div style={{alignItems:'center',width:'50%'}}>
                             {selectedReturn === flight._id ? <Button3 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right:50 }} onClick={()=>{setSelectedReturn('');  }} /> : <Button1 title={'Select Flight'} style={{ width: 160, height: 35, position: 'absolute', right: 50  }}  onClick={() => {setSelectedReturn(flight._id);}}/>}
                             
-              
+              </div>
                               </div>
                              </div>
                               
