@@ -98,7 +98,7 @@ function ProfileBookings(props) {
         }))
 
         var TotalPrice = (departFlights[toDel.departFlightID].Price * toDel.PassengerCount) + (returnFlights[toDel.returnFlightID].Price * toDel.PassengerCount);
-        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[toDel.departFlightID].From}) to (${departFlights[toDel.departFlightID].To}) has been cancelled upon your request.(${TotalPrice}) will be refunded to your bank account`;
+        var emailText = `Your flight reservation (ID: ${toDel._id}) from (${departFlights[toDel.departFlightID].From}) to (${departFlights[toDel.departFlightID].To}) has been cancelled upon your request.($${TotalPrice}) will be refunded to your bank account`;
         let mailOptions = {
           from: 'dunesairlines@gmail.com',
           to: user.Email,

@@ -100,7 +100,7 @@ function ChosenFlights(props) {
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: '#fff'}}>
               <Image1 src={require("../assets/images/error-icon.png").default} style={{width: 100, height: 100}}/>
               <label style={{fontFamily: 'Archivo Black', fontSize: 30, color:'#F0A500'}}>No Access</label>
-              <label style={{fontFamily: 'Archivo', fontSize: 20, color:'#000', marginTop: 20}}>This iternary can be accessed from your bookings page.</label>
+              <label style={{fontFamily: 'Archivo', fontSize: 20, color:'#000', marginTop: 20}}>This itinerary can be accessed from your bookings page.</label>
               <div style={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
               <Button2 style={{width: 200, height: 50, marginTop: 20}} title={'My Flight Bookings'} onClick={()=>history.push('/profile/bookings')}/>
               <Button2 style={{width: 200, height: 50, marginTop: 20, marginLeft:50}} title={'Back to Home Screen'} onClick={() => history.push('/')}/>
@@ -119,7 +119,7 @@ function ChosenFlights(props) {
       : 
         <div style={{display: 'flex', flexDirection: 'column', width: '100%', minHeight: 557, backgroundColor: '#fff'}}>
             <div style={{height: 70, width: '100%', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-              <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>{props.location['booking']?`${user['First_Name']} ${user['Last_Name']}'s Flight Iternary`:'Booking Summary'}</label>
+              <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25, marginLeft: 50}}>{props.location['booking']?`${user['First_Name']} ${user['Last_Name']}'s Flight Itinerary`:'Booking Summary'}</label>
             </div>
             <div style={{height: 70, width: '100%', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
               <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Depart <label style={{fontFamily: 'Archivo Black', color: '#fff'}}>{flight1.Flight_Date!=null?flight1.Flight_Date.substring(0,10):null}</label></label>
