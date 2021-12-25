@@ -9,8 +9,8 @@ for flights in order to travel to different countries and sometimes domestic cit
 <br>To run the project on VS code, first clone our repository "git clone https://github.com/advanced-computer-lab/Software-Engineers-in-Tears-2.0.gitmake".Then make sure you install the necessary files or softwares by running "npm i" in your console. Afterwards, split your terminal and run backend by typing "node App.js" in cosole. To run the front end change the directory to client then to src then type "npm start".<br />
 <br> Emailing API used is nodemailer (https://nodemailer.com/about/)<br/>
 <br> Payment by card was handled using Stripe API(https://thushaltk.medium.com/how-to-add-stripe-payment-gateway-to-your-mern-project-82f34691dc57)<br/>
-<br> Authentication was handled by jsonWebTokens ()<br/>
-<br> Password encryption done by bcrypt ()<br/>
+<br> Authentication was handled by jsonWebTokens (https://jwt.io/)<br/>
+<br> Password encryption done by bcrypt (https://auth0.com/blog/hashing-in-action-understanding-bcrypt/)<br/>
 
 <br> There are 3 navigation modes on the website:Admin,Guest and User. Each have different access priviliges to the website's features <br />
 <br> *Admin Mode* <br />
@@ -42,4 +42,5 @@ for flights in order to travel to different countries and sometimes domestic cit
 <br>https://blog.logrocket.com/mern-stack-tutorial/.</br>
 <br>https://www.w3schools.com/REACT/DEFAULT.ASP</br>
 <br>https://www.youtube.com/playlist?list=PLZlA0Gpn_vH_uZs4vJMIhcinABSTUH2bY</br>
+<br> Our Color Palette:https://colorhunt.co/palette/f4f4f4f0a500cf7500000000 <br/>
 
