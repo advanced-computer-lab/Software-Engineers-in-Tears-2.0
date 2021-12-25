@@ -9,7 +9,8 @@ for flights in order to travel to different countries and sometimes domestic cit
 <br>To run the project on VS code, first clone our repository "git clone https://github.com/advanced-computer-lab/Software-Engineers-in-Tears-2.0.gitmake".Then make sure you install the necessary files or softwares by running "npm i" in your console. Afterwards, split your terminal and run backend by typing "node App.js" in cosole. To run the front end chaneg the directory to client then typle "npm start".<br />
 <br> Emailing API used is nodemailer (https://nodemailer.com/about/)<br/>
 <br> Payment by card was handled using Stripe API(https://thushaltk.medium.com/how-to-add-stripe-payment-gateway-to-your-mern-project-82f34691dc57)<br/>
-
+<br> Authentication was handled by jsonWebTokens ()<br/>
+<br> Password encryption done by bcrypt ()<br/>
 
 <br> There are 3 navigation modes on the website:Admin,Guest and User. Each have different access priviliges to the website's features <br />
 <br> *Admin Mode* <br />
@@ -23,12 +24,7 @@ for flights in order to travel to different countries and sometimes domestic cit
 <br> Both an admin and a registered user can login by their credentials from the log in page. <br/>
 <br> Our UX/UI stands out. The design and colors are unique than other airlines websites. The user experience is easy, simple, and direct.</br>
 
-<br> To help you better setup our project you need to download the following packages:</br>
-<br>npm i express</br>
-<br>npm i jsonwebtoken</br>
-<br> npm i bcrypt</br>
-<br> npm i dotenv</br>
-<
+
 <br>*Suggested uncompleted future feature*<br>
 <br> 1- The top navigation bar buttons in the homepage.<br/>
 <br> 2- The "manage booking", "check-in" and "Hotels" section in the user homepage.<br/>
