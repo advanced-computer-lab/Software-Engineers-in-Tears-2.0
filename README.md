@@ -6,7 +6,7 @@
 for flights in order to travel to different countries and sometimes domestic cities.We offer only round trips. No one way tickets.<br />
 
 <br> This project was implemented using MERN stack technologies in JavaScript. The project architecture is MVC style. Backend requests are handled in App.js file and the backend route controllers are in the Routes folder. All frontend styling and functionalities are in the client folder. Database Shemas are handled in the Models folder. <br />
-<br>To run the project on VS code, first make sure you install the necessary files or softwares by running "npm i" in ypur console. Afterwards, split your terminal and run backend by typing "node App.js" in cosole. To run the front end chaneg the directory to client then typle "npm start".<br />
+<br>To run the project on VS code, first make sure you install the necessary files or softwares by running "npm i" in your console. Afterwards, split your terminal and run backend by typing "node App.js" in cosole. To run the front end chaneg the directory to client then typle "npm start".<br />
 
 <br> There are 3 navigation modes on the website:Admin,Guest and User. Each have different access priviliges to the website's features <br />
 <br> *Admin Mode* <br />
@@ -24,3 +24,5 @@ for flights in order to travel to different countries and sometimes domestic cit
 <br> 3- The loyality Skywards program features. <br/>
 
 
+<br> *How to contribute?*<br/>
+<br> You can send your implementations for the suggested features to dunesairlines@gmail.com. Feel free to also send us your feedback and suggestions too.<br/>
