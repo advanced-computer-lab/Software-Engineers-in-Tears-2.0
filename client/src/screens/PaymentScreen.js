@@ -85,6 +85,8 @@ class PaymentScreen extends Component {
         Your booking ID is ${this.state.booking._id}
         Departure Fight:
         From: ${this.state.flight1.From} To: ${this.state.flight1.To}
+        Takeoff: ${this.state.flight1.Flight_Date} at ${this.state.flight1.DepartureTime}
+        Landing: ${this.state.flight1.Arrival_Date} at ${this.state.flight1.ArrivalTime}
         Flight Number: ${this.state.flight1.FlightNumber}
         Number of Passengers: ${this.state.booking.departFlightSeats.length}
         Cabin: ${this.state.flight1.Cabin}
@@ -93,6 +95,8 @@ class PaymentScreen extends Component {
             
         Return Flight:
         From: ${this.state.flight2.From} To: ${this.state.flight2.To}
+        Takeoff: ${this.state.flight2.Flight_Date} at ${this.state.flight2.DepartureTime}
+        Landing: ${this.state.flight2.Arrival_Date} at ${this.state.flight2.ArrivalTime}
         Flight Number: ${this.state.flight2.FlightNumber}
         Number of Passengers: ${this.state.booking.returnFlightSeats.length}
         Cabin: ${this.state.flight2.Cabin}
