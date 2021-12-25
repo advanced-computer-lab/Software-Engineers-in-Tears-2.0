@@ -19,6 +19,7 @@ for flights in order to travel to different countries and sometimes domestic cit
 <br>*User Mode*<br />
 <br> A registered user is able to access all guest mode features plus now he/she can book desired flights and pay for them. In addition, they can access their bookings list and modify their reservations anytime. The user is also able to update his account information when desired. A user will recieve confirmation payment emails for any booking transactions he/she makes.<br />
 
+<br> You can see demos of all our features here: https://drive.google.com/drive/folders/102ocBTJ5EoavL9sjOI32jkqZAciL2iIT?usp=sharing <br/>
 <br> Both an admin and a registered user can login by their credentials from the log in page. <br/>
 <br> Our UX/UI stands out. The design and colors are unique than other airlines websites. The user experience is easy, simple, and direct.</br>
 
