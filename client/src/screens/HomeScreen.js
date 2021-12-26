@@ -115,7 +115,7 @@ function HomeScreen(props) {
               marginLeft: 'auto',
               marginRight: 140
             }}
-            title={'Read More'}
+            title={'Read Moree'}
           />
         </div>
         }
