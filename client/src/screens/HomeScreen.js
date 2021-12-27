@@ -115,7 +115,7 @@ function HomeScreen(props) {
               marginLeft: 'auto',
               marginRight: 140
             }}
-            title={'Read Moree'}
+            title={'Read More'}
           />
         </div>
         }
@@ -335,13 +335,13 @@ function HomeScreen(props) {
           <div style={{display: 'flex', flexDirection: 'row', marginTop: 20}}>
             <div style={{display: 'flex', flexDirection: 'column', width: 550, height: 350, boxShadow: hover7, cursor: 'pointer', border: '1px solid gray', alignItems: 'center'}} onMouseEnter={() => setHover7('0px 1px 5px  0.35px #000')} onMouseLeave={() => setHover7('')}>
               <Image120 src={require("../assets/images/sample.jpg").default} style={{width: 550, height: 180}}/>
-              <label style={{fontFamily: 'Archivo', fontSize: 13, marginTop: 15, cursor: 'pointer'}}>U N I T E D &nbsp; K I N G D O M</label>
+              <label style={{fontFamily: 'Archivo', fontSize: 13, marginTop: 15, cursor: 'pointer', fontWeight: 'bold'}}>U N I T E D &nbsp; K I N G D O M</label>
               <label style={{fontFamily: 'Archivo', fontSize: 22, marginTop: 15, cursor: 'pointer'}}>London</label>
               <label style={{fontFamily: 'Archivo Black', fontSize: 18, marginTop: 'auto', marginBottom: 20, cursor: 'pointer'}}>Discover for yourself</label>
             </div>
             <div style={{display: 'flex', flexDirection: 'column',marginLeft: 40, width: 550, height: 350, boxShadow: hover8, cursor: 'pointer', border: '1px solid gray', alignItems: 'center'}} onMouseEnter={() => setHover8('0px 1px 5px  0.35px #000')} onMouseLeave={() => setHover8('')}>
               <Image120 src={require("../assets/images/sample2.jpg").default} style={{width: 550, height: 180}}/>
-              <label style={{fontFamily: 'Archivo', fontSize: 13, marginTop: 15, cursor: 'pointer'}}>M A L D I V E S</label>
+              <label style={{fontFamily: 'Archivo', fontSize: 13, marginTop: 15, cursor: 'pointer', fontWeight: 'bold'}}>M A L D I V E S</label>
               <label style={{fontFamily: 'Archivo', fontSize: 22, marginTop: 15, cursor: 'pointer'}}>Male</label>
               <label style={{fontFamily: 'Archivo Black', fontSize: 18, marginTop: 'auto', marginBottom: 20, cursor: 'pointer'}}>Discover for yourself</label>
             </div>
@@ -349,13 +349,13 @@ function HomeScreen(props) {
           <div style={{display: 'flex', flexDirection: 'row', marginTop: 20}}>
             <div style={{display: 'flex', flexDirection: 'column', width: 550, height: 350, boxShadow: hover9, cursor: 'pointer', border: '1px solid gray', alignItems: 'center'}} onMouseEnter={() => setHover9('0px 1px 5px  0.35px #000')} onMouseLeave={() => setHover9('')}>
               <Image120 src={require("../assets/images/sample3.jpg").default} style={{width: 550, height: 180}}/>
-              <label style={{fontFamily: 'Archivo', fontSize: 13, marginTop: 15, cursor: 'pointer'}}>G E R M A N Y</label>
+              <label style={{fontFamily: 'Archivo', fontSize: 13, marginTop: 15, cursor: 'pointer', fontWeight: 'bold'}}>G E R M A N Y</label>
               <label style={{fontFamily: 'Archivo', fontSize: 22, marginTop: 15, cursor: 'pointer'}}>Berlin</label>
               <label style={{fontFamily: 'Archivo Black', fontSize: 18, marginTop: 'auto', marginBottom: 20, cursor: 'pointer'}}>Discover for yourself</label>
             </div>
             <div style={{display: 'flex', flexDirection: 'column',marginLeft: 40, width: 550, height: 350, boxShadow: hover10, cursor: 'pointer', border: '1px solid gray', alignItems: 'center'}} onMouseEnter={() => setHover10('0px 1px 5px  0.35px #000')} onMouseLeave={() => setHover10('')}> 
               <Image120 src={require("../assets/images/sample4.jpg").default} style={{width: 550, height: 180}}/>
-              <label style={{fontFamily: 'Archivo', fontSize: 13, marginTop: 15, cursor: 'pointer'}}>E G Y P T</label>
+              <label style={{fontFamily: 'Archivo', fontSize: 13, marginTop: 15, cursor: 'pointer', fontWeight: 'bold'}}>E G Y P T</label>
               <label style={{fontFamily: 'Archivo', fontSize: 22, marginTop: 15, cursor: 'pointer'}}>Sharm El Sheikh</label>
               <label style={{fontFamily: 'Archivo Black', fontSize: 18, marginTop: 'auto', marginBottom: 20, cursor: 'pointer'}}>Discover for yourself</label>
             </div>

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
 import styled from "styled-components";
 import axios from "axios";
@@ -164,7 +162,7 @@ class PaymentScreen extends Component {
                 .then((res)=>{
                     console.log('Booking has been added to user\'s account successfully ');
                     this.props.history.push({
-                        pathname: `/iternary/${this.state.booking.departFlightID}/${this.state.booking.returnFlightID}/${this.state.booking.departFlightSeats.length}`,
+                        pathname: `/itinerary/${this.state.booking.departFlightID}/${this.state.booking.returnFlightID}/${this.state.booking.departFlightSeats.length}`,
                         booking: this.state.booking
                     });
                     
@@ -193,7 +191,7 @@ class PaymentScreen extends Component {
                         var newBooking = {...this.state.booking}
                         newBooking.departFlightSeats = this.state.selectedDepartSeats;
                         this.props.history.push({
-                            pathname:`/iternary/${this.state.newFlight1._id}/${this.state.flight2._id}/${this.state.selectedDepartSeats.length}`,
+                            pathname:`/itinerary/${this.state.newFlight1._id}/${this.state.flight2._id}/${this.state.selectedDepartSeats.length}`,
                             booking: newBooking
                         })
                     })
@@ -216,7 +214,7 @@ class PaymentScreen extends Component {
                         var newBooking = {...this.state.booking}
                         newBooking.returnFlightSeats = this.state.selectedReturnSeats;
                         this.props.history.push({
-                            pathname:`/iternary/${this.state.flight1._id}/${this.state.newFlight2._id}/${this.state.selectedReturnSeats.length}`,
+                            pathname:`/itinerary/${this.state.flight1._id}/${this.state.newFlight2._id}/${this.state.selectedReturnSeats.length}`,
                             booking: newBooking
                         })
                     })
@@ -230,7 +228,7 @@ class PaymentScreen extends Component {
         if(!this.props.location.state || !this.props.location.state.bookingID || this.state.error){
             return(
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: window.innerWidth, height: window.innerHeight, backgroundColor: '#fff'}}>
-              <img src={require("../assets/images/error-icon.png").default} style={{width: 100, height: 100}}/>
+              <Image1 src={require("../assets/images/error-icon.png").default} style={{width: 100, height: 100}}/>
               <label style={{fontFamily: 'Archivo Black', fontSize: 30, color:'#F0A500'}}>Error</label>
               <label style={{fontFamily: 'Archivo', fontSize: 20, color:'#000', marginTop: 20}}>Please try booking a flight first.</label>
               <div style={{display:'flex', flexDirection:'row', justifyContent:'center'}}>
@@ -305,6 +303,9 @@ const Container = styled.div`
   display: flex;
   background-color: rgba(255,255,255,1);
   flex-direction: column;
+`;
+
+const Image1 = styled.img`
 `;
 
 export default PaymentScreen;

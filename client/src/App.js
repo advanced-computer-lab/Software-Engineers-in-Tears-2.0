@@ -26,6 +26,7 @@ import ModifyReturnBooking from './screens/ModifyReturnBooking';
 import ModifyReturnBookingResults from './screens/ModifyReturnBookingResults';
 import ForgotPassword from './screens/ForgotPassword';
 import ResetPassword from './screens/ResetPassword';
+import FlightItinerary from './screens/FlightItinerary';
 
 class App extends Component {
   render() {
@@ -38,7 +39,7 @@ class App extends Component {
           <Route exact path='/signup' component={Signup} />
           <Route exact path='/admin/update/:id' component = {FlightUpdate} />
           <Route exact path='/summary/:id1/:id2/:passengerCount' component={ChosenFlights} />
-          <Route exact path='/iternary/:id1/:id2/:passengerCount' component={ChosenFlights} />
+          <Route exact path='/itinerary/:id1/:id2/:passengerCount' component={FlightItinerary} />
           <Route exact path='/search/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/toDate=:toDate' component={UserSearch} />
           <Route exact path='/searchDepart/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/editDepart' component={SearchResultsDepart} />
           <Route exact path='/searchReturn/from=:from/to=:to/cabin=:cabin/p=:pcount/fromDate=:fromDate/editReturn' component={ModifyReturnBookingResults} />

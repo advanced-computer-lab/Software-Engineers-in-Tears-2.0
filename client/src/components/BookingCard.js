@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button1 from "./Button1";
 import { useHistory } from "react-router-dom";
 //import {Motion, spring} from 'react-motion';
-import {durationString} from "../Utils.js";
+//import {durationString} from "../Utils.js";
 
 function BookingCard(props) {
 

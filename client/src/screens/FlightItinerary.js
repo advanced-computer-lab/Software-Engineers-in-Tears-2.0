@@ -8,7 +8,8 @@ import Footer from "../components/Footer";
 import Button1 from "../components/Button1";
 import Button2 from "../components/Button2";
 import {durationString} from "../Utils";
-function ChosenFlights(props) {
+
+function FlightItinerary(props) {
 
     const history = useHistory();
 
@@ -76,7 +77,7 @@ function ChosenFlights(props) {
       }
     }
 
-    if(props.location['pathname'].includes('iternary') && !props.location['booking']){
+    if(props.location['pathname'].includes('itinerary') && !props.location['booking']){
       return(
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: window.innerHeight, backgroundColor: '#fff'}}>
               <Image1 src={require("../assets/images/error-icon.png").default} style={{width: 100, height: 100}}/>
@@ -210,4 +211,4 @@ const Image1 = styled.img`
 const Image2 = styled.img`
 `;
 
-export default ChosenFlights;
+export default FlightItinerary;

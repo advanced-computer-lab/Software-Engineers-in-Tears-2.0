@@ -220,7 +220,7 @@ function ResetPassword(props) {
   return (
     <Container>
       <Header />
-      <div style={{backgroundColor: '#f4f4f4', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <div style={{backgroundColor: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <label style={{fontFamily: 'Archivo', fontSize: 14, marginTop: 50}}>L O Y A L T Y</label>
         <label style={{fontSize: 40, fontFamily: 'Archivo', marginTop: 20, color: '#000'}}>Reset Password</label>
         <div style={{boxShadow: '0px 1px 5px  0.35px #000', marginTop: 20, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: 800}}>

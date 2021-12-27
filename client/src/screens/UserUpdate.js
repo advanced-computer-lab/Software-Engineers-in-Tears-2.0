@@ -191,114 +191,233 @@ class UserUpdateScreen extends Component {
                 <label onMouseEnter={() => this.setState({hover4: '#CF7500'})} onMouseLeave={() => this.setState({hover4: 'black'})} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: this.state.hover4}} onClick={() => this.props.history.push('/profile/changepassword')}>Change Password</label>
                 <label onMouseEnter={() => this.setState({hover5: '#CF7500'})} onMouseLeave={() => this.setState({hover5: 'black'})} style={{fontFamily: 'Archivo', cursor: 'pointer', marginTop: 10, fontSize: 15, color: this.state.hover5}} onClick={() => {this.props.history.push('/'); localStorage.clear()}}>Log Out</label>
               </div>
-          {/* <Button1
-              title={'Restore Original Values'}
-              style={{ width: 230, position: 'absolute', right: 50, height: 40 }}
-              onClick={() => { this.setState(this.orig); }
-            /> */}
           {this.state.loading ?
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: window.innerWidth-200, height: window.innerHeight, marginLeft: 50, marginRight: 180 }}>
               <ReactLoading type={"spin"} color={"#F0A500"} height={'5%'} width={'5%'} />
-            </div> : (this.state.update ?
-              <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 50, width: window.innerWidth-200, height: window.innerHeight}}>
-                <div id='d' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>First Name: <label style={{ color: '#F0A500' }}>*</label></label>
-                  <Input
-                    onMouseEnter={this.onHover}
-                    onMouseLeave={this.onHoverLeave}
-                    type="text"
-                    name="First_Name"
-                    value={this.state.First_Name}
-                    onChange={this.onChange}
-                    required='true'
-                  />
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Last Name: <label style={{ color: '#F0A500' }}>*</label></label>
-                  <Input
-                    onMouseEnter={this.onHover}
-                    onMouseLeave={this.onHoverLeave}
-                    type="text"
-                    name="Last_Name"
-                    value={this.state.Last_Name}
-                    onChange={this.onChange}
-                    required='true'
-                  />
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Email: <label style={{ color: '#F0A500' }}>*</label></label>
-                  <Input
-                    onMouseEnter={this.onHover}
-                    onMouseLeave={this.onHoverLeave}
-                    type="text"
-                    name="Email"
-                    value={this.state.Email}
-                    onChange={this.onChange}
-                    required='true'
-                  />
-                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', width: 300, height: 20, marginTop: -37, marginBottom: 17, backgroundColor: 'rgb(244, 244, 244)' }}>
-                    {this.state.emailLoading ?
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 20, height: 20 }}>
-                        <ReactLoading type={"spin"} color={"#F0A500"} height={'100%'} width={'100%'} />
+            </div> 
+            : (this.state.update ?
+              <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50, width: window.innerWidth-200}}>
+                <Image4 style={{marginRight: 180, height: 250, marginTop: 20, display: 'flex', flexDirection: 'column', boxShadow: '0px 1px 5px  0.35px #000',}}>
+                  <div style={{width: '100%', height: 170, display: 'flex', flexDirection: 'row', marginTop: 'auto', backgroundColor: '#fff', boxShadow: '0px 0.5px 0.5px  0px #000'}}>
+                    <div style={{width: '49.5%', display: 'flex', flexDirection: 'column'}}>
+                      <Image2 style={{width: 90, height: 90, marginLeft: 40, marginTop: -45, border: '6px solid white', borderRadius: 50}} src={require("../assets/images/profile.webp").default}/>
+                      <label style={{marginLeft: 46, marginTop: 10, fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>Mr. {this.state.First_Name} {this.state.Last_Name}</label>
+                      <label style={{marginLeft: 46, marginTop: 'auto', marginBottom: 20, fontFamily: 'Archivo', fontSize: 15}}>EK 675 975 720</label>
+                    </div>
+                    <div style={{height: '85%', backgroundColor: 'grey', width: 2, alignSelf: 'center'}}/>
+                    <div style={{width: '49.5%', display: 'flex', flexDirection: 'column'}}>
+                      <label style={{marginLeft: 40, marginTop: 20, fontFamily: 'Archivo', fontSize: 20}}>Skyward Miles</label>
+                      <label style={{marginLeft: 40, marginTop: 10, fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>0</label>
+                    </div>
+                  </div>
+                </Image4>
+                <label style={{textAlign: 'center', marginRight: 180, marginTop: 40, fontSize: 30, fontFamily: 'Archivo', fontWeight: 'bold'}}>Personal Details</label>
+                <label style={{textAlign: 'center', marginRight: 180, marginTop: 15, fontSize: 20, fontFamily: 'Archivo'}}>Update your information regularly so you don’t miss out on news, <br />offers and services</label>
+                <div id='d' style={{marginRight: 180, boxShadow: '0px 1px 5px  0.35px #000', display: 'flex', flexDirection: 'column', marginTop: 30}}>
+                    <div style={{width: '100%', marginTop: 40, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                      <label style={{fontFamily: 'Archivo', marginLeft: 46, fontSize: 25}}>Contact Details</label>
+                    </div>
+                    <div style={{marginLeft: 46, marginTop: 20, width: 70, height: 3, backgroundColor: '#F0A500'}}/>
+                    <div style={{width: '50%', marginTop: 30, display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 46}}>
+                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <label style={{fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>First Name</label>
+                        <Input
+                          onMouseEnter={this.onHover}
+                          onMouseLeave={this.onHoverLeave}
+                          type="text"
+                          name="First_Name"
+                          value={this.state.First_Name}
+                          onChange={this.onChange}
+                          required='true'
+                        />
                       </div>
-                      : (
-                        this.state.validEmail ?
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 20, height: 20 }}>
-                            <Image1
-                              src={require('../assets/images/Check.png').default}
-                            />
-                          </div>
-                          :
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 20, height: 20 }}>
-                            <Image1
-                              src={require('../assets/images/X.png').default}
-                            />
-                          </div>
-
-                      )
-                    }
-                    {
-                      !this.state.emailLoading ?
-                        this.state.validEmail ?
-                          <label style={{ color: '#147315', fontStyle: "Archivo Regular" }}>This email is available</label>
-                          :
-                          <label style={{ color: '#731415', fontStyle: "Archivo Regular" }}>Invalid or unavailable email</label>
-                        : null
-                    }
-                  </div>
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Passport Number: <label style={{ color: '#F0A500' }}>*</label></label>
-                  <Input
-                    onMouseEnter={this.onHover}
-                    onMouseLeave={this.onHoverLeave}
-                    type="text"
-                    name="Passport_Number"
-                    value={this.state.Passport_Number}
-                    onChange={this.onChange}
-                    required='true'
-                  />
-
-                  <div style={{ display: 'flex', flexDirection: 'row ', justifyContent: 'left', marginLeft: '0px' }}>
-                    <Button1 title="Cancel" style={{ width: 145, height: 50, marginTop: 30, marginRight:10 }} onClick={()=>{this.setState(this.orig);this.setState({update:false});}}></Button1>
-                    <Button1 title="Save" disabled={this.state.emailLoading||!this.state.validEmail} style={{ width: 145, height: 50, marginTop: 30 }} onClick={this.preSubmit}></Button1>
-                  </div>
+                      <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', marginLeft: 310}}>
+                        <label style={{fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>Last Name</label>
+                        <Input
+                          onMouseEnter={this.onHover}
+                          onMouseLeave={this.onHoverLeave}
+                          type="text"
+                          name="Last_Name"
+                          value={this.state.Last_Name}
+                          onChange={this.onChange}
+                          required='true'
+                        />
+                      </div>
+                    </div>
+                    <div style={{width: '50%', marginTop: 30, display: 'flex', flexDirection: 'row', marginLeft: 46}}>
+                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <label style={{fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>Email</label>
+                        <Input
+                          onMouseEnter={this.onHover}
+                          onMouseLeave={this.onHoverLeave}
+                          type="text"
+                          name="Email"
+                          value={this.state.Email}
+                          onChange={this.onChange}
+                          required='true'
+                        />
+                        <div style={{display: 'flex', flexDirection: 'row', marginTop: 10, alignItems: 'center'}}>
+                          {this.state.emailLoading ?
+                              <ReactLoading type={"spin"} color={"#F0A500"} height={20} width={20} />
+                            : (this.state.validEmail ?
+                                <Image1 src={require('../assets/images/Check.png').default}/>
+                              :
+                                <Image1 src={require('../assets/images/X.png').default} />
+                              )
+                          }
+                          {!this.state.emailLoading ?
+                              this.state.validEmail ?
+                                <label style={{ color: '#147315', fontStyle: "Archivo", marginLeft: 5}}>This email is available</label>
+                              :
+                                <label style={{ color: '#731415', fontStyle: "Archivo", marginLeft: 5}}>Invalid or unavailable email</label>
+                            : null
+                          }
+                        </div>
+                      </div>
+                      <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', marginLeft: 310}}>
+                        <label style={{fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>Passport Number</label>
+                        <Input
+                          onMouseEnter={this.onHover}
+                          onMouseLeave={this.onHoverLeave}
+                          type="text"
+                          name="Passport_Number"
+                          value={this.state.Passport_Number}
+                          onChange={this.onChange}
+                          required='true'
+                        />
+                      </div>
+                    </div>
+                    <div style={{display: 'flex', flexDirection: 'row', marginLeft: 'auto', marginRight: 46, marginTop: 40, marginBottom: 40}}>
+                      <Button1 title="Cancel" style={{width: 150, height: 40}} onClick={()=>{this.setState(this.orig);this.setState({update:false});}}></Button1>
+                      <Button1 title="Save" disabled={this.state.emailLoading||!this.state.validEmail} style={{width: 150, height: 40, marginLeft: 20}} onClick={this.preSubmit}></Button1>
+                    </div>
                 </div>
-              </form> :
-              <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 50, width: window.innerWidth-200, height: window.innerHeight}}>
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              </div>
+              // <form name="updateuser" id="updateuser" style={{ display: 'flex', flexDirection: 'column', marginTop: 20, marginLeft: 50, width: window.innerWidth-200, height: window.innerHeight}}>
+              //   <div id='d' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              //     <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>First Name: <label style={{ color: '#F0A500' }}>*</label></label>
+              //     <Input
+              //       onMouseEnter={this.onHover}
+              //       onMouseLeave={this.onHoverLeave}
+              //       type="text"
+              //       name="First_Name"
+              //       value={this.state.First_Name}
+              //       onChange={this.onChange}
+              //       required='true'
+              //     />
+              //     <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Last Name: <label style={{ color: '#F0A500' }}>*</label></label>
+              //     <Input
+              //       onMouseEnter={this.onHover}
+              //       onMouseLeave={this.onHoverLeave}
+              //       type="text"
+              //       name="Last_Name"
+              //       value={this.state.Last_Name}
+              //       onChange={this.onChange}
+              //       required='true'
+              //     />
+              //     <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Email: <label style={{ color: '#F0A500' }}>*</label></label>
+              //     <Input
+              //       onMouseEnter={this.onHover}
+              //       onMouseLeave={this.onHoverLeave}
+              //       type="text"
+              //       name="Email"
+              //       value={this.state.Email}
+              //       onChange={this.onChange}
+              //       required='true'
+              //     />
+              //     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', width: 300, height: 20, marginTop: -37, marginBottom: 17, backgroundColor: 'rgb(244, 244, 244)' }}>
+              //       {this.state.emailLoading ?
+              //         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 20, height: 20 }}>
+              //           <ReactLoading type={"spin"} color={"#F0A500"} height={'100%'} width={'100%'} />
+              //         </div>
+              //         : (
+              //           this.state.validEmail ?
+              //             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 20, height: 20 }}>
+              //               <Image1
+              //                 src={require('../assets/images/Check.png').default}
+              //               />
+              //             </div>
+              //             :
+              //             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 20, height: 20 }}>
+              //               <Image1
+              //                 src={require('../assets/images/X.png').default}
+              //               />
+              //             </div>
 
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>First Name: </label>
-                  <label style={{ fontFamily: 'Archivo Regular', marginTop: 13, marginBottom: 51 }}>{this.state.First_Name}</label>
+              //         )
+              //       }
+              //       {
+              //         !this.state.emailLoading ?
+              //           this.state.validEmail ?
+              //             <label style={{ color: '#147315', fontStyle: "Archivo Regular" }}>This email is available</label>
+              //             :
+              //             <label style={{ color: '#731415', fontStyle: "Archivo Regular" }}>Invalid or unavailable email</label>
+              //           : null
+              //       }
+              //     </div>
+              //     <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Passport Number: <label style={{ color: '#F0A500' }}>*</label></label>
+              //     <Input
+              //       onMouseEnter={this.onHover}
+              //       onMouseLeave={this.onHoverLeave}
+              //       type="text"
+              //       name="Passport_Number"
+              //       value={this.state.Passport_Number}
+              //       onChange={this.onChange}
+              //       required='true'
+              //     />
 
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Last Name: </label>
-                  <label style={{ fontFamily: 'Archivo Regular', marginTop: 13, marginBottom: 51 }}>{this.state.Last_Name}</label>
-
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Email: </label>
-                  <label style={{ fontFamily: 'Archivo Regular', marginTop: 13, marginBottom: 51 }}>{this.state.Email}</label>
-
-                  <label style={{ marginTop: 20, fontFamily: 'Archivo Black' }}>Passport Number: </label>
-                  <label style={{ fontFamily: 'Archivo Regular', marginTop: 13, marginBottom: 51 }}>{this.state.Passport_Number}</label>
-
-                  <div style={{ display: 'flex', flexDirection: 'column ', justifyContent: 'center', alignItems: 'left', marginLeft: '50px' }}>
-                    <Button1 title="Update Info" style={{ width: 200, height: 50, marginTop: 30 }} onClick={() => this.setState({ update: true })}></Button1>
+              //     <div style={{ display: 'flex', flexDirection: 'row ', justifyContent: 'left', marginLeft: '0px' }}>
+              //       <Button1 title="Cancel" style={{ width: 145, height: 50, marginTop: 30, marginRight:10 }} onClick={()=>{this.setState(this.orig);this.setState({update:false});}}></Button1>
+              //       <Button1 title="Save" disabled={this.state.emailLoading||!this.state.validEmail} style={{ width: 145, height: 50, marginTop: 30 }} onClick={this.preSubmit}></Button1>
+              //     </div>
+              //   </div>
+              // </form> 
+              :
+              <div style={{display: 'flex', flexDirection: 'column', marginLeft: 50, width: window.innerWidth-200}}>
+                <Image4 style={{marginRight: 180, height: 250, marginTop: 20, display: 'flex', flexDirection: 'column', boxShadow: '0px 1px 5px  0.35px #000',}}>
+                  <div style={{width: '100%', height: 170, display: 'flex', flexDirection: 'row', marginTop: 'auto', backgroundColor: '#fff', boxShadow: '0px 0.5px 0.5px  0px #000'}}>
+                    <div style={{width: '49.5%', display: 'flex', flexDirection: 'column'}}>
+                      <Image2 style={{width: 90, height: 90, marginLeft: 40, marginTop: -45, border: '6px solid white', borderRadius: 50}} src={require("../assets/images/profile.webp").default}/>
+                      <label style={{marginLeft: 46, marginTop: 10, fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>Mr. {this.state.First_Name} {this.state.Last_Name}</label>
+                      <label style={{marginLeft: 46, marginTop: 'auto', marginBottom: 20, fontFamily: 'Archivo', fontSize: 15}}>EK 675 975 720</label>
+                    </div>
+                    <div style={{height: '85%', backgroundColor: 'grey', width: 2, alignSelf: 'center'}}/>
+                    <div style={{width: '49.5%', display: 'flex', flexDirection: 'column'}}>
+                      <label style={{marginLeft: 40, marginTop: 20, fontFamily: 'Archivo', fontSize: 20}}>Skyward Miles</label>
+                      <label style={{marginLeft: 40, marginTop: 10, fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>0</label>
+                    </div>
                   </div>
+                </Image4>
+                <label style={{textAlign: 'center', marginRight: 180, marginTop: 40, fontSize: 30, fontFamily: 'Archivo', fontWeight: 'bold'}}>Personal Details</label>
+                <label style={{textAlign: 'center', marginRight: 180, marginTop: 15, fontSize: 20, fontFamily: 'Archivo'}}>Update your information regularly so you don’t miss out on news, <br />offers and services</label>
+                <div style={{marginRight: 180, boxShadow: '0px 1px 5px  0.35px #000', height: 300, display: 'flex', flexDirection: 'column', marginTop: 30}}>
+                    <div style={{width: '100%', marginTop: 40, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                      <label style={{fontFamily: 'Archivo', marginLeft: 46, fontSize: 25}}>Contact Details</label>
+                      <Button1 title="Update Details" style={{width: 150, height: 40, marginLeft: 'auto', marginRight: 46}} onClick={() => this.setState({update: true})}></Button1>
+                    </div>
+                    <div style={{marginLeft: 46, marginTop: 20, width: 70, height: 3, backgroundColor: '#F0A500'}}/>
+                    <div style={{width: '50%', marginTop: 30, display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 46}}>
+                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <label style={{fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>First Name</label>
+                        <label style={{fontFamily: 'Archivo', marginTop: 10}}>{this.state.First_Name}</label>
+                      </div>
+                      <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', marginLeft: 310}}>
+                        <label style={{fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>Last Name</label>
+                        <label style={{fontFamily: 'Archivo', marginTop: 10}}>{this.state.Last_Name}</label>
+                      </div>
+                    </div>
+                    <div style={{width: '50%', marginTop: 30, display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 46}}>
+                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <label style={{fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>Email</label>
+                        <label style={{fontFamily: 'Archivo', marginTop: 10}}>{this.state.Email}</label>
+                      </div>
+                      <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', marginLeft: 310}}>
+                        <label style={{fontFamily: 'Archivo', fontSize: 20, fontWeight: 'bold'}}>Passport Number</label>
+                        <label style={{fontFamily: 'Archivo', marginTop: 10}}>{this.state.Passport_Number}</label>
+                      </div>
+                    </div>
                 </div>
-              </form>
+              </div>
             )
           }
           </div>
@@ -320,20 +439,27 @@ const Container = styled.div`
 
 const Input = styled.input`
   height: 39px;
-  width: 300px;
+  width: 200px;
   border-top: none;
   border-right: none;
   border-left: none;
-  margin-bottom: 40px;
+  margin-top: 5px;
   background: rgba(0,0,0,0.03);
   border-bottom: 2px solid #F0A500;
   font-size: 15px;
 `;
 
 const Image1 = styled.img`
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
+  width: 15px;
+  height: 15px;
+`;
+
+const Image4 = styled.div`
+  background-image: url(${require("../assets/images/background.webp").default});
+  background-size: cover;
+`;
+
+const Image2 = styled.img`
 `;
 
 export default UserUpdateScreen;
