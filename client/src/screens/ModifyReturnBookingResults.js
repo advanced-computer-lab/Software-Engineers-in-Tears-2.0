@@ -107,10 +107,14 @@ function ModifyReturnBookingResults(props) {
             </div>
             :
             <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
-            <div style={{height: 70, width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', borderTop: '1px solid rgba(60,60,60,1)'}}>
-              <label style={{color: '#F0A500', fontFamily: 'Archivo Black', fontSize: 25}}>Choose Return Flight</label>
-            </div>
-         
+              <div style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: 40}}>
+                <div style={{width: '95%', height: 3, backgroundColor: 'grey'}}/>
+                <div style={{display: 'flex', flexDirection: 'row', backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', marginTop: -25, width: 370}}>
+                  <Image src={require("../assets/images/plane2.png").default} style={{width: 50, height: 50}}/>
+                  <label style={{fontFamily: 'Archivo', fontWeight: 'bold', fontSize: 20}}>Inbound,</label>
+                  <label style={{fontFamily: 'Archivo', fontSize: 20, marginLeft: 5}}>{from} to {to} ({returnFlights.length} options)</label>
+                </div>
+              </div>
           {returnFlights.map((flight) => {
             return(
               <div style={{height: 90, width: '95%', backgroundColor: '#f4f4f4', borderRadius: 30, boxShadow: '0px 1px 5px  0.35px #000', marginTop: 30, marginBottom: 20, display: 'flex', flexDirection: 'row', backgroundImage: "url(" + Background + ")", alignItems: 'center', alignSelf: 'center'}}>
@@ -137,7 +141,7 @@ function ModifyReturnBookingResults(props) {
           );})}
           
          
-          <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35}}>
+          <div style={{height: 70, width: '100%', backgroundColor: '#000', borderBottom: '1px solid rgba(60,60,60,1)', display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: -35, marginTop: 20}}>
             <label style={{color: '#f4f4f4', fontFamily: 'Archivo', fontSize: 25, marginLeft: 50}}>Round Trip Flight: <label style={{fontFamily: 'Archivo Black', color: '#F0A500'}}>{ props.match.params.from} - {props.match.params.to}</label></label>
             <Button1 loading={loading2} disabled={selectedReturn === '' } onClick={() => handle()} title={'Confirm Selection'} style={{fontSize: 20, position: 'absolute', right: 50, width: 180, height: 40}}/>
           </div>
