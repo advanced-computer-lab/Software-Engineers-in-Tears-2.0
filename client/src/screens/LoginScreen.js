@@ -54,7 +54,7 @@ function LoginScreen(props) {
     
     axios.post('http://localhost:8000/login', {
         Password: password,
-        Username: username.toLowerCase().trim(),
+        Username: username.trim(),
       })
       .then(res => {
         if(res.data.message === 'Success'){
